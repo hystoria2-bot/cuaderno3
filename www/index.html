@@ -1,0 +1,996 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#26475c">
+<meta name="application-name" content="Cuaderno GH">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Cuaderno GH">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
+<title>Cuaderno del Departamento de Geografía e Historia · Android 1.0</title><style>
+:root{--ink:#20262c;--muted:#68727c;--canvas:#f4f5f3;--panel:#fff;--soft:#fafaf8;--line:#dedfdb;--line2:#c7cac4;--nav:#26475c;--nav2:#1f3b4d;--accent:#2d6889;--accentSoft:#e8f0f4;--green:#34745a;--greenSoft:#e8f2ec;--amber:#8a6529;--amberSoft:#f5efe2;--red:#984247;--redSoft:#f5e8e9;--side:238px}
+*{box-sizing:border-box}html{background:var(--canvas)}body{margin:0;color:var(--ink);background:var(--canvas);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.shell{min-height:100vh;display:grid;grid-template-columns:var(--side) 1fr}.sidebar{position:fixed;inset:0 auto 0 0;width:var(--side);padding:22px 14px;display:flex;flex-direction:column;background:var(--nav);color:#fff}.brand{padding:3px 8px 18px;border-bottom:1px solid rgba(255,255,255,.15)}.brandmark{width:42px;height:42px;display:grid;place-items:center;border-radius:9px;background:#fff;color:var(--nav);font-weight:900}.brand h1{margin:13px 0 2px;font-size:1rem}.brand p{margin:0;color:rgba(255,255,255,.65);font-size:.78rem}.nav{display:grid;gap:2px;padding:16px 0}.nav button{border:0;border-radius:7px;padding:9px 10px;text-align:left;background:transparent;color:rgba(255,255,255,.76);font-weight:650}.nav button:hover{background:rgba(255,255,255,.09);color:#fff}.nav button.active{background:#fff;color:var(--nav2)}.privacy{margin-top:auto;padding:12px 8px 0;border-top:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.62);font-size:.73rem}.workspace{grid-column:2;min-width:0}.topbar{position:sticky;top:0;z-index:20;display:grid;grid-template-columns:1fr auto auto auto auto;gap:10px;align-items:center;min-height:60px;padding:8px clamp(18px,4vw,42px);background:rgba(244,245,243,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}.topbar select{min-width:210px}.version{font-size:.7rem;color:#8a939a}
+.sync{display:inline-flex;align-items:center;gap:5px;padding:4px 7px;border-radius:999px;font-size:.68rem;font-weight:750}
+.sync.loading{background:var(--amberSoft);color:var(--amber)}
+.sync.ok{background:var(--greenSoft);color:var(--green)}
+.sync.error{background:var(--redSoft);color:var(--red)}
+.storage-badge.ok{background:#e5f1eb;color:#2f7054}
+.storage-badge.fallback{background:var(--amberSoft);color:var(--amber)}
+.storage-card-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.storage-metric{padding:11px;border:1px solid var(--line);border-radius:8px;background:#f8f9f7}
+.storage-metric strong{display:block;font-size:.95rem}
+.storage-metric span{display:block;margin-top:2px;color:var(--muted);font-size:.68rem}
+.storage-note{padding:10px 12px;border-left:3px solid var(--accent);background:#f4f7f8;color:var(--muted);font-size:.77rem}
+.install-card{display:grid;grid-template-columns:auto 1fr auto;gap:13px;align-items:center;padding:14px;border:1px solid #d6dfd9;border-radius:10px;background:#f8fbf9}
+.install-app-icon{width:56px;height:56px;border-radius:13px;box-shadow:0 6px 16px rgba(31,51,63,.14)}
+.install-copy h3{margin:0 0 3px;font-size:.94rem}.install-copy p{margin:0;color:var(--muted);font-size:.74rem}
+.install-state{display:inline-flex;margin-top:7px;padding:3px 7px;border-radius:999px;background:var(--accentSoft);color:var(--accent);font-size:.66rem;font-weight:750}
+.install-help{display:none;margin-top:10px;padding:11px 12px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--muted);font-size:.76rem}
+.install-help.show{display:block}.install-help b{color:var(--ink)}
+.pwa-update{position:fixed;left:50%;bottom:18px;z-index:100;transform:translate(-50%,140%);opacity:0;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:#26343d;color:#fff;box-shadow:0 12px 32px rgba(0,0,0,.22);transition:.2s}
+.pwa-update.show{transform:translate(-50%,0);opacity:1}.pwa-update button{border:0;border-radius:7px;padding:6px 9px;background:#fff;color:#26343d;font-weight:750}
+@media(max-width:620px){.install-card{grid-template-columns:auto 1fr}.install-card .actions{grid-column:1/-1}.install-card .actions button{width:100%}.pwa-update{left:10px;right:10px;bottom:78px;transform:translateY(140%)}.pwa-update.show{transform:none}}
+.curriculum-source{margin-top:8px;padding:9px 11px;border-left:3px solid var(--accent);background:#f5f8f9;color:var(--muted);font-size:.76rem}.bottom{display:none}main{max-width:1540px;margin:auto;padding:28px clamp(16px,3.2vw,38px) 80px}.head{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin-bottom:18px}.head h2{margin:0;font-size:clamp(1.5rem,3vw,2.05rem);letter-spacing:-.035em}.head p{margin:.4rem 0 0;color:var(--muted)}.grid{display:grid;gap:12px}.two{grid-template-columns:repeat(2,minmax(0,1fr))}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.four{grid-template-columns:repeat(4,minmax(0,1fr))}.card,.item{background:var(--panel);border:1px solid var(--line);border-radius:10px}.card{padding:18px}.item{padding:15px}.item header{display:flex;justify-content:space-between;gap:12px}.item h3,.card h3{margin:0 0 10px}.stack{display:grid;gap:12px}.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}label{display:grid;gap:5px;font-size:.82rem;font-weight:650}input,select,textarea{width:100%;padding:9px 10px;border:1px solid var(--line2);border-radius:8px;background:#fff;color:var(--ink);outline:none}textarea{min-height:88px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(45,104,137,.1)}.actions{display:flex;gap:7px;align-items:center;flex-wrap:wrap}button.primary,button.secondary,button.danger,button.ghost{padding:8px 11px;border-radius:8px;border:1px solid transparent;font-weight:700}button.primary{background:var(--accent);color:#fff}button.secondary{background:#eef0ed;border-color:var(--line);color:var(--ink)}button.danger{background:var(--redSoft);border-color:#ead3d5;color:var(--red)}button.ghost{background:#fff;border-color:var(--line2);color:var(--accent)}button.small{padding:5px 8px;font-size:.77rem}.help{margin:0;color:var(--muted);font-size:.78rem}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.stat{min-height:90px;padding:16px;background:#fff;border:1px solid var(--line);border-radius:9px;display:flex;flex-direction:column;justify-content:center}.stat strong{font-size:1.7rem}.stat span{color:var(--muted);font-size:.79rem}.chips{display:flex;gap:5px;flex-wrap:wrap}.chip,.status{display:inline-flex;padding:3px 7px;border-radius:999px;background:#edf1f3;color:#536772;font-size:.68rem;font-weight:750}.chip.gold{background:#f3ede2;color:#76591f}.chip.green{background:var(--greenSoft);color:var(--green)}.chip.red{background:var(--redSoft);color:var(--red)}.callout{padding:11px 13px;border:1px solid #d4e1e7;border-radius:8px;background:var(--accentSoft);color:#35596d}.warning{background:var(--amberSoft);border-color:#e6d8bc;color:#76571f}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:8px;background:#fff}table{width:100%;border-collapse:collapse;min-width:680px}th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f0f2ef;color:var(--muted);font-size:.72rem}tr:last-child td{border-bottom:0}.check-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;max-height:400px;overflow:auto}.check{display:grid;grid-template-columns:auto 1fr;gap:8px;padding:9px;border:1px solid var(--line);border-radius:8px;background:var(--soft);font-weight:400}.check input{width:17px;height:17px;margin-top:2px}.check small{display:block;color:var(--muted);margin-top:3px}
+/* Cuaderno de notas 4.2 */
+.gradebook-shell{
+  overflow:hidden;
+  border:1px solid #d7dad5;
+  border-radius:12px;
+  background:#fff;
+  box-shadow:0 8px 28px rgba(31,43,51,.055)
+}
+.gradebook-toolbar{
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+  padding:14px 16px;border-bottom:1px solid var(--line);
+  background:#fbfcfa
+}
+.gradebook-toolbar-main{display:flex;align-items:center;gap:12px;min-width:0}
+.gradebook-icon{
+  width:38px;height:38px;flex:0 0 auto;display:grid;place-items:center;
+  border-radius:9px;background:var(--nav);color:#fff;font-weight:850
+}
+.gradebook-toolbar h3{margin:0;font-size:.96rem;letter-spacing:-.01em}
+.gradebook-toolbar p{margin:2px 0 0;color:var(--muted);font-size:.74rem}
+.gradebook-legend{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.gradebook-legend span{display:inline-flex;align-items:center;gap:5px;color:var(--muted);font-size:.68rem}
+.gradebook-legend i{width:9px;height:9px;border-radius:50%}
+.legend-high{background:#4b8a67}.legend-good{background:#477e9b}
+.legend-pass{background:#b08137}.legend-low{background:#aa5054}
+.gradebook-scroll{
+  overflow:auto;max-height:calc(100vh - 255px);
+  scrollbar-width:thin;scrollbar-color:#b7beb9 transparent
+}
+.gradebook{
+  width:100%;min-width:max(900px,100%);
+  border-collapse:separate;border-spacing:0
+}
+.gradebook th,.gradebook td{
+  padding:0;border-right:1px solid #e2e4e0;border-bottom:1px solid #e4e6e2
+}
+.gradebook thead th{
+  position:sticky;top:0;z-index:5;background:#f1f4f1
+}
+.gradebook tbody tr:nth-child(even) th,
+.gradebook tbody tr:nth-child(even) td{background-color:#fbfcfa}
+.gradebook tbody tr:hover th,
+.gradebook tbody tr:hover td{background-color:#f3f7f8}
+.gradebook .student-col{
+  position:sticky;left:0;z-index:7;width:225px;min-width:225px;
+  padding:10px 13px!important;text-align:left;background:#f7f9f6!important
+}
+.gradebook thead .student-col{
+  z-index:9!important;color:#53606a;font-size:.71rem;text-transform:uppercase;
+  letter-spacing:.045em
+}
+.gradebook tbody .student-col{
+  z-index:4!important;background:#fff!important
+}
+.gradebook tbody tr:nth-child(even) .student-col{background:#fbfcfa!important}
+.gradebook tbody tr:hover .student-col{background:#f3f7f8!important}
+.student-index{
+  display:inline-grid;place-items:center;width:24px;height:24px;margin-right:8px;
+  border-radius:7px;background:#edf0ed;color:#6b747b;font-size:.68rem;font-weight:800
+}
+.student-line{display:flex;align-items:center}
+.student-name{display:block;font-weight:750;line-height:1.25}
+.student-meta{display:block;margin-top:2px;color:#90989f;font-size:.66rem;font-weight:500}
+.activity-col{width:126px;min-width:126px;height:96px}
+.activity-head{
+  width:100%;height:100%;border:0;background:transparent;padding:9px 8px;
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;
+  text-align:left;color:var(--ink)
+}
+.activity-head:hover{background:#e8eff2}
+.activity-type{
+  display:inline-flex;margin-bottom:auto;padding:2px 5px;border-radius:4px;
+  background:#dde8ed;color:#41647a;font-size:.58rem;font-weight:800;
+  text-transform:uppercase;letter-spacing:.025em
+}
+.activity-head strong{
+  display:-webkit-box;overflow:hidden;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+  font-size:.72rem;line-height:1.18
+}
+.activity-head small{margin-top:4px;color:#808990;font-size:.6rem}
+.grade-cell{height:50px;text-align:center;background:#fff}
+.grade-btn{
+  width:100%;height:50px;border:0;background:transparent;
+  display:grid;place-items:center
+}
+.grade-btn:hover .score-pill{transform:translateY(-1px);box-shadow:0 4px 10px rgba(35,48,56,.12)}
+.score-pill{
+  min-width:44px;padding:5px 8px;border-radius:8px;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:#f0f2ef;color:#8e969b;font-weight:850;font-variant-numeric:tabular-nums;
+  transition:.15s
+}
+.score-pill.g-high{background:#e4f1e8;color:#2f6e50}
+.score-pill.g-good{background:#e4eef3;color:#315f78}
+.score-pill.g-pass{background:#f5ecd9;color:#7b5a21}
+.score-pill.g-low{background:#f4e3e5;color:#8f3f45}
+.score-pill.g-none{background:#f1f2f0;color:#adb3af}
+.gradebook .avg-col{
+  position:sticky;right:0;z-index:6;width:102px;min-width:102px;
+  padding:7px!important;text-align:center;background:#f4f6f3!important;
+  box-shadow:-5px 0 12px rgba(42,53,59,.035)
+}
+.gradebook thead .avg-col{z-index:9!important;color:#53606a;font-size:.68rem}
+.gradebook tbody tr:hover .avg-col{background:#edf3f4!important}
+.overall-score{display:flex;flex-direction:column;align-items:center;gap:2px}
+.overall-score small{color:#8c9499;font-size:.57rem;font-weight:650}
+.gradebook tfoot th,.gradebook tfoot td{
+  position:sticky;bottom:0;z-index:4;height:39px;background:#eef1ee!important;
+  color:#68727a;font-size:.68rem;text-align:center
+}
+.gradebook tfoot .student-col{z-index:8!important}
+.gradebook tfoot .avg-col{z-index:8!important}
+.gradebook-mobile{display:none}
+.mobile-book-selector{
+  padding:13px;border:1px solid var(--line);border-radius:11px;background:#fff
+}
+.mobile-book-selector label{font-size:.74rem}
+.mobile-activity-summary{
+  margin-top:10px;padding:13px;border-radius:11px;background:var(--nav);color:#fff
+}
+.mobile-activity-summary h3{margin:0;font-size:1rem}
+.mobile-activity-summary p{margin:4px 0 0;color:rgba(255,255,255,.7);font-size:.72rem}
+.mobile-activity-summary .chips{margin-top:9px}
+.mobile-activity-summary .chip{background:rgba(255,255,255,.13);color:#fff}
+.mobile-student-list{display:grid;gap:8px;margin-top:10px}
+.mobile-student-row{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;
+  min-height:67px;padding:10px 10px 10px 13px;border:1px solid var(--line);
+  border-radius:11px;background:#fff
+}
+.mobile-student-row:active{background:#f5f7f5}
+.mobile-student-main{min-width:0}
+.mobile-student-main strong{
+  display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  font-size:.89rem
+}
+.mobile-student-main small{display:block;margin-top:3px;color:var(--muted);font-size:.67rem}
+.mobile-score-button{
+  min-width:68px;min-height:47px;border:0;border-radius:9px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-weight:850
+}
+.mobile-score-button span{font-size:1rem;font-variant-numeric:tabular-nums}
+.mobile-score-button small{font-size:.55rem;font-weight:700;opacity:.8}
+.mobile-score-button.g-high{background:#e4f1e8;color:#2f6e50}
+.mobile-score-button.g-good{background:#e4eef3;color:#315f78}
+.mobile-score-button.g-pass{background:#f5ecd9;color:#7b5a21}
+.mobile-score-button.g-low{background:#f4e3e5;color:#8f3f45}
+.mobile-score-button.g-none{background:#f0f2ef;color:#8c959a}
+.mobile-book-footer{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px
+}
+.mobile-book-stat{
+  padding:9px 5px;border:1px solid var(--line);border-radius:9px;background:#fff;text-align:center
+}
+.mobile-book-stat strong{display:block;font-size:.93rem}
+.mobile-book-stat span{color:var(--muted);font-size:.58rem}
+.levels{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.level{position:relative}.level input{position:absolute;opacity:0}.level span{min-height:105px;padding:10px;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:8px;background:#fff}.level input:checked+span{border-color:var(--accent);box-shadow:0 0 0 2px rgba(45,104,137,.09)}.level b{font-size:.86rem}.level em{font-style:normal;color:var(--muted);font-size:.71rem;margin-top:5px}.level small{margin-top:auto;color:#8a939a}.competence-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.competence-card{padding:12px;border:1px solid var(--line);border-radius:8px;background:#fff}.competence-card header{display:flex;justify-content:space-between;gap:9px}.competence-card h4{margin:0}.competence-card strong{font-size:1.18rem}.coverage{height:5px;margin-top:8px;background:#e7e9e5;border-radius:999px;overflow:hidden}.coverage span{display:block;height:100%;background:var(--accent)}.empty{text-align:center;padding:34px;color:var(--muted)}details{border:1px solid var(--line);border-radius:8px;padding:10px;background:#fff}summary{cursor:pointer;font-weight:700;color:var(--accent)}.modal-bg{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(25,32,37,.45)}.modal-bg[hidden]{display:none}.modal{width:min(900px,100%);max-height:92vh;overflow:auto;padding:19px;border-radius:12px;background:#f8f9f7}.modal header{display:flex;justify-content:space-between}.toast{position:fixed;right:18px;bottom:18px;z-index:90;padding:10px 13px;border-radius:8px;background:#273039;color:#fff;transform:translateY(130%);opacity:0;transition:.2s}.toast.show{transform:none;opacity:1}.hidden{display:none!important}.selftest{position:fixed;inset:10px;z-index:999;background:#111;color:#c8ffc8;padding:16px;overflow:auto;white-space:pre-wrap;font-family:monospace}
+@media(max-width:1050px){:root{--side:205px}.storage-card-grid{grid-template-columns:repeat(2,1fr)}.three,.four,.competence-grid{grid-template-columns:repeat(2,1fr)}.check-grid{grid-template-columns:1fr}}
+@media(max-width:780px){
+  .shell{display:block}.sidebar{display:none}.workspace{grid-column:auto}
+  .topbar{grid-template-columns:1fr auto;padding:7px 10px}
+  .topbar select:first-of-type{grid-column:1/-1}
+  .version{display:none}#curriculumSync{display:none}.sync{font-size:.6rem;padding:3px 6px}
+  main{padding:15px 10px calc(108px + env(safe-area-inset-bottom))}
+  .head{align-items:flex-start;flex-direction:column;gap:11px;margin-bottom:13px}
+  .head h2{font-size:1.45rem}.head p{font-size:.78rem}
+  .head .actions{width:100%}.head .actions button{flex:1}
+  .two,.three,.four,.row,.stats{grid-template-columns:1fr}
+  .bottom{
+    display:flex;position:fixed;z-index:55;
+    left:6px;right:6px;bottom:6px;bottom:max(6px,env(safe-area-inset-bottom));
+    align-items:stretch;justify-content:flex-start;flex-wrap:nowrap;
+    gap:3px;
+    padding:4px calc(6px + env(safe-area-inset-right))
+      4px calc(6px + env(safe-area-inset-left));
+    overflow-x:auto;overflow-y:hidden;
+    border:1px solid var(--line);border-radius:12px;
+    background:rgba(255,255,255,.97);
+    box-shadow:0 8px 25px rgba(0,0,0,.15);
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior-x:contain;
+    touch-action:pan-x;
+    scroll-snap-type:x proximity;
+    scrollbar-width:none
+  }
+  .bottom::-webkit-scrollbar{display:none;width:0;height:0}
+  .bottom button{
+    flex:0 0 78px;width:78px;min-width:78px;
+    border:0;background:transparent;padding:8px 5px;
+    color:var(--muted);font-size:.62rem;font-weight:650;
+    white-space:nowrap;scroll-snap-align:center;
+    touch-action:pan-x;user-select:none;-webkit-user-select:none;
+    -webkit-tap-highlight-color:transparent
+  }
+  .bottom button.active{
+    background:var(--accentSoft);color:var(--accent);border-radius:8px
+  }
+  .levels{grid-template-columns:repeat(2,1fr)}
+  .competence-grid{grid-template-columns:1fr}
+  .gradebook-desktop{display:none}
+  .gradebook-mobile{display:block}
+  .gradebook-toolbar{display:none}
+  .toast{left:10px;right:10px;bottom:calc(88px + env(safe-area-inset-bottom));text-align:center}
+}
+@media(max-width:520px){.storage-card-grid{grid-template-columns:1fr}}
+@media(max-width:360px){
+  .bottom button{flex-basis:72px;width:72px;min-width:72px;font-size:.59rem}
+}
+@media(max-width:390px){
+  .topbar select{min-width:0;font-size:.75rem}
+  .mobile-student-row{min-height:63px;padding-left:10px}
+  .mobile-score-button{min-width:62px}
+  .mobile-book-footer{gap:5px}
+}
+@media print{.sidebar,.topbar,.bottom,.actions,.toast{display:none!important}.shell{display:block}.workspace{grid-column:auto}main{max-width:none;padding:0}.card,.item{break-inside:avoid}}
+</style></head><body>
+<div class="shell">
+<aside class="sidebar"><div class="brand"><div class="brandmark">GH</div><h1>Cuaderno del Departamento</h1><p>Geografía e Historia · Andalucía</p></div><nav class="nav"><button data-view="cuaderno" class="active">Cuaderno</button><button data-view="grupos" class="">Grupos</button><button data-view="actividades" class="">Actividades</button><button data-view="evaluar" class="">Evaluar</button><button data-view="asistencia" class="">Asistencia</button><button data-view="situaciones" class="">Situaciones</button><button data-view="informes" class="">Informes</button><button data-view="curriculo" class="">Currículo</button><button data-view="datos" class="">Datos</button></nav><div class="privacy">Datos almacenados localmente. Realiza copias JSON periódicas.</div></aside>
+<section class="workspace"><header class="topbar"><select id="groupSelect" aria-label="Grupo"></select><select id="termSelect" aria-label="Evaluación"><option value="all">Curso completo</option><option value="1">1.ª evaluación</option><option value="2">2.ª evaluación</option><option value="3">3.ª evaluación</option><option value="final">Ordinaria</option></select><span class="version">ANDROID 1.0 · FASE 1</span><span id="curriculumSync" class="sync loading">Cargando currículo…</span><span id="storageStatus" class="sync loading storage-badge">Abriendo datos…</span></header><main id="app" tabindex="-1"></main></section>
+</div>
+<nav class="bottom"><button data-view="cuaderno" class="active">Cuaderno</button><button data-view="grupos" class="">Grupos</button><button data-view="actividades" class="">Actividades</button><button data-view="evaluar" class="">Evaluar</button><button data-view="asistencia" class="">Asistencia</button><button data-view="situaciones" class="">Situaciones</button><button data-view="informes" class="">Informes</button><button data-view="curriculo" class="">Currículo</button><button data-view="datos" class="">Datos</button></nav>
+<div id="modalBg" class="modal-bg" hidden><section class="modal"><header><h2 id="modalTitle">Editar</h2><button id="closeModal" class="secondary small">Cerrar</button></header><div id="modalBody" class="stack" style="margin-top:12px"></div></section></div>
+<div id="toast" class="toast"></div><div id="pwaUpdate" class="pwa-update"><span>Nueva versión disponible</span><button id="applyPwaUpdate" type="button">Actualizar</button></div>
+<script>
+(function(){"use strict";
+var CURRICULA={"eso1_geh":{"id":"eso1_geh","meta":{"comunidad":"Andalucía","etapa":"ESO","curso":"1.º ESO","materia":"Geografía e Historia","norma":"Orden de 30 de mayo de 2023","fuente":"BOJA núm. 104, de 2 de junio de 2023","status":"resumen_operativo"},"niveles":[{"valor":4,"nota":10,"nombre":"Excelente"},{"valor":3,"nota":7.5,"nombre":"Adecuado"},{"valor":2,"nota":5,"nombre":"En proceso"},{"valor":1,"nota":2.5,"nombre":"Inicial"}],"competencias":[{"codigo":"CE1","texto":"Buscar, seleccionar, tratar y organizar información sobre temas relevantes del presente y del pasado, usando críticamente fuentes históricas y geográficas, para adquirir conocimientos, elaborar y expresar contenidos en varios formatos.","descriptores":["CCL2","CCL3","STEM4","CD1","CD2","CC1"]},{"codigo":"CE2","texto":"Indagar, argumentar y elaborar productos propios sobre problemas geográficos, históricos y sociales que resulten relevantes en la actualidad, desde lo local a lo global, para desarrollar un pensamiento crítico, respetuoso con las diferencias, que contribuya a la construcción de la propia identidad y a enriquecer el acervo común.","descriptores":["CCL1","CCL2","CD2","CC1","CC3","CE3","CCEC3"]},{"codigo":"CE3","texto":"Conocer los principales desafíos a los que se han enfrentado distintas sociedades a lo largo del tiempo, identificando las causas y consecuencias de los cambios producidos y los problemas a los que se enfrentan en la actualidad, mediante el desarrollo de proyectos de investigación y el uso de fuentes fiables, para realizar propuestas que contribuyan al desarrollo sostenible.","descriptores":["STEM3","STEM4","STEM5","CPSAA3","CC3","CC4","CE1","CCEC1"]},{"codigo":"CE4","texto":"Identificar y analizar los elementos del paisaje y su articulación en sistemas complejos naturales, rurales y urbanos, así como su evolución en el tiempo, interpretando las causas de las transformaciones y valorando el grado de equilibrio existente en los distintos ecosistemas, para promover su conservación, mejora y uso sostenible.","descriptores":["CPSAA2","CC1","CC2","CC3","CC4","CE1"]},{"codigo":"CE5","texto":"Analizar de forma crítica planteamientos históricos y geográficos explicando la construcción de los sistemas democráticos y los principios constitucionales que rigen la vida en comunidad, así como asumiendo los deberes y derechos propios de nuestro marco de convivencia, para promover la participación ciudadana y la cohesión social.","descriptores":["CCL5","CC1","CC2","CCEC1"]},{"codigo":"CE6","texto":"Comprender los procesos geográficos, históricos y culturales que han conformado la realidad multicultural en la que vivimos, conociendo y difundiendo la historia y cultura de las minorías étnicas presentes en nuestro país, y valorando la aportación de los movimientos en defensa de la igualdad y la inclusión, para reducir estereotipos, evitar cualquier tipo de discriminación y violencia, y reconocer la riqueza de la diversidad.","descriptores":["CCL5","CPSAA3","CC1","CC2","CC3","CCEC1"]},{"codigo":"CE7","texto":"Identificar los fundamentos que sostienen las diversas identidades propias y las ajenas, a través del conocimiento y puesta en valor del patrimonio material e inmaterial que compartimos para conservarlo y respetar los sentimientos de pertenencia, así como para favorecer procesos que contribuyan a la cohesión y solidaridad territorial en orden a los valores del europeísmo y de la Declaración Universal de los Derechos Humanos.","descriptores":["CP3","CPSAA1","CC1","CC2","CC3","CCEC1"]},{"codigo":"CE8","texto":"Tomar conciencia del papel de los ciclos demográficos, el ciclo vital, las formas de vida y las relaciones intergeneracionales y de dependencia en la sociedad actual y su evolución a lo largo del tiempo, analizándolas de forma crítica, para promover alternativas saludables, sostenibles, enriquecedoras y respetuosas con la dignidad humana y el compromiso con la sociedad y el entorno.","descriptores":["STEM5","CD4","CPSAA2","CPSAA5","CC1","CC2","CC3"]},{"codigo":"CE9","texto":"Conocer y valorar la importancia de la seguridad integral ciudadana en la cultura de la convivencia internacional, de nuestro país y de Andalucía, destacando la contribución del Estado, sus instituciones y otras entidades sociales, a la paz, a la cooperación internacional y al desarrollo sostenible, para promover la consecución de un mundo más seguro, solidario, sostenible y justo.","descriptores":["CCL2","CC1","CC2","CC3","CC4","CE1","CCEC1"]}],"criterios":[{"codigo":"1.1","competencia":"CE1","texto":"Elaborar y presentar contenidos sencillos utilizando fuentes geográficas e históricas fiables, diferenciando información, opinión y desinformación.","saberes":["GEH.1.A.1"]},{"codigo":"1.2","competencia":"CE1","texto":"Relacionar la información obtenida y realizar síntesis, esquemas, mapas o ejes cronológicos que permitan explicar los contenidos trabajados.","saberes":["GEH.1.A.2"]},{"codigo":"1.3","competencia":"CE1","texto":"Comunicar conocimientos mediante narraciones, presentaciones, carteles, mapas y otros productos adecuados al nivel.","saberes":["GEH.1.A.3"]},{"codigo":"2.1","competencia":"CE2","texto":"Identificar problemas geográficos e históricos próximos y formular explicaciones propias mediante una investigación guiada.","saberes":["GEH.1.A.4"]},{"codigo":"2.2","competencia":"CE2","texto":"Expresar opiniones argumentadas y respetuosas sobre cuestiones sociales, históricas y territoriales.","saberes":["GEH.1.A.5"]},{"codigo":"3.1","competencia":"CE3","texto":"Conocer los Objetivos de Desarrollo Sostenible y proponer actuaciones sencillas relacionadas con el entorno.","saberes":["GEH.1.B.1"]},{"codigo":"3.2","competencia":"CE3","texto":"Identificar relaciones entre sociedad y naturaleza y explicar problemas de interdependencia y ecodependencia.","saberes":["GEH.1.B.2"]},{"codigo":"3.3","competencia":"CE3","texto":"Ordenar hechos y procesos mediante cronologías, reconociendo cambios, permanencias, causas y consecuencias.","saberes":["GEH.1.B.3"]},{"codigo":"3.4","competencia":"CE3","texto":"Comparar procesos históricos y geográficos mediante fuentes y representaciones diversas.","saberes":["GEH.1.B.4"]},{"codigo":"4.1","competencia":"CE4","texto":"Reconocer los elementos del medio físico y humanizado y explicar las relaciones que configuran los paisajes.","saberes":["GEH.1.B.5"]},{"codigo":"4.2","competencia":"CE4","texto":"Proponer comportamientos responsables para conservar y mejorar el medio natural, rural y urbano.","saberes":["GEH.1.B.6"]},{"codigo":"5.1","competencia":"CE5","texto":"Reconocer derechos, deberes, normas e instituciones que organizan la convivencia democrática.","saberes":["GEH.1.C.1"]},{"codigo":"5.2","competencia":"CE5","texto":"Participar de forma respetuosa en actividades colectivas y valorar la resolución dialogada de los conflictos.","saberes":["GEH.1.C.2"]},{"codigo":"6.1","competencia":"CE6","texto":"Identificar desigualdades y situaciones de discriminación en sociedades del pasado y del presente.","saberes":["GEH.1.C.3"]},{"codigo":"6.2","competencia":"CE6","texto":"Valorar la diversidad cultural y rechazar prejuicios, estereotipos y comportamientos discriminatorios.","saberes":["GEH.1.C.4"]},{"codigo":"7.1","competencia":"CE7","texto":"Relacionar culturas, territorios y procesos históricos que han contribuido a formar identidades colectivas.","saberes":["GEH.1.C.5"]},{"codigo":"7.2","competencia":"CE7","texto":"Conocer y valorar el patrimonio histórico, cultural y natural, especialmente el andaluz.","saberes":["GEH.1.A.1"]},{"codigo":"8.1","competencia":"CE8","texto":"Analizar de forma básica la evolución demográfica y los modos de vida de las sociedades.","saberes":["GEH.1.A.2"]},{"codigo":"8.2","competencia":"CE8","texto":"Adoptar hábitos responsables relacionados con la salud, la convivencia, el consumo y la sostenibilidad.","saberes":["GEH.1.A.3"]},{"codigo":"9.1","competencia":"CE9","texto":"Interpretar conexiones entre España, Andalucía, Europa y el mundo a través de procesos históricos y geográficos.","saberes":["GEH.1.A.4"]},{"codigo":"9.2","competencia":"CE9","texto":"Contribuir a la convivencia, la cooperación y la construcción de una ciudadanía democrática y solidaria.","saberes":["GEH.1.A.5"]}],"saberes":[{"codigo":"GEH.1.A.1","bloque":"Retos del mundo actual","texto":"Ubicación espacial, orientación y representación cartográfica."},{"codigo":"GEH.1.A.2","bloque":"Retos del mundo actual","texto":"El relieve, las aguas y los climas del planeta."},{"codigo":"GEH.1.A.3","bloque":"Retos del mundo actual","texto":"Paisajes naturales y acción humana."},{"codigo":"GEH.1.A.4","bloque":"Retos del mundo actual","texto":"Riesgos naturales y sostenibilidad."},{"codigo":"GEH.1.A.5","bloque":"Retos del mundo actual","texto":"Fuentes, datos e información geográfica."},{"codigo":"GEH.1.B.1","bloque":"Sociedades y territorios","texto":"Tiempo histórico y fuentes para conocer el pasado."},{"codigo":"GEH.1.B.2","bloque":"Sociedades y territorios","texto":"Prehistoria y primeras sociedades humanas."},{"codigo":"GEH.1.B.3","bloque":"Sociedades y territorios","texto":"Primeras civilizaciones urbanas."},{"codigo":"GEH.1.B.4","bloque":"Sociedades y territorios","texto":"Grecia y Roma."},{"codigo":"GEH.1.B.5","bloque":"Sociedades y territorios","texto":"La Península Ibérica y Andalucía en la Antigüedad."},{"codigo":"GEH.1.B.6","bloque":"Sociedades y territorios","texto":"Origen y evolución de las desigualdades sociales."},{"codigo":"GEH.1.C.1","bloque":"Compromiso cívico","texto":"Convivencia democrática y participación."},{"codigo":"GEH.1.C.2","bloque":"Compromiso cívico","texto":"Diversidad cultural y respeto."},{"codigo":"GEH.1.C.3","bloque":"Compromiso cívico","texto":"Patrimonio natural, histórico y artístico."},{"codigo":"GEH.1.C.4","bloque":"Compromiso cívico","texto":"Igualdad entre mujeres y hombres."},{"codigo":"GEH.1.C.5","bloque":"Compromiso cívico","texto":"Consumo responsable y protección del medio."}]},"eso2_geh":{"id":"eso2_geh","meta":{"comunidad":"Andalucía","etapa":"ESO","curso":"2.º ESO","materia":"Geografía e Historia","norma":"Orden de 30 de mayo de 2023","fuente":"BOJA núm. 104, de 2 de junio de 2023","status":"resumen_operativo"},"niveles":[{"valor":4,"nota":10,"nombre":"Excelente"},{"valor":3,"nota":7.5,"nombre":"Adecuado"},{"valor":2,"nota":5,"nombre":"En proceso"},{"valor":1,"nota":2.5,"nombre":"Inicial"}],"competencias":[{"codigo":"CE1","texto":"Buscar, seleccionar, tratar y organizar información sobre temas relevantes del presente y del pasado, usando críticamente fuentes históricas y geográficas, para adquirir conocimientos, elaborar y expresar contenidos en varios formatos.","descriptores":["CCL2","CCL3","STEM4","CD1","CD2","CC1"]},{"codigo":"CE2","texto":"Indagar, argumentar y elaborar productos propios sobre problemas geográficos, históricos y sociales que resulten relevantes en la actualidad, desde lo local a lo global, para desarrollar un pensamiento crítico, respetuoso con las diferencias, que contribuya a la construcción de la propia identidad y a enriquecer el acervo común.","descriptores":["CCL1","CCL2","CD2","CC1","CC3","CE3","CCEC3"]},{"codigo":"CE3","texto":"Conocer los principales desafíos a los que se han enfrentado distintas sociedades a lo largo del tiempo, identificando las causas y consecuencias de los cambios producidos y los problemas a los que se enfrentan en la actualidad, mediante el desarrollo de proyectos de investigación y el uso de fuentes fiables, para realizar propuestas que contribuyan al desarrollo sostenible.","descriptores":["STEM3","STEM4","STEM5","CPSAA3","CC3","CC4","CE1","CCEC1"]},{"codigo":"CE4","texto":"Identificar y analizar los elementos del paisaje y su articulación en sistemas complejos naturales, rurales y urbanos, así como su evolución en el tiempo, interpretando las causas de las transformaciones y valorando el grado de equilibrio existente en los distintos ecosistemas, para promover su conservación, mejora y uso sostenible.","descriptores":["CPSAA2","CC1","CC2","CC3","CC4","CE1"]},{"codigo":"CE5","texto":"Analizar de forma crítica planteamientos históricos y geográficos explicando la construcción de los sistemas democráticos y los principios constitucionales que rigen la vida en comunidad, así como asumiendo los deberes y derechos propios de nuestro marco de convivencia, para promover la participación ciudadana y la cohesión social.","descriptores":["CCL5","CC1","CC2","CCEC1"]},{"codigo":"CE6","texto":"Comprender los procesos geográficos, históricos y culturales que han conformado la realidad multicultural en la que vivimos, conociendo y difundiendo la historia y cultura de las minorías étnicas presentes en nuestro país, y valorando la aportación de los movimientos en defensa de la igualdad y la inclusión, para reducir estereotipos, evitar cualquier tipo de discriminación y violencia, y reconocer la riqueza de la diversidad.","descriptores":["CCL5","CPSAA3","CC1","CC2","CC3","CCEC1"]},{"codigo":"CE7","texto":"Identificar los fundamentos que sostienen las diversas identidades propias y las ajenas, a través del conocimiento y puesta en valor del patrimonio material e inmaterial que compartimos para conservarlo y respetar los sentimientos de pertenencia, así como para favorecer procesos que contribuyan a la cohesión y solidaridad territorial en orden a los valores del europeísmo y de la Declaración Universal de los Derechos Humanos.","descriptores":["CP3","CPSAA1","CC1","CC2","CC3","CCEC1"]},{"codigo":"CE8","texto":"Tomar conciencia del papel de los ciclos demográficos, el ciclo vital, las formas de vida y las relaciones intergeneracionales y de dependencia en la sociedad actual y su evolución a lo largo del tiempo, analizándolas de forma crítica, para promover alternativas saludables, sostenibles, enriquecedoras y respetuosas con la dignidad humana y el compromiso con la sociedad y el entorno.","descriptores":["STEM5","CD4","CPSAA2","CPSAA5","CC1","CC2","CC3"]},{"codigo":"CE9","texto":"Conocer y valorar la importancia de la seguridad integral ciudadana en la cultura de la convivencia internacional, de nuestro país y de Andalucía, destacando la contribución del Estado, sus instituciones y otras entidades sociales, a la paz, a la cooperación internacional y al desarrollo sostenible, para promover la consecución de un mundo más seguro, solidario, sostenible y justo.","descriptores":["CCL2","CC1","CC2","CC3","CC4","CE1","CCEC1"]}],"criterios":[{"codigo":"1.1","competencia":"CE1","texto":"Elaborar y presentar contenidos sencillos utilizando fuentes geográficas e históricas fiables, diferenciando información, opinión y desinformación.","saberes":["GEH.2.A.1"]},{"codigo":"1.2","competencia":"CE1","texto":"Relacionar la información obtenida y realizar síntesis, esquemas, mapas o ejes cronológicos que permitan explicar los contenidos trabajados.","saberes":["GEH.2.A.2"]},{"codigo":"1.3","competencia":"CE1","texto":"Comunicar conocimientos mediante narraciones, presentaciones, carteles, mapas y otros productos adecuados al nivel.","saberes":["GEH.2.A.3"]},{"codigo":"2.1","competencia":"CE2","texto":"Identificar problemas geográficos e históricos próximos y formular explicaciones propias mediante una investigación guiada.","saberes":["GEH.2.A.4"]},{"codigo":"2.2","competencia":"CE2","texto":"Expresar opiniones argumentadas y respetuosas sobre cuestiones sociales, históricas y territoriales.","saberes":["GEH.2.A.5"]},{"codigo":"3.1","competencia":"CE3","texto":"Conocer los Objetivos de Desarrollo Sostenible y proponer actuaciones sencillas relacionadas con el entorno.","saberes":["GEH.2.B.1"]},{"codigo":"3.2","competencia":"CE3","texto":"Identificar relaciones entre sociedad y naturaleza y explicar problemas de interdependencia y ecodependencia.","saberes":["GEH.2.B.2"]},{"codigo":"3.3","competencia":"CE3","texto":"Ordenar hechos y procesos mediante cronologías, reconociendo cambios, permanencias, causas y consecuencias.","saberes":["GEH.2.B.3"]},{"codigo":"3.4","competencia":"CE3","texto":"Comparar procesos históricos y geográficos mediante fuentes y representaciones diversas.","saberes":["GEH.2.B.4"]},{"codigo":"4.1","competencia":"CE4","texto":"Reconocer los elementos del medio físico y humanizado y explicar las relaciones que configuran los paisajes.","saberes":["GEH.2.B.5"]},{"codigo":"4.2","competencia":"CE4","texto":"Proponer comportamientos responsables para conservar y mejorar el medio natural, rural y urbano.","saberes":["GEH.2.B.6"]},{"codigo":"5.1","competencia":"CE5","texto":"Reconocer derechos, deberes, normas e instituciones que organizan la convivencia democrática.","saberes":["GEH.2.C.1"]},{"codigo":"5.2","competencia":"CE5","texto":"Participar de forma respetuosa en actividades colectivas y valorar la resolución dialogada de los conflictos.","saberes":["GEH.2.C.2"]},{"codigo":"6.1","competencia":"CE6","texto":"Identificar desigualdades y situaciones de discriminación en sociedades del pasado y del presente.","saberes":["GEH.2.C.3"]},{"codigo":"6.2","competencia":"CE6","texto":"Valorar la diversidad cultural y rechazar prejuicios, estereotipos y comportamientos discriminatorios.","saberes":["GEH.2.C.4"]},{"codigo":"7.1","competencia":"CE7","texto":"Relacionar culturas, territorios y procesos históricos que han contribuido a formar identidades colectivas.","saberes":["GEH.2.C.5"]},{"codigo":"7.2","competencia":"CE7","texto":"Conocer y valorar el patrimonio histórico, cultural y natural, especialmente el andaluz.","saberes":["GEH.2.A.1"]},{"codigo":"8.1","competencia":"CE8","texto":"Analizar de forma básica la evolución demográfica y los modos de vida de las sociedades.","saberes":["GEH.2.A.2"]},{"codigo":"8.2","competencia":"CE8","texto":"Adoptar hábitos responsables relacionados con la salud, la convivencia, el consumo y la sostenibilidad.","saberes":["GEH.2.A.3"]},{"codigo":"9.1","competencia":"CE9","texto":"Interpretar conexiones entre España, Andalucía, Europa y el mundo a través de procesos históricos y geográficos.","saberes":["GEH.2.A.4"]},{"codigo":"9.2","competencia":"CE9","texto":"Contribuir a la convivencia, la cooperación y la construcción de una ciudadanía democrática y solidaria.","saberes":["GEH.2.A.5"]}],"saberes":[{"codigo":"GEH.2.A.1","bloque":"Retos del mundo actual","texto":"Población, distribución y movimientos migratorios."},{"codigo":"GEH.2.A.2","bloque":"Retos del mundo actual","texto":"El proceso de urbanización y las ciudades."},{"codigo":"GEH.2.A.3","bloque":"Retos del mundo actual","texto":"Desigualdad, diversidad y cohesión social."},{"codigo":"GEH.2.A.4","bloque":"Retos del mundo actual","texto":"Representación de datos demográficos y urbanos."},{"codigo":"GEH.2.A.5","bloque":"Retos del mundo actual","texto":"Retos ambientales de los asentamientos humanos."},{"codigo":"GEH.2.B.1","bloque":"Sociedades y territorios","texto":"La fragmentación del mundo antiguo."},{"codigo":"GEH.2.B.2","bloque":"Sociedades y territorios","texto":"El Islam y al-Ándalus."},{"codigo":"GEH.2.B.3","bloque":"Sociedades y territorios","texto":"La Europa feudal."},{"codigo":"GEH.2.B.4","bloque":"Sociedades y territorios","texto":"Las ciudades medievales."},{"codigo":"GEH.2.B.5","bloque":"Sociedades y territorios","texto":"Los reinos peninsulares y la formación histórica de Andalucía."},{"codigo":"GEH.2.B.6","bloque":"Sociedades y territorios","texto":"Cultura, arte y patrimonio medieval."},{"codigo":"GEH.2.C.1","bloque":"Compromiso cívico","texto":"Ciudadanía y convivencia intercultural."},{"codigo":"GEH.2.C.2","bloque":"Compromiso cívico","texto":"Respeto al patrimonio y memoria colectiva."},{"codigo":"GEH.2.C.3","bloque":"Compromiso cívico","texto":"Igualdad y rechazo de la discriminación."},{"codigo":"GEH.2.C.4","bloque":"Compromiso cívico","texto":"Solidaridad y cooperación."},{"codigo":"GEH.2.C.5","bloque":"Compromiso cívico","texto":"Uso responsable de la información digital."}]},"eso3_geh":{"meta":{"comunidad":"Andalucía","etapa":"ESO","curso":"3.º ESO","materia":"Geografía e Historia","norma":"Orden de 30 de mayo de 2023","fuente":"BOJA núm. 104, de 2 de junio de 2023, Anexos II y III","url":"https://www.juntadeandalucia.es/boja/2023/104/36","status":"revisado"},"niveles":[{"valor":4,"nota":10,"nombre":"Excelente"},{"valor":3,"nota":7.5,"nombre":"Adecuado"},{"valor":2,"nota":5,"nombre":"En proceso"},{"valor":1,"nota":2.5,"nombre":"Inicial"}],"competencias":[{"codigo":"CE1","texto":"Buscar, seleccionar, tratar y organizar información sobre temas relevantes del presente y del pasado, usando críticamente fuentes históricas y geográficas, para adquirir conocimientos, elaborar y expresar contenidos en varios formatos.","descriptores":["CCL2","CCL3","STEM4","CD1","CD2","CC1"]},{"codigo":"CE2","texto":"Indagar, argumentar y elaborar productos propios sobre problemas geográficos, históricos y sociales que resulten relevantes en la actualidad, desde lo local a lo global, para desarrollar un pensamiento crítico, respetuoso con las diferencias, que contribuya a la construcción de la propia identidad y a enriquecer el acervo común.","descriptores":["CCL1","CCL2","CD2","CC1","CC3","CE3","CCEC3"]},{"codigo":"CE3","texto":"Conocer los principales desafíos a los que se han enfrentado distintas sociedades a lo largo del tiempo, identificando las causas y consecuencias de los cambios producidos y los problemas a los que se enfrentan en la actualidad, mediante el desarrollo de proyectos de investigación y el uso de fuentes fiables, para realizar propuestas que contribuyan al desarrollo sostenible.","descriptores":["STEM3","STEM4","STEM5","CPSAA3","CC3","CC4","CE1","CCEC1"]},{"codigo":"CE4","texto":"Identificar y analizar los elementos del paisaje y su articulación en sistemas complejos naturales, rurales y urbanos, así como su evolución en el tiempo, interpretando las causas de las transformaciones y valorando el grado de equilibrio existente en los distintos ecosistemas, para promover su conservación, mejora y uso sostenible.","descriptores":["CPSAA2","CC1","CC2","CC3","CC4","CE1"]},{"codigo":"CE5","texto":"Analizar de forma crítica planteamientos históricos y geográficos explicando la construcción de los sistemas democráticos y los principios constitucionales que rigen la vida en comunidad, así como asumiendo los deberes y derechos propios de nuestro marco de convivencia, para promover la participación ciudadana y la cohesión social.","descriptores":["CCL5","CC1","CC2","CCEC1"]},{"codigo":"CE6","texto":"Comprender los procesos geográficos, históricos y culturales que han conformado la realidad multicultural en la que vivimos, conociendo y difundiendo la historia y cultura de las minorías étnicas presentes en nuestro país, y valorando la aportación de los movimientos en defensa de la igualdad y la inclusión, para reducir estereotipos, evitar cualquier tipo de discriminación y violencia, y reconocer la riqueza de la diversidad.","descriptores":["CCL5","CPSAA3","CC1","CC2","CC3","CCEC1"]},{"codigo":"CE7","texto":"Identificar los fundamentos que sostienen las diversas identidades propias y las ajenas, a través del conocimiento y puesta en valor del patrimonio material e inmaterial que compartimos para conservarlo y respetar los sentimientos de pertenencia, así como para favorecer procesos que contribuyan a la cohesión y solidaridad territorial en orden a los valores del europeísmo y de la Declaración Universal de los Derechos Humanos.","descriptores":["CP3","CPSAA1","CC1","CC2","CC3","CCEC1"]},{"codigo":"CE8","texto":"Tomar conciencia del papel de los ciclos demográficos, el ciclo vital, las formas de vida y las relaciones intergeneracionales y de dependencia en la sociedad actual y su evolución a lo largo del tiempo, analizándolas de forma crítica, para promover alternativas saludables, sostenibles, enriquecedoras y respetuosas con la dignidad humana y el compromiso con la sociedad y el entorno.","descriptores":["STEM5","CD4","CPSAA2","CPSAA5","CC1","CC2","CC3"]},{"codigo":"CE9","texto":"Conocer y valorar la importancia de la seguridad integral ciudadana en la cultura de la convivencia internacional, de nuestro país y de Andalucía, destacando la contribución del Estado, sus instituciones y otras entidades sociales, a la paz, a la cooperación internacional y al desarrollo sostenible, para promover la consecución de un mundo más seguro, solidario, sostenible y justo.","descriptores":["CCL2","CC1","CC2","CC3","CC4","CE1","CCEC1"]}],"criterios":[{"codigo":"1.1","competencia":"CE1","texto":"Elaborar contenidos propios en distintos formatos, mediante aplicaciones y estrategias de recogida y representación de datos sencillas, aprendiendo a usar y contrastar críticamente fuentes fiables, tanto analógicas como digitales, del presente y de la historia contemporánea, identificando la desinformación y la manipulación.","saberes":["GEH.3.A.2","GEH.3.A.3"]},{"codigo":"1.2","competencia":"CE1","texto":"Establecer conexiones y relaciones básicas entre los conocimientos e informaciones adquiridos, elaborando síntesis explicativas sencillas, mediante informes, estudios o dosieres informativos, que reflejen un dominio de los contenidos tratados.","saberes":["GEH.3.A.3"]},{"codigo":"1.3","competencia":"CE1","texto":"Transferir de manera sencilla la información y el conocimiento por medio de narraciones, pósteres, presentaciones, exposiciones orales, medios audiovisuales y otros productos.","saberes":["GEH.3.A.3"]},{"codigo":"2.1","competencia":"CE2","texto":"Generar productos originales y creativos sencillos mediante la organización de conocimientos previos utilizando herramientas de investigación sencillas que permitan explicar problemas presentes y pasados de la humanidad a distintas escalas temporales y espaciales, partiendo del entorno más cercano, utilizando conceptos, situaciones y datos relevantes.","saberes":["GEH.3.A.3","GEH.3.A.4","GEH.3.B.1"]},{"codigo":"2.2","competencia":"CE2","texto":"Construir la propia identidad y enriquecer el acervo común en el contexto del mundo actual, de sus retos y conflictos, desde una perspectiva sistémica y global, iniciándose en la producción y expresión discursiva y abierta al diálogo de juicios y planteamientos personales, críticos y argumentados.","saberes":["GEH.3.B.3"]},{"codigo":"3.1","competencia":"CE3","texto":"Conocer los Objetivos de Desarrollo Sostenible, planteando propuestas que contribuyan a su logro, aplicando métodos y proyectos de investigación, incidiendo en el uso de mapas y otras representaciones gráficas, así como de medios accesibles de interpretación de imágenes.","saberes":["GEH.3.A.1","GEH.3.A.3"]},{"codigo":"3.2","competencia":"CE3","texto":"Identificar, desde un enfoque ecosocial, problemas y desafíos pasados, actuales o futuros de las sociedades contemporáneas señalando sus relaciones de interdependencia y ecodependencia.","saberes":["GEH.3.A.5","GEH.3.C.3"]},{"codigo":"3.3","competencia":"CE3","texto":"Utilizar secuencias cronológicas complejas en las que identificar, comparar y relacionar hechos y procesos en diferentes períodos y lugares históricos (simultaneidad, duración, causalidad), utilizando términos y conceptos del ámbito de la Historia y de la Geografía.","saberes":["GEH.3.B.2"]},{"codigo":"3.4","competencia":"CE3","texto":"Analizar procesos de cambio histórico y comparar casos del ámbito de la Historia y la Geografía a través del uso de fuentes de información diversas, teniendo en cuenta las transformaciones de corta y larga duración (coyuntura y estructura), las continuidades y permanencias en diferentes períodos y lugares.","saberes":["GEH.3.A.2","GEH.3.B.1"]},{"codigo":"4.1","competencia":"CE4","texto":"Identificar los elementos del entorno y conocer su funcionamiento como un sistema complejo por medio del análisis multicausal de sus relaciones naturales y humanas, presentes y pasadas, investigando sobre el grado de conservación y de equilibrio dinámico.","saberes":["GEH.3.A.4","GEH.3.C.1"]},{"codigo":"4.2","competencia":"CE4","texto":"Identificar comportamientos y acciones que contribuyan a la conservación y mejora del entorno natural, rural y urbano, a través del respeto a todos los seres vivos, mostrando comportamientos orientados al logro de un desarrollo sostenible de dichos entornos, y comprendiendo el acceso universal, justo y equitativo a los recursos que nos ofrece el planeta.","saberes":["GEH.3.A.2","GEH.3.B.4","GEH.3.B.5","GEH.3.C.3","GEH.3.C.4"]},{"codigo":"5.1","competencia":"CE5","texto":"Conocer, valorar y ejercitar responsabilidades, derechos y deberes y dar ejemplos en favor de su desarrollo y afirmación a través del conocimiento de nuestro ordenamiento jurídico y constitucional, la comprensión y puesta en valor de nuestra memoria democrática y de la contribución de los hombres y mujeres a la misma, y la defensa de nuestros valores constitucionales.","saberes":["GEH.3.B.8","GEH.3.C.6","GEH.3.C.9"]},{"codigo":"5.2","competencia":"CE5","texto":"Reconocer movimientos y causas que generen una conciencia solidaria, promuevan la cohesión social, y trabajen para la eliminación de la desigualdad, especialmente la motivada por cuestión de género, y el pleno desarrollo de la ciudadanía, mediante el trabajo en equipo, la mediación y resolución pacífica de conflictos.","saberes":["GEH.3.A.7","GEH.3.B.6","GEH.3.C.6","GEH.3.C.9","GEH.3.C.10"]},{"codigo":"6.1","competencia":"CE6","texto":"Investigar acerca de actitudes discriminatorias y reconocer la riqueza de la diversidad, a partir del análisis de la relación entre los aspectos geográficos, históricos, ecosociales y culturales que han conformado la sociedad globalizada y multicultural actual, y el conocimiento de la aportación de los movimientos en defensa de los derechos de las minorías y en favor de la inclusión y la igualdad real, especialmente de las mujeres y de otros colectivos discriminados.","saberes":["GEH.3.A.2","GEH.3.A.7","GEH.3.A.8","GEH.3.A.9","GEH.3.B.4","GEH.3.B.5"]},{"codigo":"6.2","competencia":"CE6","texto":"Contribuir al bienestar individual y colectivo a través del diseño y exposición de iniciativas orientadas a promover un compromiso activo con los valores comunes, la mejora del entorno y el servicio a la comunidad.","saberes":["GEH.3.C.5","GEH.3.C.7"]},{"codigo":"7.1","competencia":"CE7","texto":"Reconocer los rasgos que van conformando la identidad propia y de los demás, la riqueza de las identidades múltiples en relación con distintas escalas espaciales, a través de la iniciación en la investigación y el análisis guiado de sus fundamentos geográficos, históricos, artísticos, ideológicos y lingüísticos, y el reconocimiento de sus expresiones culturales.","saberes":["GEH.3.A.9","GEH.3.B.1"]},{"codigo":"7.2","competencia":"CE7","texto":"Conocer y contribuir a conservar el patrimonio material e inmaterial común, respetar los sentimientos de pertenencia adoptando compromisos en su entorno más cercano con principios y acciones orientadas a la cohesión y solidaridad territorial de la comunidad política, los valores del europeísmo y de la Declaración Universal de los Derechos Humanos.","saberes":["GEH.3.C.1","GEH.3.C.2","GEH.3.C.8","GEH.3.C.13"]},{"codigo":"8.1","competencia":"CE8","texto":"Adoptar un papel activo y comprometido con el entorno, de acuerdo a aptitudes, aspiraciones, intereses y valores propios, a partir de la iniciación guiada en el análisis crítico de la realidad económica, de la distribución y gestión del trabajo, y la adopción de hábitos responsables, saludables, sostenibles y respetuosos con la dignidad humana y la de otros seres vivos, así como de la reflexión ética ante los usos de la tecnología y la gestión del tiempo libre.","saberes":["GEH.3.A.7","GEH.3.B.5","GEH.3.C.5","GEH.3.C.10","GEH.3.C.12"]},{"codigo":"8.2","competencia":"CE8","texto":"Identificar las iniciativas de la sociedad civil, reflejadas en asociaciones y entidades sociales, adoptando actitudes de participación y transformación en el ámbito local y comunitario, especialmente en el ámbito de las relaciones intergeneracionales.","saberes":["GEH.3.C.6","GEH.3.C.7","GEH.3.C.11","GEH.3.C.12"]},{"codigo":"9.1","competencia":"CE9","texto":"Interpretar y explicar de forma argumentada la conexión de España con los grandes procesos históricos de la época contemporánea, valorando lo que han supuesto para su evolución y señalando las aportaciones de sus habitantes a lo largo de la historia, así como las aportaciones del Estado y sus instituciones a la cultura europea y mundial.","saberes":["GEH.3.B.6","GEH.3.B.7","GEH.3.B.8","GEH.3.C.14"]},{"codigo":"9.2","competencia":"CE9","texto":"Contribuir desde su entorno más cercano a la consecución de un mundo más seguro, justo, solidario y sostenible, a través del análisis guiado y el reconocimiento de los compromisos internacionales de nuestro país y de Andalucía, en favor de la paz, la seguridad, la cooperación, la sostenibilidad, los valores democráticos y los Objetivos de Desarrollo Sostenible.","saberes":["GEH.3.A.6","GEH.3.C.8","GEH.3.C.9","GEH.3.C.14"]}],"saberes":[{"codigo":"GEH.3.A.1","bloque":"A. Retos del mundo actual","texto":"Objetivos de Desarrollo Sostenible. Emergencia climática y sostenibilidad. Relación entre factores naturales y antrópicos en la Tierra. Globalización, movimientos migratorios e interculturalidad. Los avances tecnológicos y la conciencia ecosocial. Conflictos ideológicos y etnoculturales. Andalucía en el espacio global."},{"codigo":"GEH.3.A.2","bloque":"A. Retos del mundo actual","texto":"Sociedad de la información. Búsqueda, tratamiento de la información, uso de datos en entornos digitales y evaluación y contraste de la fiabilidad de las fuentes. El problema de la desinformación. Uso específico del léxico relativo a los ámbitos histórico, artístico y geográfico."},{"codigo":"GEH.3.A.3","bloque":"A. Retos del mundo actual","texto":"Cultura mediática. Técnicas y métodos de las Ciencias Sociales: análisis de textos, interpretación y elaboración de mapas, esquemas y síntesis, representación de gráficos e interpretación de imágenes a través de medios digitales accesibles. Tecnologías de la información geográfica."},{"codigo":"GEH.3.A.4","bloque":"A. Retos del mundo actual","texto":"Lo global y lo local. La investigación en Ciencias Sociales, el estudio multicausal y el análisis comparado del espacio natural, rural y urbano, su evolución y los retos de futuro. Análisis e interpretación de conceptos espaciales: localización, escala, conexión y proximidad espacial."},{"codigo":"GEH.3.A.5","bloque":"A. Retos del mundo actual","texto":"Estructuras económicas en el mundo actual, cambios en los sectores productivos y funcionamiento de los mercados. Dilemas e incertidumbres ante el crecimiento, la empleabilidad y la sustentabilidad. Sectores productivos en Andalucía."},{"codigo":"GEH.3.A.6","bloque":"A. Retos del mundo actual","texto":"Geopolítica y principales conflictos en el presente. Genocidios y crímenes contra la humanidad. Guerras, terrorismo y otras formas de violencia política. Alianzas e instituciones internacionales, mediación y misiones de paz. Injerencia humanitaria y Justicia Universal. El papel de las ONG."},{"codigo":"GEH.3.A.7","bloque":"A. Retos del mundo actual","texto":"Desigualdad e injusticia en el contexto local y global. Solidaridad, cohesión social y cooperación para el desarrollo."},{"codigo":"GEH.3.A.8","bloque":"A. Retos del mundo actual","texto":"Igualdad de género y formas de violencia contra las mujeres. Actitudes y comportamientos sexistas."},{"codigo":"GEH.3.A.9","bloque":"A. Retos del mundo actual","texto":"Diversidad social, etnocultural y de género. Migraciones, multiculturalidad y mestizaje en sociedades abiertas. Historia y reconocimiento del pueblo gitano y otras minorías étnicas de nuestro país. Nuevas formas de identificación cultural. Andalucía diversa y multicultural."},{"codigo":"GEH.3.B.1","bloque":"B. Sociedades y territorios","texto":"Métodos de investigación en el ámbito de la Geografía y de la Historia. Metodologías del pensamiento histórico y del pensamiento geográfico."},{"codigo":"GEH.3.B.2","bloque":"B. Sociedades y territorios","texto":"Tiempo histórico: construcción e interpretación de líneas del tiempo a través de la linealidad, cronología, simultaneidad y duración."},{"codigo":"GEH.3.B.3","bloque":"B. Sociedades y territorios","texto":"Conciencia histórica. Elaboración de juicios propios y argumentados ante problemas de actualidad contextualizados históricamente. Defensa y exposición crítica de los mismos a través de presentaciones y debates."},{"codigo":"GEH.3.B.4","bloque":"B. Sociedades y territorios","texto":"Interpretación del sistema capitalista desde sus orígenes hasta la actualidad. Colonialismo, imperialismo y nuevas subordinaciones económicas y culturales."},{"codigo":"GEH.3.B.5","bloque":"B. Sociedades y territorios","texto":"La transformación humana del territorio y la distribución desigual de los recursos y del trabajo. Evolución de los sistemas económicos, de los ciclos demográficos, de los modos de vida y de los modelos de organización social. La lucha por los derechos laborales y sociales: el estado del bienestar. Los servicios públicos en Andalucía."},{"codigo":"GEH.3.B.6","bloque":"B. Sociedades y territorios","texto":"Interpretación del territorio y del paisaje. Del éxodo rural a la concentración urbana. El reto demográfico en España y Andalucía. Evolución, distribución, dinámica y estructura de la población española y andaluza. El problema de la despoblación rural. Ordenación del territorio y transformación del espacio. La ciudad como espacio de convivencia. Importancia y cuidado del espacio público. La huella humana y la protección del medio natural. Proceso de urbanización y sistema de ciudades en Andalucía."},{"codigo":"GEH.3.B.7","bloque":"B. Sociedades y territorios","texto":"El proceso de construcción europea. Integración económica, monetaria y ciudadana. Las instituciones europeas. El futuro de Europa. Andalucía en Europa."},{"codigo":"GEH.3.B.8","bloque":"B. Sociedades y territorios","texto":"La transición española desde 1975 a 1978. La ley como contrato social. De la Constitución de 1812 a la Constitución de 1978. Los valores y principios constitucionales. Ordenamiento normativo autonómico, constitucional y supranacional como garante del desarrollo de derechos y libertades para el ejercicio de la ciudadanía. Blas Infante y el andalucismo. El estatuto de Andalucía. Las instituciones andaluzas. Ordenación territorial de Andalucía."},{"codigo":"GEH.3.C.1","bloque":"C. Compromiso cívico local y global","texto":"Dignidad humana y derechos universales. Declaración Universal de los Derechos Humanos."},{"codigo":"GEH.3.C.2","bloque":"C. Compromiso cívico local y global","texto":"Diversidad social y multiculturalidad. Integración y cohesión social."},{"codigo":"GEH.3.C.3","bloque":"C. Compromiso cívico local y global","texto":"Responsabilidad ecosocial. Compromiso y acción ante los Objetivos del Desarrollo Sostenible. La juventud andaluza como agente de cambio para el desarrollo sostenible."},{"codigo":"GEH.3.C.4","bloque":"C. Compromiso cívico local y global","texto":"Implicación en la defensa y protección del medioambiente. Acción y posición ante la emergencia climática. La protección medioambiental en Andalucía."},{"codigo":"GEH.3.C.5","bloque":"C. Compromiso cívico local y global","texto":"Ciudadanía ética digital. Nuevos comportamientos en la sociedad de la información. Lucha contra el ciberacoso."},{"codigo":"GEH.3.C.6","bloque":"C. Compromiso cívico local y global","texto":"Compromiso cívico y participación ciudadana. Mediación y gestión pacífica de conflictos y apoyo a las víctimas de cualquier forma de violencia y terrorismo."},{"codigo":"GEH.3.C.7","bloque":"C. Compromiso cívico local y global","texto":"Servicio a la comunidad. La corresponsabilidad en los cuidados. Las relaciones intergeneracionales. La responsabilidad colectiva e individual. El asociacionismo y el voluntariado. Entornos y redes sociales."},{"codigo":"GEH.3.C.8","bloque":"C. Compromiso cívico local y global","texto":"El patrimonio como bien común y como recurso cultural y económico. Necesidad de su conocimiento, valoración, conservación, puesta en valor, difusión y gestión de la riqueza patrimonial andaluza."},{"codigo":"GEH.3.C.9","bloque":"C. Compromiso cívico local y global","texto":"Cohesión social e integración. Medidas y acciones en favor de la igualdad y de la plena inclusión."},{"codigo":"GEH.3.C.10","bloque":"C. Compromiso cívico local y global","texto":"La igualdad real de mujeres y hombres. La discriminación por motivo de diversidad sexual y de género. La conquista de derechos en las sociedades democráticas contemporáneas. El camino hacia la igualdad en Andalucía."},{"codigo":"GEH.3.C.11","bloque":"C. Compromiso cívico local y global","texto":"Las emociones y el contexto cultural. La perspectiva histórica del componente emocional."},{"codigo":"GEH.3.C.12","bloque":"C. Compromiso cívico local y global","texto":"Empleo y trabajo en la sociedad de la información, aprendizaje permanente y a lo largo de toda la vida."},{"codigo":"GEH.3.C.13","bloque":"C. Compromiso cívico local y global","texto":"Los valores del europeísmo. Fórmulas de participación en programas educativos europeos."},{"codigo":"GEH.3.C.14","bloque":"C. Compromiso cívico local y global","texto":"Instituciones del Estado que garantizan la seguridad integral y la convivencia social. Los compromisos internacionales de nuestro país en favor de la paz, la seguridad y la cooperación internacional."}],"id":"eso3_geh"},"eso4_geh":{"meta":{"comunidad":"Andalucía","etapa":"ESO","curso":"4.º ESO","materia":"Geografía e Historia","norma":"Orden de 30 de mayo de 2023","fuente":"BOJA núm. 104, de 2 de junio de 2023, Anexos II y III","url":"https://www.juntadeandalucia.es/boja/2023/104/36","status":"resumen_operativo"},"niveles":[{"valor":4,"nota":10,"nombre":"Excelente"},{"valor":3,"nota":7.5,"nombre":"Adecuado"},{"valor":2,"nota":5,"nombre":"En proceso"},{"valor":1,"nota":2.5,"nombre":"Inicial"}],"competencias":[{"codigo":"CE1","texto":"Buscar, seleccionar, tratar y organizar información sobre temas relevantes del presente y del pasado, usando críticamente fuentes históricas y geográficas, para adquirir conocimientos, elaborar y expresar contenidos en varios formatos.","descriptores":["CCL2","CCL3","STEM4","CD1","CD2","CC1"]},{"codigo":"CE2","texto":"Indagar, argumentar y elaborar productos propios sobre problemas geográficos, históricos y sociales que resulten relevantes en la actualidad, desde lo local a lo global, para desarrollar un pensamiento crítico, respetuoso con las diferencias, que contribuya a la construcción de la propia identidad y a enriquecer el acervo común.","descriptores":["CCL1","CCL2","CD2","CC1","CC3","CE3","CCEC3"]},{"codigo":"CE3","texto":"Conocer los principales desafíos a los que se han enfrentado distintas sociedades a lo largo del tiempo, identificando las causas y consecuencias de los cambios producidos y los problemas a los que se enfrentan en la actualidad, mediante el desarrollo de proyectos de investigación y el uso de fuentes fiables, para realizar propuestas que contribuyan al desarrollo sostenible.","descriptores":["STEM3","STEM4","STEM5","CPSAA3","CC3","CC4","CE1","CCEC1"]},{"codigo":"CE4","texto":"Identificar y analizar los elementos del paisaje y su articulación en sistemas complejos naturales, rurales y urbanos, así como su evolución en el tiempo, interpretando las causas de las transformaciones y valorando el grado de equilibrio existente en los distintos ecosistemas, para promover su conservación, mejora y uso sostenible.","descriptores":["CPSAA2","CC1","CC2","CC3","CC4","CE1"]},{"codigo":"CE5","texto":"Analizar de forma crítica planteamientos históricos y geográficos explicando la construcción de los sistemas democráticos y los principios constitucionales que rigen la vida en comunidad, así como asumiendo los deberes y derechos propios de nuestro marco de convivencia, para promover la participación ciudadana y la cohesión social.","descriptores":["CCL5","CC1","CC2","CCEC1"]},{"codigo":"CE6","texto":"Comprender los procesos geográficos, históricos y culturales que han conformado la realidad multicultural en la que vivimos, conociendo y difundiendo la historia y cultura de las minorías étnicas presentes en nuestro país, y valorando la aportación de los movimientos en defensa de la igualdad y la inclusión, para reducir estereotipos, evitar cualquier tipo de discriminación y violencia, y reconocer la riqueza de la diversidad.","descriptores":["CCL5","CPSAA3","CC1","CC2","CC3","CCEC1"]},{"codigo":"CE7","texto":"Identificar los fundamentos que sostienen las diversas identidades propias y las ajenas, a través del conocimiento y puesta en valor del patrimonio material e inmaterial que compartimos para conservarlo y respetar los sentimientos de pertenencia, así como para favorecer procesos que contribuyan a la cohesión y solidaridad territorial en orden a los valores del europeísmo y de la Declaración Universal de los Derechos Humanos.","descriptores":["CP3","CPSAA1","CC1","CC2","CC3","CCEC1"]},{"codigo":"CE8","texto":"Tomar conciencia del papel de los ciclos demográficos, el ciclo vital, las formas de vida y las relaciones intergeneracionales y de dependencia en la sociedad actual y su evolución a lo largo del tiempo, analizándolas de forma crítica, para promover alternativas saludables, sostenibles, enriquecedoras y respetuosas con la dignidad humana y el compromiso con la sociedad y el entorno.","descriptores":["STEM5","CD4","CPSAA2","CPSAA5","CC1","CC2","CC3"]},{"codigo":"CE9","texto":"Conocer y valorar la importancia de la seguridad integral ciudadana en la cultura de la convivencia internacional, de nuestro país y de Andalucía, destacando la contribución del Estado, sus instituciones y otras entidades sociales, a la paz, a la cooperación internacional y al desarrollo sostenible, para promover la consecución de un mundo más seguro, solidario, sostenible y justo.","descriptores":["CCL2","CC1","CC2","CC3","CC4","CE1","CCEC1"]}],"criterios":[{"codigo":"1.1","competencia":"CE1","texto":"Elaborar contenidos propios en distintos formatos, mediante aplicaciones y estrategias de recogida y representación de datos sencillas, aprendiendo a usar y contrastar críticamente fuentes fiables, tanto analógicas como digitales, del presente y de la historia contemporánea, identificando la desinformación y la manipulación.","saberes":["GEH.4.A.2","GEH.4.A.3"]},{"codigo":"1.2","competencia":"CE1","texto":"Establecer conexiones y relaciones básicas entre los conocimientos e informaciones adquiridos, elaborando síntesis explicativas sencillas, mediante informes, estudios o dosieres informativos, que reflejen un dominio de los contenidos tratados.","saberes":["GEH.4.A.3"]},{"codigo":"1.3","competencia":"CE1","texto":"Transferir de manera sencilla la información y el conocimiento por medio de narraciones, pósteres, presentaciones, exposiciones orales, medios audiovisuales y otros productos.","saberes":["GEH.4.A.3"]},{"codigo":"2.1","competencia":"CE2","texto":"Generar productos originales y creativos sencillos mediante la organización de conocimientos previos utilizando herramientas de investigación sencillas que permitan explicar problemas presentes y pasados de la humanidad a distintas escalas temporales y espaciales, partiendo del entorno más cercano, utilizando conceptos, situaciones y datos relevantes.","saberes":["GEH.4.A.3","GEH.4.A.4","GEH.4.B.1"]},{"codigo":"2.2","competencia":"CE2","texto":"Construir la propia identidad y enriquecer el acervo común en el contexto del mundo actual, de sus retos y conflictos, desde una perspectiva sistémica y global, iniciándose en la producción y expresión discursiva y abierta al diálogo de juicios y planteamientos personales, críticos y argumentados.","saberes":["GEH.4.B.3"]},{"codigo":"3.1","competencia":"CE3","texto":"Conocer los Objetivos de Desarrollo Sostenible, planteando propuestas que contribuyan a su logro, aplicando métodos y proyectos de investigación, incidiendo en el uso de mapas y otras representaciones gráficas, así como de medios accesibles de interpretación de imágenes.","saberes":["GEH.4.A.1","GEH.4.A.3"]},{"codigo":"3.2","competencia":"CE3","texto":"Identificar, desde un enfoque ecosocial, problemas y desafíos pasados, actuales o futuros de las sociedades contemporáneas señalando sus relaciones de interdependencia y ecodependencia.","saberes":["GEH.4.A.5","GEH.4.C.3"]},{"codigo":"3.3","competencia":"CE3","texto":"Utilizar secuencias cronológicas complejas en las que identificar, comparar y relacionar hechos y procesos en diferentes períodos y lugares históricos (simultaneidad, duración, causalidad), utilizando términos y conceptos del ámbito de la Historia y de la Geografía.","saberes":["GEH.4.B.2"]},{"codigo":"3.4","competencia":"CE3","texto":"Analizar procesos de cambio histórico y comparar casos del ámbito de la Historia y la Geografía a través del uso de fuentes de información diversas, teniendo en cuenta las transformaciones de corta y larga duración (coyuntura y estructura), las continuidades y permanencias en diferentes períodos y lugares.","saberes":["GEH.4.A.2","GEH.4.B.1"]},{"codigo":"4.1","competencia":"CE4","texto":"Identificar los elementos del entorno y conocer su funcionamiento como un sistema complejo por medio del análisis multicausal de sus relaciones naturales y humanas, presentes y pasadas, investigando sobre el grado de conservación y de equilibrio dinámico.","saberes":["GEH.4.A.4","GEH.4.C.1"]},{"codigo":"4.2","competencia":"CE4","texto":"Identificar comportamientos y acciones que contribuyan a la conservación y mejora del entorno natural, rural y urbano, a través del respeto a todos los seres vivos, mostrando comportamientos orientados al logro de un desarrollo sostenible de dichos entornos, y comprendiendo el acceso universal, justo y equitativo a los recursos que nos ofrece el planeta.","saberes":["GEH.4.A.2","GEH.4.B.4","GEH.4.B.5","GEH.4.C.3","GEH.4.C.4"]},{"codigo":"5.1","competencia":"CE5","texto":"Conocer, valorar y ejercitar responsabilidades, derechos y deberes y dar ejemplos en favor de su desarrollo y afirmación a través del conocimiento de nuestro ordenamiento jurídico y constitucional, la comprensión y puesta en valor de nuestra memoria democrática y de la contribución de los hombres y mujeres a la misma, y la defensa de nuestros valores constitucionales.","saberes":["GEH.4.B.8","GEH.4.C.6","GEH.4.C.9"]},{"codigo":"5.2","competencia":"CE5","texto":"Reconocer movimientos y causas que generen una conciencia solidaria, promuevan la cohesión social, y trabajen para la eliminación de la desigualdad, especialmente la motivada por cuestión de género, y el pleno desarrollo de la ciudadanía, mediante el trabajo en equipo, la mediación y resolución pacífica de conflictos.","saberes":["GEH.4.A.7","GEH.4.B.6","GEH.4.C.6","GEH.4.C.9","GEH.4.C.10"]},{"codigo":"6.1","competencia":"CE6","texto":"Investigar acerca de actitudes discriminatorias y reconocer la riqueza de la diversidad, a partir del análisis de la relación entre los aspectos geográficos, históricos, ecosociales y culturales que han conformado la sociedad globalizada y multicultural actual, y el conocimiento de la aportación de los movimientos en defensa de los derechos de las minorías y en favor de la inclusión y la igualdad real, especialmente de las mujeres y de otros colectivos discriminados.","saberes":["GEH.4.A.2","GEH.4.A.7","GEH.4.A.8","GEH.4.A.9","GEH.4.B.4","GEH.4.B.5"]},{"codigo":"6.2","competencia":"CE6","texto":"Contribuir al bienestar individual y colectivo a través del diseño y exposición de iniciativas orientadas a promover un compromiso activo con los valores comunes, la mejora del entorno y el servicio a la comunidad.","saberes":["GEH.4.C.5","GEH.4.C.7"]},{"codigo":"7.1","competencia":"CE7","texto":"Reconocer los rasgos que van conformando la identidad propia y de los demás, la riqueza de las identidades múltiples en relación con distintas escalas espaciales, a través de la iniciación en la investigación y el análisis guiado de sus fundamentos geográficos, históricos, artísticos, ideológicos y lingüísticos, y el reconocimiento de sus expresiones culturales.","saberes":["GEH.4.A.9","GEH.4.B.1"]},{"codigo":"7.2","competencia":"CE7","texto":"Conocer y contribuir a conservar el patrimonio material e inmaterial común, respetar los sentimientos de pertenencia adoptando compromisos en su entorno más cercano con principios y acciones orientadas a la cohesión y solidaridad territorial de la comunidad política, los valores del europeísmo y de la Declaración Universal de los Derechos Humanos.","saberes":["GEH.4.C.1","GEH.4.C.2","GEH.4.C.8","GEH.4.C.13"]},{"codigo":"8.1","competencia":"CE8","texto":"Adoptar un papel activo y comprometido con el entorno, de acuerdo a aptitudes, aspiraciones, intereses y valores propios, a partir de la iniciación guiada en el análisis crítico de la realidad económica, de la distribución y gestión del trabajo, y la adopción de hábitos responsables, saludables, sostenibles y respetuosos con la dignidad humana y la de otros seres vivos, así como de la reflexión ética ante los usos de la tecnología y la gestión del tiempo libre.","saberes":["GEH.4.A.7","GEH.4.B.5","GEH.4.C.5","GEH.4.C.10","GEH.4.C.12"]},{"codigo":"8.2","competencia":"CE8","texto":"Identificar las iniciativas de la sociedad civil, reflejadas en asociaciones y entidades sociales, adoptando actitudes de participación y transformación en el ámbito local y comunitario, especialmente en el ámbito de las relaciones intergeneracionales.","saberes":["GEH.4.C.6","GEH.4.C.7","GEH.4.C.11","GEH.4.C.12"]},{"codigo":"9.1","competencia":"CE9","texto":"Interpretar y explicar de forma argumentada la conexión de España con los grandes procesos históricos de la época contemporánea, valorando lo que han supuesto para su evolución y señalando las aportaciones de sus habitantes a lo largo de la historia, así como las aportaciones del Estado y sus instituciones a la cultura europea y mundial.","saberes":["GEH.4.B.6","GEH.4.B.7","GEH.4.B.8","GEH.4.C.14"]},{"codigo":"9.2","competencia":"CE9","texto":"Contribuir desde su entorno más cercano a la consecución de un mundo más seguro, justo, solidario y sostenible, a través del análisis guiado y el reconocimiento de los compromisos internacionales de nuestro país y de Andalucía, en favor de la paz, la seguridad, la cooperación, la sostenibilidad, los valores democráticos y los Objetivos de Desarrollo Sostenible.","saberes":["GEH.4.A.6","GEH.4.C.8","GEH.4.C.9","GEH.4.C.14"]}],"saberes":[{"codigo":"GEH.4.A.1","bloque":"A. Retos del mundo actual","texto":"Objetivos de Desarrollo Sostenible. Emergencia climática y sostenibilidad. Relación entre factores naturales y antrópicos en la Tierra. Globalización, movimientos migratorios e interculturalidad. Los avances tecnológicos y la conciencia ecosocial. Conflictos ideológicos y etnoculturales. Andalucía en el espacio global."},{"codigo":"GEH.4.A.2","bloque":"A. Retos del mundo actual","texto":"Sociedad de la información. Búsqueda, tratamiento de la información, uso de datos en entornos digitales y evaluación y contraste de la fiabilidad de las fuentes. El problema de la desinformación. Uso específico del léxico relativo a los ámbitos histórico, artístico y geográfico."},{"codigo":"GEH.4.A.3","bloque":"A. Retos del mundo actual","texto":"Cultura mediática. Técnicas y métodos de las Ciencias Sociales: análisis de textos, interpretación y elaboración de mapas, esquemas y síntesis, representación de gráficos e interpretación de imágenes a través de medios digitales accesibles. Tecnologías de la información geográfica."},{"codigo":"GEH.4.A.4","bloque":"A. Retos del mundo actual","texto":"Lo global y lo local. La investigación en Ciencias Sociales, el estudio multicausal y el análisis comparado del espacio natural, rural y urbano, su evolución y los retos de futuro. Análisis e interpretación de conceptos espaciales: localización, escala, conexión y proximidad espacial."},{"codigo":"GEH.4.A.5","bloque":"A. Retos del mundo actual","texto":"Estructuras económicas en el mundo actual, cambios en los sectores productivos y funcionamiento de los mercados. Dilemas e incertidumbres ante el crecimiento, la empleabilidad y la sustentabilidad. Sectores productivos en Andalucía."},{"codigo":"GEH.4.A.6","bloque":"A. Retos del mundo actual","texto":"Geopolítica y principales conflictos en el presente. Genocidios y crímenes contra la humanidad. Guerras, terrorismo y otras formas de violencia política. Alianzas e instituciones internacionales, mediación y misiones de paz. Injerencia humanitaria y Justicia Universal. El papel de las ONG."},{"codigo":"GEH.4.A.7","bloque":"A. Retos del mundo actual","texto":"Desigualdad e injusticia en el contexto local y global. Solidaridad, cohesión social y cooperación para el desarrollo."},{"codigo":"GEH.4.A.8","bloque":"A. Retos del mundo actual","texto":"Igualdad de género y formas de violencia contra las mujeres. Actitudes y comportamientos sexistas."},{"codigo":"GEH.4.A.9","bloque":"A. Retos del mundo actual","texto":"Diversidad social, etnocultural y de género. Migraciones, multiculturalidad y mestizaje en sociedades abiertas. Historia y reconocimiento del pueblo gitano y otras minorías étnicas de nuestro país. Nuevas formas de identificación cultural. Andalucía diversa y multicultural."},{"codigo":"GEH.4.B.1","bloque":"B. Sociedades y territorios","texto":"Métodos de investigación en el ámbito de la Geografía y de la Historia. Metodologías del pensamiento histórico y del pensamiento geográfico."},{"codigo":"GEH.4.B.2","bloque":"B. Sociedades y territorios","texto":"Tiempo histórico: construcción e interpretación de líneas del tiempo a través de la linealidad, cronología, simultaneidad y duración."},{"codigo":"GEH.4.B.3","bloque":"B. Sociedades y territorios","texto":"Conciencia histórica. Elaboración de juicios propios y argumentados ante problemas de actualidad contextualizados históricamente. Defensa y exposición crítica de los mismos a través de presentaciones y debates."},{"codigo":"GEH.4.B.4","bloque":"B. Sociedades y territorios","texto":"Interpretación del sistema capitalista desde sus orígenes hasta la actualidad. Colonialismo, imperialismo y nuevas subordinaciones económicas y culturales."},{"codigo":"GEH.4.B.5","bloque":"B. Sociedades y territorios","texto":"La transformación humana del territorio y la distribución desigual de los recursos y del trabajo. Evolución de los sistemas económicos, de los ciclos demográficos, de los modos de vida y de los modelos de organización social. La lucha por los derechos laborales y sociales: el estado del bienestar. Los servicios públicos en Andalucía."},{"codigo":"GEH.4.B.6","bloque":"B. Sociedades y territorios","texto":"Interpretación del territorio y del paisaje. Del éxodo rural a la concentración urbana. El reto demográfico en España y Andalucía. Evolución, distribución, dinámica y estructura de la población española y andaluza. El problema de la despoblación rural. Ordenación del territorio y transformación del espacio. La ciudad como espacio de convivencia. Importancia y cuidado del espacio público. La huella humana y la protección del medio natural. Proceso de urbanización y sistema de ciudades en Andalucía."},{"codigo":"GEH.4.B.7","bloque":"B. Sociedades y territorios","texto":"El proceso de construcción europea. Integración económica, monetaria y ciudadana. Las instituciones europeas. El futuro de Europa. Andalucía en Europa."},{"codigo":"GEH.4.B.8","bloque":"B. Sociedades y territorios","texto":"La transición española desde 1975 a 1978. La ley como contrato social. De la Constitución de 1812 a la Constitución de 1978. Los valores y principios constitucionales. Ordenamiento normativo autonómico, constitucional y supranacional como garante del desarrollo de derechos y libertades para el ejercicio de la ciudadanía. Blas Infante y el andalucismo. El estatuto de Andalucía. Las instituciones andaluzas. Ordenación territorial de Andalucía."},{"codigo":"GEH.4.C.1","bloque":"C. Compromiso cívico local y global","texto":"Dignidad humana y derechos universales. Declaración Universal de los Derechos Humanos."},{"codigo":"GEH.4.C.2","bloque":"C. Compromiso cívico local y global","texto":"Diversidad social y multiculturalidad. Integración y cohesión social."},{"codigo":"GEH.4.C.3","bloque":"C. Compromiso cívico local y global","texto":"Responsabilidad ecosocial. Compromiso y acción ante los Objetivos del Desarrollo Sostenible. La juventud andaluza como agente de cambio para el desarrollo sostenible."},{"codigo":"GEH.4.C.4","bloque":"C. Compromiso cívico local y global","texto":"Implicación en la defensa y protección del medioambiente. Acción y posición ante la emergencia climática. La protección medioambiental en Andalucía."},{"codigo":"GEH.4.C.5","bloque":"C. Compromiso cívico local y global","texto":"Ciudadanía ética digital. Nuevos comportamientos en la sociedad de la información. Lucha contra el ciberacoso."},{"codigo":"GEH.4.C.6","bloque":"C. Compromiso cívico local y global","texto":"Compromiso cívico y participación ciudadana. Mediación y gestión pacífica de conflictos y apoyo a las víctimas de cualquier forma de violencia y terrorismo."},{"codigo":"GEH.4.C.7","bloque":"C. Compromiso cívico local y global","texto":"Servicio a la comunidad. La corresponsabilidad en los cuidados. Las relaciones intergeneracionales. La responsabilidad colectiva e individual. El asociacionismo y el voluntariado. Entornos y redes sociales."},{"codigo":"GEH.4.C.8","bloque":"C. Compromiso cívico local y global","texto":"El patrimonio como bien común y como recurso cultural y económico. Necesidad de su conocimiento, valoración, conservación, puesta en valor, difusión y gestión de la riqueza patrimonial andaluza."},{"codigo":"GEH.4.C.9","bloque":"C. Compromiso cívico local y global","texto":"Cohesión social e integración. Medidas y acciones en favor de la igualdad y de la plena inclusión."},{"codigo":"GEH.4.C.10","bloque":"C. Compromiso cívico local y global","texto":"La igualdad real de mujeres y hombres. La discriminación por motivo de diversidad sexual y de género. La conquista de derechos en las sociedades democráticas contemporáneas. El camino hacia la igualdad en Andalucía."},{"codigo":"GEH.4.C.11","bloque":"C. Compromiso cívico local y global","texto":"Las emociones y el contexto cultural. La perspectiva histórica del componente emocional."},{"codigo":"GEH.4.C.12","bloque":"C. Compromiso cívico local y global","texto":"Empleo y trabajo en la sociedad de la información, aprendizaje permanente y a lo largo de toda la vida."},{"codigo":"GEH.4.C.13","bloque":"C. Compromiso cívico local y global","texto":"Los valores del europeísmo. Fórmulas de participación en programas educativos europeos."},{"codigo":"GEH.4.C.14","bloque":"C. Compromiso cívico local y global","texto":"Instituciones del Estado que garantizan la seguridad integral y la convivencia social. Los compromisos internacionales de nuestro país en favor de la paz, la seguridad y la cooperación internacional."}],"id":"eso4_geh"},"bach1_hmc":{"id":"bach1_hmc","meta":{"comunidad":"Andalucía","etapa":"Bachillerato","curso":"1.º Bachillerato","materia":"Historia del Mundo Contemporáneo","norma":"Orden de 30 de mayo de 2023","fuente":"BOJA núm. 104, de 2 de junio de 2023","status":"resumen_operativo"},"niveles":[{"valor":4,"nota":10,"nombre":"Excelente"},{"valor":3,"nota":7.5,"nombre":"Adecuado"},{"valor":2,"nota":5,"nombre":"En proceso"},{"valor":1,"nota":2.5,"nombre":"Inicial"}],"competencias":[{"codigo":"CE1","texto":"Reconocer los movimientos, acciones y transformaciones que han contribuido al afianzamiento de la libertad y de los sistemas democráticos en el mundo contemporáneo.","descriptores":[]},{"codigo":"CE2","texto":"Tomar conciencia del grado de violencia, barbarie y destrucción alcanzado por los conflictos contemporáneos y valorar la defensa de la paz y los derechos humanos.","descriptores":[]},{"codigo":"CE3","texto":"Identificar la desigualdad como uno de los principales problemas de las sociedades contemporáneas, analizando sus causas y consecuencias.","descriptores":[]},{"codigo":"CE4","texto":"Comprender la importancia de las identidades colectivas y analizar críticamente nacionalismos, movimientos sociales y procesos de construcción estatal.","descriptores":[]},{"codigo":"CE5","texto":"Identificar y reconocer los principales retos del siglo XXI mediante el análisis de procesos políticos, económicos, sociales y culturales.","descriptores":[]},{"codigo":"CE6","texto":"Valorar el significado histórico del progreso y sus repercusiones sociales, ambientales y territoriales.","descriptores":[]},{"codigo":"CE7","texto":"Interpretar la función de las ideas, ideologías y sistemas de pensamiento en las transformaciones del mundo contemporáneo.","descriptores":[]},{"codigo":"CE8","texto":"Describir y analizar los cambios y permanencias en la sociedad contemporánea incorporando la perspectiva de género y la diversidad social.","descriptores":[]}],"criterios":[{"codigo":"1.1","competencia":"CE1","texto":"Identificar y analizar los procedimientos mediante los que se han conquistado derechos, libertades y sistemas democráticos desde finales del siglo XVIII.","saberes":["HMCO.1.A.1"]},{"codigo":"1.2","competencia":"CE1","texto":"Comparar revoluciones y procesos democratizadores, valorando sus logros, límites y contradicciones.","saberes":["HMCO.1.A.2"]},{"codigo":"2.1","competencia":"CE2","texto":"Analizar las causas, desarrollo y consecuencias de guerras, genocidios y otras formas de violencia política contemporánea.","saberes":["HMCO.1.A.3"]},{"codigo":"2.2","competencia":"CE2","texto":"Valorar iniciativas de paz, justicia internacional, memoria y reparación de las víctimas.","saberes":["HMCO.1.A.4"]},{"codigo":"3.1","competencia":"CE3","texto":"Describir la evolución de los sistemas económicos y de las relaciones laborales y explicar la generación de desigualdades.","saberes":["HMCO.1.A.5"]},{"codigo":"3.2","competencia":"CE3","texto":"Analizar movimientos sociales, sindicales y políticos vinculados a la mejora de las condiciones de vida.","saberes":["HMCO.1.A.6"]},{"codigo":"4.1","competencia":"CE4","texto":"Analizar la formación de naciones y estados y los conflictos asociados a identidades, fronteras e imperios.","saberes":["HMCO.1.A.7"]},{"codigo":"4.2","competencia":"CE4","texto":"Contrastar procesos de descolonización y construcción de nuevos estados.","saberes":["HMCO.1.A.8"]},{"codigo":"5.1","competencia":"CE5","texto":"Investigar retos actuales como globalización, crisis democráticas, migraciones, desigualdad y emergencia climática.","saberes":["HMCO.1.B.1"]},{"codigo":"5.2","competencia":"CE5","texto":"Elaborar argumentos fundamentados utilizando fuentes diversas y datos contrastados.","saberes":["HMCO.1.B.2"]},{"codigo":"6.1","competencia":"CE6","texto":"Valorar críticamente la idea de progreso y sus efectos económicos, sociales y ambientales.","saberes":["HMCO.1.B.3"]},{"codigo":"6.2","competencia":"CE6","texto":"Relacionar innovación científica y tecnológica con cambios en la vida cotidiana y el trabajo.","saberes":["HMCO.1.B.4"]},{"codigo":"7.1","competencia":"CE7","texto":"Reconocer las principales ideologías contemporáneas y su influencia en movimientos, regímenes y conflictos.","saberes":["HMCO.1.B.5"]},{"codigo":"7.2","competencia":"CE7","texto":"Analizar discursos políticos y propagandísticos identificando manipulación y desinformación.","saberes":["HMCO.1.C.1"]},{"codigo":"8.1","competencia":"CE8","texto":"Analizar cambios demográficos, familiares, culturales y de género en las sociedades contemporáneas.","saberes":["HMCO.1.C.2"]},{"codigo":"8.2","competencia":"CE8","texto":"Visibilizar el papel de las mujeres y de grupos tradicionalmente excluidos en los procesos históricos.","saberes":["HMCO.1.C.3"]}],"saberes":[{"codigo":"HMCO.1.A.1","bloque":"Sociedades en el tiempo","texto":"Crisis del Antiguo Régimen y revoluciones liberales."},{"codigo":"HMCO.1.A.2","bloque":"Sociedades en el tiempo","texto":"Industrialización, capitalismo y movimiento obrero."},{"codigo":"HMCO.1.A.3","bloque":"Sociedades en el tiempo","texto":"Nacionalismos, imperialismos y expansión colonial."},{"codigo":"HMCO.1.A.4","bloque":"Sociedades en el tiempo","texto":"La Primera Guerra Mundial y la Revolución rusa."},{"codigo":"HMCO.1.A.5","bloque":"Sociedades en el tiempo","texto":"El periodo de entreguerras, fascismos y crisis de las democracias."},{"codigo":"HMCO.1.A.6","bloque":"Sociedades en el tiempo","texto":"La Segunda Guerra Mundial, genocidios y Holocausto."},{"codigo":"HMCO.1.A.7","bloque":"Sociedades en el tiempo","texto":"Guerra Fría, descolonización y nuevos estados."},{"codigo":"HMCO.1.A.8","bloque":"Sociedades en el tiempo","texto":"El mundo tras 1989 y los retos del siglo XXI."},{"codigo":"HMCO.1.B.1","bloque":"Retos del mundo actual","texto":"Globalización económica, tecnológica y cultural."},{"codigo":"HMCO.1.B.2","bloque":"Retos del mundo actual","texto":"Desigualdad, pobreza y desarrollo."},{"codigo":"HMCO.1.B.3","bloque":"Retos del mundo actual","texto":"Migraciones y sociedades multiculturales."},{"codigo":"HMCO.1.B.4","bloque":"Retos del mundo actual","texto":"Conflictos, seguridad y cultura de paz."},{"codigo":"HMCO.1.B.5","bloque":"Retos del mundo actual","texto":"Emergencia climática y sostenibilidad."},{"codigo":"HMCO.1.C.1","bloque":"Compromiso cívico","texto":"Derechos humanos y memoria democrática."},{"codigo":"HMCO.1.C.2","bloque":"Compromiso cívico","texto":"Ciudadanía global y participación."},{"codigo":"HMCO.1.C.3","bloque":"Compromiso cívico","texto":"Perspectiva de género."},{"codigo":"HMCO.1.C.4","bloque":"Compromiso cívico","texto":"Uso crítico de fuentes y medios digitales."},{"codigo":"HMCO.1.C.5","bloque":"Compromiso cívico","texto":"Compromiso con los Objetivos de Desarrollo Sostenible."}]},"bach1_pcul":{"id":"bach1_pcul","meta":{"comunidad":"Andalucía","etapa":"Bachillerato","curso":"1.º Bachillerato","materia":"Patrimonio Cultural y Artístico de Andalucía","norma":"Orden de 30 de mayo de 2023","fuente":"BOJA núm. 104, de 2 de junio de 2023, Anexos II y III","status":"oficial_completo","origen":"Anexo oficial incorporado en la aplicación"},"niveles":[{"valor":4,"nota":10,"nombre":"Excelente"},{"valor":3,"nota":7.5,"nombre":"Adecuado"},{"valor":2,"nota":5,"nombre":"En proceso"},{"valor":1,"nota":2.5,"nombre":"Inicial"}],"competencias":[{"codigo":"CE1","texto":"Identifica las características del patrimonio natural, urbano, industrial y artístico de la Comunidad Autónoma Andaluza, expresando, de forma oral y escrita y utilizando distintos tipos de soporte, los rasgos más significativos del patrimonio cultural de Andalucía, apreciando las peculiaridades de la cultura e historia andaluzas para la comprensión de la posición y relevancia de Andalucía en el mundo y las formas por las que se ha desarrollado la identidad, la economía y la sociedad andaluza.","descriptores":["CCL1","CCL2","CD1","CC1","CC2","CC3","CCEC1"]},{"codigo":"CE2","texto":"Identifica, describe, expresa y representa gráficamente, mediante diferentes soportes y utilizando la terminología específica, las principales manifestaciones culturales y artísticas de Andalucía y su evolución, comparando los elementos definitorios de los distintos estilos artísticos, valorando su diversidad cultural y artística y comprendiendo la influencia de las corrientes y modelos estéticos de cada época, con el objetivo de comprender y relacionarlos con los principales hitos culturales y artísticos de Andalucía.","descriptores":["CCL1","CCL2","CD1","CD2","CPSAA3.1","CC1","CC3","CCEC1","CCEC2","CCEC4.1"]},{"codigo":"CE3","texto":"Iniciar, planificar, desarrollar y difundir proyectos de investigación sobre las principales manifestaciones culturales y artísticas de Andalucía, por medio de la recopilación de información procedente de una pluralidad de fuentes, organizada, editada y presentada, haciendo uso de tecnologías digitales, describiendo de manera oral o escrita la información obtenida, participando en debates y exposiciones orales, respetando los turnos de palabra y opiniones ajenas, analizando y valorando los puntos de vista distintos al propio y expresando sus argumentos y conclusiones de manera clara y coherente, manifestando una actitud de respeto hacia el patrimonio cultural de Andalucía, dirigido a favorecer la participación activa, la experimentación y un aprendizaje funcional.","descriptores":["CCL1","CCL2","CCL3","CD1","CD2","CPSAA4","CC1","CC3","CCEC1","CCEC3.1"]},{"codigo":"CE4","texto":"Reconoce y comprende la normativa reguladora del Patrimonio Cultural y Artístico de Andalucía y analiza de forma crítica textos y noticias en distintos formatos que la aluden; expone oralmente y por escrito la importancia de su conservación, proponiendo soluciones para frenar su deterioro, y difunde, utilizando recursos digitales, tanto el patrimonio cultural y artístico de Andalucía como las acciones para su conservación y difusión.","descriptores":["CCL1","CCL2","CD1","CD2","CC1","CC3","CCEC1"]}],"criterios":[{"codigo":"1.1","competencia":"CE1","texto":"Distinguir los distintos tipos de patrimonio y de bienes patrimoniales de Andalucía.","saberes":["PCUL.1.A.1","PCUL.1.A.2"]},{"codigo":"1.2","competencia":"CE1","texto":"Analizar y exponer oralmente y por escrito, utilizando distintos tipos de soporte, algunos ejemplos más significativos de distintos tipos de patrimonio.","saberes":["PCUL.1.A.4","PCUL.1.A.6"]},{"codigo":"1.3","competencia":"CE1","texto":"Apreciar las peculiaridades y la diversidad de la cultura e historia andaluzas.","saberes":["PCUL.1.A.4","PCUL.1.A.5","PCUL.1.A.6","PCUL.1.A.7"]},{"codigo":"2.1","competencia":"CE2","texto":"Analizar los grandes conjuntos monumentales y las principales manifestaciones artísticas de Andalucía, identificando las características más destacadas que permiten su clasificación en un determinado estilo artístico.","saberes":["PCUL.1.B.1","PCUL.1.B.3"]},{"codigo":"2.2","competencia":"CE2","texto":"Valorar la diversidad de corrientes o modelos estéticos que pueden desarrollarse en una misma época.","saberes":["PCUL.1.B.4","PCUL.1.B.5"]},{"codigo":"2.3","competencia":"CE2","texto":"Situar en el espacio y en el tiempo las principales manifestaciones artísticas andaluzas y relacionarlas con el contexto en el que se desarrollan.","saberes":["PCUL.1.B.2","PCUL.1.B.5"]},{"codigo":"3.1","competencia":"CE3","texto":"Especificar los rasgos más característicos de las principales manifestaciones culturales y artísticas de Andalucía mediante el contraste con el entorno más inmediato con el fin de seleccionar problemas y objetos de interés o estudio.","saberes":["PCUL.1.C.1","PCUL.1.C.4"]},{"codigo":"3.2","competencia":"CE3","texto":"Participar en proyectos colaborativos para desarrollar producciones de calidad.","saberes":["PCUL.1.C.3","PCUL.1.C.4"]},{"codigo":"3.3","competencia":"CE3","texto":"Utilizar la terminología específica del arte y del estudio del patrimonio en las exposiciones orales y escritas.","saberes":["PCUL.1.A.3","PCUL.1.A.4"]},{"codigo":"3.4","competencia":"CE3","texto":"Advertir la importancia y necesidad de conservación de las fuentes documentales y bibliográficas para comprender el papel de la red de Archivos y Bibliotecas de Andalucía mediante el recurso a las nuevas tecnologías.","saberes":["PCUL.1.A.5","PCUL.1.C.5"]},{"codigo":"3.5","competencia":"CE3","texto":"Considerar el carácter multicultural de la riqueza patrimonial andaluza como base identitaria con el fin de ofrecer una visión integradora que justifique su importancia mediante el uso de recursos documentales y primando el trabajo de campo.","saberes":["PCUL.1.B.7","PCUL.1.B.8","PCUL.1.C.2"]},{"codigo":"3.6","competencia":"CE3","texto":"Debatir y analizar la proyección internacional de Andalucía.","saberes":["PCUL.1.C.5","PCUL.1.C.7"]},{"codigo":"4.1","competencia":"CE4","texto":"Conocer la legislación específica sobre patrimonio.","saberes":["PCUL.1.D.1","PCUL.1.D.2"]},{"codigo":"4.2","competencia":"CE4","texto":"Valorar la conservación y el fomento de los bienes patrimoniales y difundir su importancia.","saberes":["PCUL.1.D.2","PCUL.1.D.3"]},{"codigo":"4.3","competencia":"CE4","texto":"Analizar el grado de deterioro de alguno de los bienes, valorando críticamente las causas que han determinado su estado en la actualidad y aportando posibles soluciones.","saberes":["PCUL.1.D.4","PCUL.1.D.5"]},{"codigo":"4.4","competencia":"CE4","texto":"Realizar actividades de explicación y difusión del patrimonio.","saberes":["PCUL.1.C.5","PCUL.1.C.6"]},{"codigo":"4.5","competencia":"CE4","texto":"Designar e incentivar diferentes formas de implicación ciudadana en las tareas propias de la tutela del patrimonio.","saberes":["PCUL.1.B.6","PCUL.1.D.5"]}],"saberes":[{"codigo":"PCUL.1.A.1","bloque":"A. Concepto de patrimonio","texto":"Tipos de patrimonio: natural, urbano, cultural y artístico. Características."},{"codigo":"PCUL.1.A.2","bloque":"A. Concepto de patrimonio","texto":"Concepto de patrimonio cultural: Sitios del patrimonio mundial. Patrimonio cultural inmaterial."},{"codigo":"PCUL.1.A.3","bloque":"A. Concepto de patrimonio","texto":"Concepto y tipos de bienes culturales: inmuebles, muebles, especiales."},{"codigo":"PCUL.1.A.4","bloque":"A. Concepto de patrimonio","texto":"Patrimonio histórico-artístico y patrimonio inmueble: conjunto histórico, monumento, jardín histórico, sitio histórico, zona arqueológica y lugar de interés etnológico. Patrimonio arqueológico."},{"codigo":"PCUL.1.A.5","bloque":"A. Concepto de patrimonio","texto":"Patrimonio documental y bibliográfico."},{"codigo":"PCUL.1.A.6","bloque":"A. Concepto de patrimonio","texto":"Patrimonio etnográfico."},{"codigo":"PCUL.1.A.7","bloque":"A. Concepto de patrimonio","texto":"Riqueza y variedad patrimonial de Andalucía."},{"codigo":"PCUL.1.B.1","bloque":"B. Culturas históricas en Andalucía","texto":"Pueblos prehistóricos y prerromanos: colonizaciones fenicia y griega, mundo tartésico e ibérico, megalitismo."},{"codigo":"PCUL.1.B.2","bloque":"B. Culturas históricas en Andalucía","texto":"Aportaciones romana y paleocristiana: grandes conjuntos monumentales de influencia romana, urbanismo, influencias posteriores y testimonios paleocristianos."},{"codigo":"PCUL.1.B.3","bloque":"B. Culturas históricas en Andalucía","texto":"Al-Ándalus: grandes conjuntos monumentales de influencia musulmana e influencias posteriores."},{"codigo":"PCUL.1.B.4","bloque":"B. Culturas históricas en Andalucía","texto":"Andalucía cristiana: arquitectura militar y religiosa, la influencia mudéjar. Renacimiento y Barroco: palacios y catedrales. Neoclasicismo."},{"codigo":"PCUL.1.B.5","bloque":"B. Culturas históricas en Andalucía","texto":"El aporte cultural y patrimonial del judaísmo andaluz: juderías, sinagogas y cementerios. Judaica. La memoria en la tradición."},{"codigo":"PCUL.1.B.6","bloque":"B. Culturas históricas en Andalucía","texto":"Patrimonio y desarrollo urbano: modelos de desarrollo urbano, cambios urbanos y destrucción del patrimonio durante los siglos XIX y XX, la especulación como causa de destrucción del patrimonio."},{"codigo":"PCUL.1.B.7","bloque":"B. Culturas históricas en Andalucía","texto":"Manifestaciones populares. Evolución de las formas artesanales en Andalucía."},{"codigo":"PCUL.1.B.8","bloque":"B. Culturas históricas en Andalucía","texto":"Incorporación de las minorías (judía, morisca, gitana, etc.) a la creación del patrimonio cultural."},{"codigo":"PCUL.1.C.1","bloque":"C. Patrimonio cultural andaluz","texto":"Conjuntos arqueológicos de Andalucía, lugares históricos y monumentos."},{"codigo":"PCUL.1.C.2","bloque":"C. Patrimonio cultural andaluz","texto":"Patrimonio etnográfico: fiestas y costumbres andaluzas. La fiesta profana: ferias, exposiciones y encuentros. Tauromaquia. La fiesta religiosa: celebraciones patronales, romerías y Semana Santa. Fiestas y tradiciones no cristianas: judaísmo e islam."},{"codigo":"PCUL.1.C.3","bloque":"C. Patrimonio cultural andaluz","texto":"La cocina tradicional andaluza, sus raíces y evolución."},{"codigo":"PCUL.1.C.4","bloque":"C. Patrimonio cultural andaluz","texto":"El flamenco como patrimonio inmaterial: influencia de la cultura gitana y tipos de cante. La tradición musical de raíces andaluzas: música judía sefardí y andalusí."},{"codigo":"PCUL.1.C.5","bloque":"C. Patrimonio cultural andaluz","texto":"Patrimonio documental y bibliográfico: importancia y fuentes. Archivos y bibliotecas de Andalucía. Nuevas tecnologías, digitalización y patrimonio."},{"codigo":"PCUL.1.C.6","bloque":"C. Patrimonio cultural andaluz","texto":"Arqueología industrial: grandes núcleos industriales históricos de Andalucía."},{"codigo":"PCUL.1.C.7","bloque":"C. Patrimonio cultural andaluz","texto":"Patrimonio compartido: el sefardismo judeo-andaluz en el Mediterráneo: Magreb, Imperio otomano y Oriente Medio. La relación entre Andalucía y América."},{"codigo":"PCUL.1.D.1","bloque":"D. Protección y fomento del patrimonio","texto":"La legislación. Normas y principios generales. El sistema de protección cultural español. Competencias propias de Andalucía."},{"codigo":"PCUL.1.D.2","bloque":"D. Protección y fomento del patrimonio","texto":"Protección, catalogación e intervención. Restauración y conservación. Modelos y ejemplos."},{"codigo":"PCUL.1.D.3","bloque":"D. Protección y fomento del patrimonio","texto":"Difusión y revalorización. La interpretación. Museos y centros de interpretación en Andalucía."},{"codigo":"PCUL.1.D.4","bloque":"D. Protección y fomento del patrimonio","texto":"Gestión y administración de los bienes culturales andaluces. El mecenazgo y las fundaciones privadas."},{"codigo":"PCUL.1.D.5","bloque":"D. Protección y fomento del patrimonio","texto":"Participación ciudadana en la tutela patrimonial."}]},"bach2_hesp":{"id":"bach2_hesp","meta":{"comunidad":"Andalucía","etapa":"Bachillerato","curso":"2.º Bachillerato","materia":"Historia de España","norma":"Orden de 30 de mayo de 2023","fuente":"BOJA núm. 104, de 2 de junio de 2023","status":"resumen_operativo"},"niveles":[{"valor":4,"nota":10,"nombre":"Excelente"},{"valor":3,"nota":7.5,"nombre":"Adecuado"},{"valor":2,"nota":5,"nombre":"En proceso"},{"valor":1,"nota":2.5,"nombre":"Inicial"}],"competencias":[{"codigo":"CE1","texto":"Valorar los movimientos y acciones que han promovido las libertades en la Historia de España y reconocer el legado democrático de la Constitución de 1978.","descriptores":[]},{"codigo":"CE2","texto":"Reconocer y valorar la diversidad identitaria de España y los distintos sentimientos de pertenencia.","descriptores":[]},{"codigo":"CE3","texto":"Analizar la evolución económica y social de España, identificando desigualdades, transformaciones y modelos de desarrollo.","descriptores":[]},{"codigo":"CE4","texto":"Estudiar los cambios políticos y administrativos del Estado español y su relación con la ciudadanía y el territorio.","descriptores":[]},{"codigo":"CE5","texto":"Analizar el papel de las creencias, ideologías y culturas políticas en la Historia de España.","descriptores":[]},{"codigo":"CE6","texto":"Interpretar la posición de España en Europa y el mundo a través de sus relaciones internacionales y procesos de integración.","descriptores":[]},{"codigo":"CE7","texto":"Incorporar la perspectiva de género y reconocer la contribución de las mujeres a la Historia de España y Andalucía.","descriptores":[]},{"codigo":"CE8","texto":"Valorar el patrimonio, la memoria colectiva y las fuentes históricas como instrumentos de conocimiento y ciudadanía.","descriptores":[]}],"criterios":[{"codigo":"1.1","competencia":"CE1","texto":"Reconocer el legado democrático y comparar regímenes políticos desde la crisis del Antiguo Régimen hasta la actualidad.","saberes":["HESP.2.A.1"]},{"codigo":"1.2","competencia":"CE1","texto":"Identificar acciones y movimientos favorables a las libertades, los derechos y la democracia.","saberes":["HESP.2.A.2"]},{"codigo":"2.1","competencia":"CE2","texto":"Contrastar fuentes sobre el origen y evolución de las identidades nacionales y regionales de España.","saberes":["HESP.2.A.3"]},{"codigo":"2.2","competencia":"CE2","texto":"Analizar la configuración territorial del Estado y la diversidad histórica, cultural y lingüística.","saberes":["HESP.2.A.4"]},{"codigo":"3.1","competencia":"CE3","texto":"Analizar transformaciones económicas, demográficas y sociales y sus efectos sobre la desigualdad.","saberes":["HESP.2.A.5"]},{"codigo":"3.2","competencia":"CE3","texto":"Comparar modelos económicos y procesos de modernización, industrialización y construcción del Estado del bienestar.","saberes":["HESP.2.A.6"]},{"codigo":"4.1","competencia":"CE4","texto":"Explicar la evolución del Estado, las constituciones y las instituciones políticas españolas.","saberes":["HESP.2.A.7"]},{"codigo":"4.2","competencia":"CE4","texto":"Valorar la participación ciudadana y la administración territorial en distintos periodos históricos.","saberes":["HESP.2.A.8"]},{"codigo":"5.1","competencia":"CE5","texto":"Analizar culturas políticas, ideologías, religiones y movimientos sociales en la España contemporánea.","saberes":["HESP.2.B.1"]},{"codigo":"5.2","competencia":"CE5","texto":"Interpretar conflictos, consensos y procesos de memoria democrática mediante fuentes contrastadas.","saberes":["HESP.2.B.2"]},{"codigo":"6.1","competencia":"CE6","texto":"Relacionar la historia española con procesos europeos, mediterráneos, atlánticos y globales.","saberes":["HESP.2.B.3"]},{"codigo":"6.2","competencia":"CE6","texto":"Analizar la integración europea y la posición internacional de España en la actualidad.","saberes":["HESP.2.B.4"]},{"codigo":"7.1","competencia":"CE7","texto":"Incorporar la perspectiva de género al análisis de procesos políticos, económicos, sociales y culturales.","saberes":["HESP.2.B.5"]},{"codigo":"7.2","competencia":"CE7","texto":"Reconocer la trayectoria y aportaciones de mujeres relevantes de España y Andalucía.","saberes":["HESP.2.C.1"]},{"codigo":"8.1","competencia":"CE8","texto":"Realizar investigaciones utilizando fuentes primarias, archivos, patrimonio y memoria oral.","saberes":["HESP.2.C.2"]},{"codigo":"8.2","competencia":"CE8","texto":"Valorar la conservación y difusión del patrimonio histórico y la memoria colectiva.","saberes":["HESP.2.C.3"]}],"saberes":[{"codigo":"HESP.2.A.1","bloque":"Sociedades en el tiempo","texto":"Pervivencias del Antiguo Régimen y construcción del Estado liberal."},{"codigo":"HESP.2.A.2","bloque":"Sociedades en el tiempo","texto":"Revolución liberal, constituciones y conflictos dinásticos."},{"codigo":"HESP.2.A.3","bloque":"Sociedades en el tiempo","texto":"Transformaciones económicas y sociales del siglo XIX."},{"codigo":"HESP.2.A.4","bloque":"Sociedades en el tiempo","texto":"Restauración, crisis política y movimientos sociales."},{"codigo":"HESP.2.A.5","bloque":"Sociedades en el tiempo","texto":"Segunda República y Guerra Civil."},{"codigo":"HESP.2.A.6","bloque":"Sociedades en el tiempo","texto":"Dictadura franquista."},{"codigo":"HESP.2.A.7","bloque":"Sociedades en el tiempo","texto":"Transición, Constitución de 1978 y democracia."},{"codigo":"HESP.2.A.8","bloque":"Sociedades en el tiempo","texto":"Andalucía en la Historia de España."},{"codigo":"HESP.2.B.1","bloque":"Retos del mundo actual","texto":"Organización territorial del Estado."},{"codigo":"HESP.2.B.2","bloque":"Retos del mundo actual","texto":"España en la Unión Europea y el mundo."},{"codigo":"HESP.2.B.3","bloque":"Retos del mundo actual","texto":"Estado del bienestar, desigualdad y cohesión social."},{"codigo":"HESP.2.B.4","bloque":"Retos del mundo actual","texto":"Memoria democrática."},{"codigo":"HESP.2.B.5","bloque":"Retos del mundo actual","texto":"Retos demográficos, económicos y ambientales."},{"codigo":"HESP.2.C.1","bloque":"Compromiso cívico","texto":"Derechos, libertades y participación democrática."},{"codigo":"HESP.2.C.2","bloque":"Compromiso cívico","texto":"Diversidad identitaria y cultural."},{"codigo":"HESP.2.C.3","bloque":"Compromiso cívico","texto":"Perspectiva de género."},{"codigo":"HESP.2.C.4","bloque":"Compromiso cívico","texto":"Patrimonio histórico y archivos."},{"codigo":"HESP.2.C.5","bloque":"Compromiso cívico","texto":"Solidaridad, cooperación y ciudadanía."}]},"bach2_geo":{"id":"bach2_geo","meta":{"comunidad":"Andalucía","etapa":"Bachillerato","curso":"2.º Bachillerato","materia":"Geografía","norma":"Orden de 30 de mayo de 2023","fuente":"BOJA núm. 104, de 2 de junio de 2023","status":"resumen_operativo"},"niveles":[{"valor":4,"nota":10,"nombre":"Excelente"},{"valor":3,"nota":7.5,"nombre":"Adecuado"},{"valor":2,"nota":5,"nombre":"En proceso"},{"valor":1,"nota":2.5,"nombre":"Inicial"}],"competencias":[{"codigo":"CE1","texto":"Reconocer los retos ecosociales actuales y proponer soluciones sostenibles aplicadas al territorio español y andaluz.","descriptores":[]},{"codigo":"CE2","texto":"Comprender la complejidad del espacio geográfico mediante el análisis de sus elementos naturales, humanos y económicos.","descriptores":[]},{"codigo":"CE3","texto":"Analizar la diversidad natural de España y Andalucía y valorar su conservación.","descriptores":[]},{"codigo":"CE4","texto":"Aplicar métodos, técnicas y tecnologías de información geográfica para interpretar y representar el territorio.","descriptores":[]},{"codigo":"CE5","texto":"Analizar la población, el poblamiento y los sistemas urbanos españoles y andaluces.","descriptores":[]},{"codigo":"CE6","texto":"Explicar las actividades económicas, sus transformaciones y sus impactos territoriales y sociales.","descriptores":[]},{"codigo":"CE7","texto":"Comprender la organización territorial de España y su posición en Europa y el mundo, valorando desequilibrios y políticas de cohesión.","descriptores":[]}],"criterios":[{"codigo":"1.1","competencia":"CE1","texto":"Analizar problemas ecosociales y proponer respuestas sostenibles desde una perspectiva territorial.","saberes":["GEOG.2.A.1"]},{"codigo":"1.2","competencia":"CE1","texto":"Valorar los compromisos de España y Andalucía con los Objetivos de Desarrollo Sostenible.","saberes":["GEOG.2.A.2"]},{"codigo":"2.1","competencia":"CE2","texto":"Identificar y relacionar los principales elementos que configuran el espacio geográfico.","saberes":["GEOG.2.A.3"]},{"codigo":"2.2","competencia":"CE2","texto":"Comparar paisajes y regiones mediante indicadores, mapas y fuentes geográficas.","saberes":["GEOG.2.A.4"]},{"codigo":"3.1","competencia":"CE3","texto":"Describir relieve, clima, aguas, vegetación y suelos de España y Andalucía.","saberes":["GEOG.2.B.1"]},{"codigo":"3.2","competencia":"CE3","texto":"Analizar riesgos naturales, cambio climático y políticas de protección ambiental.","saberes":["GEOG.2.B.2"]},{"codigo":"4.1","competencia":"CE4","texto":"Utilizar mapas, gráficos, datos estadísticos y fuentes cartográficas con precisión.","saberes":["GEOG.2.B.3"]},{"codigo":"4.2","competencia":"CE4","texto":"Aplicar tecnologías de información geográfica para interpretar fenómenos naturales y humanos.","saberes":["GEOG.2.B.4"]},{"codigo":"5.1","competencia":"CE5","texto":"Analizar la estructura, dinámica y distribución de la población española y andaluza.","saberes":["GEOG.2.B.5"]},{"codigo":"5.2","competencia":"CE5","texto":"Explicar el sistema urbano, las funciones de las ciudades y los problemas del espacio urbano.","saberes":["GEOG.2.C.1"]},{"codigo":"6.1","competencia":"CE6","texto":"Analizar espacios agrarios, industriales y de servicios y sus procesos de transformación.","saberes":["GEOG.2.C.2"]},{"codigo":"6.2","competencia":"CE6","texto":"Valorar impactos de la globalización, el turismo, el transporte y la transición energética.","saberes":["GEOG.2.C.3"]},{"codigo":"7.1","competencia":"CE7","texto":"Explicar la organización territorial y administrativa de España y Andalucía.","saberes":["GEOG.2.C.4"]},{"codigo":"7.2","competencia":"CE7","texto":"Analizar desequilibrios territoriales, políticas de cohesión y la integración de España en la Unión Europea.","saberes":["GEOG.2.C.5"]}],"saberes":[{"codigo":"GEOG.2.A.1","bloque":"España, Europa y globalización","texto":"España en el mundo y en la Unión Europea."},{"codigo":"GEOG.2.A.2","bloque":"España, Europa y globalización","texto":"Organización territorial y administrativa."},{"codigo":"GEOG.2.A.3","bloque":"España, Europa y globalización","texto":"Desequilibrios territoriales y políticas de cohesión."},{"codigo":"GEOG.2.A.4","bloque":"España, Europa y globalización","texto":"Fuentes cartográficas, estadísticas y TIG."},{"codigo":"GEOG.2.B.1","bloque":"Sostenibilidad del medio físico","texto":"Relieve y unidades morfoestructurales."},{"codigo":"GEOG.2.B.2","bloque":"Sostenibilidad del medio físico","texto":"Climas y dominios bioclimáticos."},{"codigo":"GEOG.2.B.3","bloque":"Sostenibilidad del medio físico","texto":"Aguas, recursos hídricos y gestión."},{"codigo":"GEOG.2.B.4","bloque":"Sostenibilidad del medio físico","texto":"Vegetación, suelos y paisajes."},{"codigo":"GEOG.2.B.5","bloque":"Sostenibilidad del medio físico","texto":"Riesgos naturales, cambio climático y protección ambiental."},{"codigo":"GEOG.2.C.1","bloque":"Ordenación del territorio","texto":"Población, migraciones y reto demográfico."},{"codigo":"GEOG.2.C.2","bloque":"Ordenación del territorio","texto":"Sistema urbano y espacios metropolitanos."},{"codigo":"GEOG.2.C.3","bloque":"Ordenación del territorio","texto":"Espacios agrarios y mundo rural."},{"codigo":"GEOG.2.C.4","bloque":"Ordenación del territorio","texto":"Industria, energía y transición productiva."},{"codigo":"GEOG.2.C.5","bloque":"Ordenación del territorio","texto":"Servicios, turismo, transporte y comunicaciones."},{"codigo":"GEOG.2.C.6","bloque":"Ordenación del territorio","texto":"Geografía económica y social de Andalucía."}]},"bach2_hart":{"id":"bach2_hart","meta":{"comunidad":"Andalucía","etapa":"Bachillerato","curso":"2.º Bachillerato","materia":"Historia del Arte","norma":"Orden de 30 de mayo de 2023","fuente":"BOJA núm. 104, de 2 de junio de 2023","status":"resumen_operativo"},"niveles":[{"valor":4,"nota":10,"nombre":"Excelente"},{"valor":3,"nota":7.5,"nombre":"Adecuado"},{"valor":2,"nota":5,"nombre":"En proceso"},{"valor":1,"nota":2.5,"nombre":"Inicial"}],"competencias":[{"codigo":"CE1","texto":"Identificar diferentes concepciones del arte a lo largo de la historia y valorar su diversidad.","descriptores":[]},{"codigo":"CE2","texto":"Reconocer los lenguajes artísticos y aplicar métodos de análisis formal, técnico, iconográfico e histórico.","descriptores":[]},{"codigo":"CE3","texto":"Distinguir las funciones del arte y su relación con los contextos sociales, políticos, religiosos y económicos.","descriptores":[]},{"codigo":"CE4","texto":"Identificar y explicar obras, estilos y movimientos fundamentales de la Historia del Arte.","descriptores":[]},{"codigo":"CE5","texto":"Analizar relaciones de influencia, continuidad y ruptura entre obras, estilos y culturas.","descriptores":[]},{"codigo":"CE6","texto":"Conocer y valorar el patrimonio artístico y promover su conservación y difusión.","descriptores":[]},{"codigo":"CE7","texto":"Analizar los cambios estéticos y los cánones de belleza a lo largo de la historia.","descriptores":[]},{"codigo":"CE8","texto":"Integrar la perspectiva de género, visibilizando a las artistas y cuestionando estereotipos en la representación.","descriptores":[]}],"criterios":[{"codigo":"1.1","competencia":"CE1","texto":"Valorar la diversidad de respuestas históricas a la pregunta por la naturaleza y función del arte.","saberes":["HART.2.A.1"]},{"codigo":"1.2","competencia":"CE1","texto":"Comparar concepciones artísticas de diferentes épocas y culturas.","saberes":["HART.2.A.2"]},{"codigo":"2.1","competencia":"CE2","texto":"Elaborar comentarios de obras utilizando terminología y métodos de análisis adecuados.","saberes":["HART.2.A.3"]},{"codigo":"2.2","competencia":"CE2","texto":"Interpretar técnicas, formas, iconografía, significado y contexto de obras artísticas.","saberes":["HART.2.A.4"]},{"codigo":"3.1","competencia":"CE3","texto":"Explicar funciones rituales, religiosas, políticas, didácticas, sociales y económicas del arte.","saberes":["HART.2.A.5"]},{"codigo":"3.2","competencia":"CE3","texto":"Analizar relaciones entre creación artística, poder, mecenazgo, mercado y sociedad.","saberes":["HART.2.B.1"]},{"codigo":"4.1","competencia":"CE4","texto":"Identificar y contextualizar obras y estilos relevantes desde la Antigüedad hasta la actualidad.","saberes":["HART.2.B.2"]},{"codigo":"4.2","competencia":"CE4","texto":"Relacionar las obras con procesos históricos, culturales y territoriales, incluyendo Andalucía.","saberes":["HART.2.B.3"]},{"codigo":"5.1","competencia":"CE5","texto":"Analizar influencias, préstamos, pervivencias, rupturas y reinterpretaciones artísticas.","saberes":["HART.2.B.4"]},{"codigo":"5.2","competencia":"CE5","texto":"Realizar comparaciones fundamentadas entre obras de distintas épocas y lugares.","saberes":["HART.2.B.5"]},{"codigo":"6.1","competencia":"CE6","texto":"Valorar el patrimonio artístico y analizar amenazas, conservación, restauración y difusión.","saberes":["HART.2.B.6"]},{"codigo":"6.2","competencia":"CE6","texto":"Diseñar propuestas de conocimiento y protección del patrimonio, especialmente el andaluz.","saberes":["HART.2.B.7"]},{"codigo":"7.1","competencia":"CE7","texto":"Elaborar argumentos sobre belleza y gusto comparando cánones y modelos estéticos.","saberes":["HART.2.C.1"]},{"codigo":"7.2","competencia":"CE7","texto":"Reconocer la diversidad estética y superar prejuicios sobre culturas, épocas y lenguajes artísticos.","saberes":["HART.2.C.2"]},{"codigo":"8.1","competencia":"CE8","texto":"Conocer y contextualizar figuras femeninas relevantes de la Historia del Arte.","saberes":["HART.2.C.3"]},{"codigo":"8.2","competencia":"CE8","texto":"Analizar críticamente la representación de las mujeres y las identidades de género en el arte.","saberes":["HART.2.C.4"]}],"saberes":[{"codigo":"HART.2.A.1","bloque":"Aproximación a la Historia del Arte","texto":"Conceptos de arte, belleza y experiencia estética."},{"codigo":"HART.2.A.2","bloque":"Aproximación a la Historia del Arte","texto":"Lenguajes, técnicas y terminología artística."},{"codigo":"HART.2.A.3","bloque":"Aproximación a la Historia del Arte","texto":"Métodos de análisis de la obra de arte."},{"codigo":"HART.2.A.4","bloque":"Aproximación a la Historia del Arte","texto":"Iconografía, símbolos y comunicación visual."},{"codigo":"HART.2.A.5","bloque":"Aproximación a la Historia del Arte","texto":"Influencias, continuidades y rupturas."},{"codigo":"HART.2.B.1","bloque":"El arte y sus funciones","texto":"Arte prehistórico y primeras civilizaciones."},{"codigo":"HART.2.B.2","bloque":"El arte y sus funciones","texto":"Arte griego y romano."},{"codigo":"HART.2.B.3","bloque":"El arte y sus funciones","texto":"Arte paleocristiano, bizantino, islámico, románico y gótico."},{"codigo":"HART.2.B.4","bloque":"El arte y sus funciones","texto":"Renacimiento, Barroco y academicismo."},{"codigo":"HART.2.B.5","bloque":"El arte y sus funciones","texto":"Arte del siglo XIX."},{"codigo":"HART.2.B.6","bloque":"El arte y sus funciones","texto":"Vanguardias y arte contemporáneo."},{"codigo":"HART.2.B.7","bloque":"El arte y sus funciones","texto":"Arte, poder, religión, propaganda, mercado y consumo."},{"codigo":"HART.2.C.1","bloque":"Dimensión individual y social","texto":"Patrimonio, museos, conservación y restauración."},{"codigo":"HART.2.C.2","bloque":"Dimensión individual y social","texto":"Patrimonio artístico de Andalucía."},{"codigo":"HART.2.C.3","bloque":"Dimensión individual y social","texto":"Perspectiva de género y mujeres artistas."},{"codigo":"HART.2.C.4","bloque":"Dimensión individual y social","texto":"Arte, identidad y diversidad cultural."},{"codigo":"HART.2.C.5","bloque":"Dimensión individual y social","texto":"Nuevos medios, fotografía, cine y cultura visual."}]}};
+var KEY="cuaderno_departamento_geh_v4",OLD_KEY="cuaderno_geh_3eso_v3";
+
+var CURRICULUM_CACHE_KEY="curriculos_andalucia_geh_completos_c643f907_v1";
+var CURRICULUM_REF="c643f90715ddd179d770ece746d8e6980411ab3e";
+var CURRICULUM_REPO="d3stroya/virgulayapp-curriculos";
+var CURRICULUM_SOURCES={
+  eso1_geh:{comp:"andalucia/eso/geografia-e-historia/competencias-especificas.json",data:"andalucia/eso/geografia-e-historia/1/saberes-criterios.json"},
+  eso2_geh:{comp:"andalucia/eso/geografia-e-historia/competencias-especificas.json",data:"andalucia/eso/geografia-e-historia/2/saberes-criterios.json"},
+  eso3_geh:{comp:"andalucia/eso/geografia-e-historia/competencias-especificas.json",data:"andalucia/eso/geografia-e-historia/3/saberes-criterios.json"},
+  eso4_geh:{comp:"andalucia/eso/geografia-e-historia/competencias-especificas.json",data:"andalucia/eso/geografia-e-historia/4/saberes-criterios.json"},
+  bach1_hmc:{comp:"andalucia/bach/historia-del-mundo-contemporaneo/competencias-especificas.json",data:"andalucia/bach/historia-del-mundo-contemporaneo/1/saberes-criterios.json"},
+  bach2_hesp:{comp:"andalucia/bach/historia-de-espana/competencias-especificas.json",data:"andalucia/bach/historia-de-espana/2/saberes-criterios.json"},
+  bach2_geo:{comp:"andalucia/bach/geografia/competencias-especificas.json",data:"andalucia/bach/geografia/2/saberes-criterios.json"},
+  bach2_hart:{comp:"andalucia/bach/historia-del-arte/competencias-especificas.json",data:"andalucia/bach/historia-del-arte/2/saberes-criterios.json"}
+};
+function sourceUrls(path){
+  return[
+    "https://raw.githubusercontent.com/"+CURRICULUM_REPO+"/"+CURRICULUM_REF+"/"+path,
+    "https://cdn.jsdelivr.net/gh/"+CURRICULUM_REPO+"@"+CURRICULUM_REF+"/"+path
+  ]
+}
+async function fetchCurriculumJson(path){
+  var errors=[];
+  var urls=sourceUrls(path);
+  for(var i=0;i<urls.length;i++){
+    try{
+      var response=await fetch(urls[i],{cache:"force-cache"});
+      if(!response.ok)throw new Error("HTTP "+response.status);
+      return await response.json()
+    }catch(error){errors.push(error.message)}
+  }
+  throw new Error(path+": "+errors.join(" / "))
+}
+function splitDescriptorText(raw){
+  var clean=String(raw||"").trim();
+  var number=clean.match(/^(\d+)\.\s*/);
+  if(number)clean=clean.slice(number[0].length);
+  var descriptorPattern=/\s((?:(?:CCL|CP|STEM|CD|CPSAA|CC|CE|CCEC)[A-Z0-9.]*,?\s*)+)\.?$/;
+  var match=clean.match(descriptorPattern),descriptors=[];
+  if(match){
+    descriptors=(match[1].match(/(?:CCL|CP|STEM|CD|CPSAA|CC|CE|CCEC)[A-Z0-9.]*/g)||[]);
+    clean=clean.slice(0,match.index).trim()
+  }
+  return{texto:clean,descriptores:descriptors}
+}
+function parseCompetences(items){
+  return(items||[]).map(function(raw,index){
+    var parsed=splitDescriptorText(raw);
+    var match=String(raw).match(/^(\d+)\./);
+    return{codigo:"CE"+(match?match[1]:index+1),texto:parsed.texto,descriptores:parsed.descriptores}
+  })
+}
+function parseCriteria(items){
+  return(items||[]).map(function(raw,index){
+    var match=String(raw).match(/^(\d+\.\d+)\.\s*(.*)$/s);
+    var code=match?match[1]:String(index+1);
+    return{codigo:code,competencia:"CE"+code.split(".")[0],texto:match?match[2].trim():String(raw).trim(),saberes:[]}
+  })
+}
+function parseKnowledge(items){
+  var block="",result=[];
+  (items||[]).forEach(function(raw){
+    var text=String(raw||"").trim();
+    if(!text)return;
+    var pieces=text.replace(/\s+(?=[A-ZÁÉÍÓÚÑ]{2,}(?:\.\d+|\.[A-Z]){3,}\.\s)/g,"\u0000").split("\u0000");
+    pieces.forEach(function(piece){
+      piece=piece.trim();
+      if(!piece)return;
+      var match=piece.match(/^([A-ZÁÉÍÓÚÑ]+(?:\.\d+|\.[A-Z])+)\.\s*(.*)$/s);
+      if(match){
+        result.push({codigo:match[1],bloque:block||"Saberes básicos",texto:match[2].trim()})
+      }else{
+        block=piece.replace(/^[A-D]\.\s*/,"").trim()
+      }
+    })
+  });
+  return result
+}
+function applyOfficialModule(id,compJson,dataJson){
+  var current=CURRICULA[id];
+  if(!current)return;
+  current.competencias=parseCompetences(compJson.competenciasEspecificas);
+  current.criterios=parseCriteria(dataJson.criteriosEvaluacion);
+  current.saberes=parseKnowledge(dataJson.saberes);
+  current.meta.status="oficial_completo";
+  current.meta.origen="Textos completos cargados desde una copia curricular fijada a la revisión "+CURRICULUM_REF.slice(0,8);
+  current.meta.revision=CURRICULUM_REF
+}
+function updateSyncStatus(kind,text){
+  var el=document.getElementById("curriculumSync");
+  if(!el)return;
+  el.className="sync "+kind;
+  el.textContent=text
+}
+function loadCachedCurricula(){
+  try{
+    var cached=JSON.parse(localStorage.getItem(CURRICULUM_CACHE_KEY)||"null");
+    if(!cached||cached.ref!==CURRICULUM_REF||!cached.modules)return false;
+    Object.keys(cached.modules).forEach(function(id){
+      if(CURRICULA[id])CURRICULA[id]=cached.modules[id]
+    });
+    return true
+  }catch(error){return false}
+}
+async function hydrateCurricula(){
+  if(loadCachedCurricula()){
+    updateSyncStatus("ok","Currículos completos");
+    return true
+  }
+  updateSyncStatus("loading","Cargando currículos…");
+  var ids=Object.keys(CURRICULUM_SOURCES),loaded={bach1_pcul:CURRICULA.bach1_pcul};
+  try{
+    await Promise.all(ids.map(async function(id){
+      var source=CURRICULUM_SOURCES[id];
+      var values=await Promise.all([fetchCurriculumJson(source.comp),fetchCurriculumJson(source.data)]);
+      applyOfficialModule(id,values[0],values[1]);
+      loaded[id]=CURRICULA[id]
+    }));
+    localStorage.setItem(CURRICULUM_CACHE_KEY,JSON.stringify({ref:CURRICULUM_REF,modules:loaded,savedAt:new Date().toISOString()}));
+    updateSyncStatus("ok","Currículos completos");
+    return true
+  }catch(error){
+    console.error("No se pudieron cargar todos los currículos completos:",error);
+    updateSyncStatus("error","Error curricular");
+    return false
+  }
+}
+
+var app=document.getElementById("app"),groupSelect=document.getElementById("groupSelect"),termSelect=document.getElementById("termSelect"),modalBg=document.getElementById("modalBg"),modalBody=document.getElementById("modalBody"),toastEl=document.getElementById("toast");
+var view="cuaderno",csvRows=null,state=defaultState(),activeGroup=state.ui.groupId,activeTerm=state.ui.term||"all",storageMode="initializing",storageWriteQueue=Promise.resolve(),databasePromise=null;
+var deferredInstallPrompt=null,pwaRegistration=null,pwaWaitingWorker=null;
+function uid(p){return p+"_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,8)}
+function esc(v){return String(v==null?"":v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\"/g,"&quot;").replace(/'/g,"&#39;")}
+function norm(v){return String(v||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/\s+/g," ").trim()}
+function clone(v){return JSON.parse(JSON.stringify(v))}
+function defaultState(){return{version:6,settings:{center:"",teacher:"",schoolYear:"2026/2027"},groups:[{id:"g_default",name:"3.º ESO A",curriculumId:"eso3_geh",schoolYear:"2026/2027"}],students:[],activities:[],evidence:[],attendance:[],situations:[],notes:[],ui:{groupId:"g_default",term:"all"}}}
+function normalizeState(x){var d=defaultState(),source=x||{},gs=Array.isArray(source.groups)&&source.groups.length?source.groups:d.groups;gs.forEach(function(g){if(!g.curriculumId)g.curriculumId="eso3_geh"});return{version:6,settings:Object.assign({},d.settings,source.settings||{}),groups:gs,students:Array.isArray(source.students)?source.students:[],activities:Array.isArray(source.activities)?source.activities:[],evidence:Array.isArray(source.evidence)?source.evidence:[],attendance:Array.isArray(source.attendance)?source.attendance:[],situations:Array.isArray(source.situations)?source.situations:[],notes:Array.isArray(source.notes)?source.notes:[],ui:Object.assign({},d.ui,source.ui||{})}}
+
+var DB_NAME="cuaderno_departamento_geh";
+var DB_VERSION=1;
+var DB_COLLECTIONS=["groups","students","activities","evidence","attendance","situations","notes"];
+var DB_ALL_STORES=DB_COLLECTIONS.concat(["settings","ui","meta","backups"]);
+
+function updateStorageStatus(kind,text){
+  var el=document.getElementById("storageStatus");
+  if(!el)return;
+  el.className="sync storage-badge "+kind;
+  el.textContent=text
+}
+function requestResult(request){
+  return new Promise(function(resolve,reject){
+    request.onsuccess=function(){resolve(request.result)};
+    request.onerror=function(){reject(request.error||new Error("Error de IndexedDB"))}
+  })
+}
+function transactionFinished(transaction){
+  return new Promise(function(resolve,reject){
+    transaction.oncomplete=function(){resolve()};
+    transaction.onerror=function(){reject(transaction.error||new Error("Error de transacción"))};
+    transaction.onabort=function(){reject(transaction.error||new Error("Transacción cancelada"))}
+  })
+}
+function createStoreIfNeeded(db,transaction,name,indexes){
+  var store;
+  if(!db.objectStoreNames.contains(name)){
+    store=db.createObjectStore(name,{keyPath:"id"})
+  }else{
+    store=transaction.objectStore(name)
+  }
+  (indexes||[]).forEach(function(index){
+    if(!store.indexNames.contains(index.name)){
+      store.createIndex(index.name,index.keyPath,{unique:!!index.unique})
+    }
+  })
+}
+function openAppDatabase(){
+  if(!("indexedDB" in window))return Promise.reject(new Error("IndexedDB no está disponible"));
+  if(databasePromise)return databasePromise;
+  databasePromise=new Promise(function(resolve,reject){
+    var request=indexedDB.open(DB_NAME,DB_VERSION);
+    request.onupgradeneeded=function(){
+      var db=request.result,tx=request.transaction;
+      createStoreIfNeeded(db,tx,"groups",[
+        {name:"curriculumId",keyPath:"curriculumId"}
+      ]);
+      createStoreIfNeeded(db,tx,"students",[
+        {name:"groupId",keyPath:"groupId"},
+        {name:"groupName",keyPath:["groupId","name"]}
+      ]);
+      createStoreIfNeeded(db,tx,"activities",[
+        {name:"groupId",keyPath:"groupId"},
+        {name:"term",keyPath:"term"},
+        {name:"groupTerm",keyPath:["groupId","term"]}
+      ]);
+      createStoreIfNeeded(db,tx,"evidence",[
+        {name:"studentId",keyPath:"studentId"},
+        {name:"activityId",keyPath:"activityId"},
+        {name:"criterionCode",keyPath:"criterionCode"},
+        {name:"activityStudent",keyPath:["activityId","studentId"]}
+      ]);
+      createStoreIfNeeded(db,tx,"attendance",[
+        {name:"groupId",keyPath:"groupId"},
+        {name:"studentId",keyPath:"studentId"},
+        {name:"date",keyPath:"date"},
+        {name:"groupDate",keyPath:["groupId","date"]}
+      ]);
+      createStoreIfNeeded(db,tx,"situations",[
+        {name:"groupId",keyPath:"groupId"},
+        {name:"term",keyPath:"term"}
+      ]);
+      createStoreIfNeeded(db,tx,"notes",[
+        {name:"groupId",keyPath:"groupId"},
+        {name:"studentId",keyPath:"studentId"}
+      ]);
+      createStoreIfNeeded(db,tx,"settings");
+      createStoreIfNeeded(db,tx,"ui");
+      createStoreIfNeeded(db,tx,"meta");
+      createStoreIfNeeded(db,tx,"backups",[
+        {name:"createdAt",keyPath:"createdAt"},
+        {name:"sourceKey",keyPath:"sourceKey"}
+      ])
+    };
+    request.onsuccess=function(){
+      var db=request.result;
+      db.onversionchange=function(){db.close();databasePromise=null};
+      resolve(db)
+    };
+    request.onerror=function(){databasePromise=null;reject(request.error||new Error("No se pudo abrir IndexedDB"))};
+    request.onblocked=function(){updateStorageStatus("fallback","Cierra otras pestañas")}
+  });
+  return databasePromise
+}
+async function readStateFromIndexedDB(){
+  var db=await openAppDatabase();
+  var stores=DB_COLLECTIONS.concat(["settings","ui","meta"]);
+  var tx=db.transaction(stores,"readonly");
+  var done=transactionFinished(tx);
+  var reads=DB_COLLECTIONS.map(function(name){
+    return requestResult(tx.objectStore(name).getAll())
+  });
+  reads.push(requestResult(tx.objectStore("settings").get("main")));
+  reads.push(requestResult(tx.objectStore("ui").get("main")));
+  reads.push(requestResult(tx.objectStore("meta").get("state")));
+  var values=await Promise.all(reads);
+  await done;
+  var meta=values[values.length-1];
+  if(!meta||meta.initialized!==true)return null;
+  return normalizeState({
+    groups:values[0],
+    students:values[1],
+    activities:values[2],
+    evidence:values[3],
+    attendance:values[4],
+    situations:values[5],
+    notes:values[6],
+    settings:values[7]||{},
+    ui:values[8]||{}
+  })
+}
+async function writeStateToIndexedDB(snapshot){
+  var db=await openAppDatabase();
+  var stores=DB_COLLECTIONS.concat(["settings","ui","meta"]);
+  var tx=db.transaction(stores,"readwrite");
+  var done=transactionFinished(tx);
+  DB_COLLECTIONS.forEach(function(name){
+    var store=tx.objectStore(name);
+    store.clear();
+    (snapshot[name]||[]).forEach(function(record){store.put(record)})
+  });
+  tx.objectStore("settings").clear();
+  tx.objectStore("settings").put(Object.assign({id:"main"},snapshot.settings||{}));
+  tx.objectStore("ui").clear();
+  tx.objectStore("ui").put(Object.assign({id:"main"},snapshot.ui||{}));
+  tx.objectStore("meta").put({
+    id:"state",
+    initialized:true,
+    schemaVersion:DB_VERSION,
+    appVersion:6,
+    updatedAt:new Date().toISOString()
+  });
+  await done
+}
+async function saveLegacyBackup(sourceKey,raw){
+  var db=await openAppDatabase();
+  var tx=db.transaction(["backups"],"readwrite");
+  var done=transactionFinished(tx);
+  tx.objectStore("backups").put({
+    id:"migration_"+Date.now(),
+    sourceKey:sourceKey,
+    createdAt:new Date().toISOString(),
+    payload:raw
+  });
+  await done
+}
+function readLegacyState(){
+  try{
+    var raw=localStorage.getItem(KEY);
+    if(raw)return{key:KEY,raw:raw,state:normalizeState(JSON.parse(raw))};
+    var old=localStorage.getItem(OLD_KEY);
+    if(old)return{key:OLD_KEY,raw:old,state:normalizeState(JSON.parse(old))}
+  }catch(error){console.warn("No se pudo leer la copia antigua",error)}
+  return null
+}
+function stateCounts(value){
+  return DB_COLLECTIONS.reduce(function(result,name){
+    result[name]=(value[name]||[]).length;
+    return result
+  },{})
+}
+function sameCounts(a,b){
+  var ac=stateCounts(a),bc=stateCounts(b);
+  return DB_COLLECTIONS.every(function(name){return ac[name]===bc[name]})
+}
+async function initializeStorage(){
+  updateStorageStatus("loading","Abriendo datos…");
+  try{
+    var stored=await readStateFromIndexedDB();
+    if(stored){
+      storageMode="indexeddb";
+      updateStorageStatus("ok","IndexedDB");
+      return stored
+    }
+    var legacy=readLegacyState();
+    var initial=legacy?legacy.state:defaultState();
+    if(legacy)await saveLegacyBackup(legacy.key,legacy.raw);
+    await writeStateToIndexedDB(initial);
+    var verified=await readStateFromIndexedDB();
+    if(!verified||!sameCounts(initial,verified)){
+      throw new Error("La comprobación de la migración no coincide")
+    }
+    if(legacy){
+      localStorage.removeItem(KEY);
+      localStorage.removeItem(OLD_KEY);
+      updateStorageStatus("ok","Datos migrados")
+    }else{
+      updateStorageStatus("ok","IndexedDB")
+    }
+    storageMode="indexeddb";
+    return verified
+  }catch(error){
+    console.error("IndexedDB no disponible; se activa el modo compatible.",error);
+    storageMode="localstorage";
+    var fallback=readLegacyState();
+    updateStorageStatus("fallback","Modo compatible");
+    return fallback?fallback.state:defaultState()
+  }
+}
+function persistSnapshot(snapshot){
+  if(storageMode==="indexeddb")return writeStateToIndexedDB(snapshot);
+  localStorage.setItem(KEY,JSON.stringify(snapshot));
+  return Promise.resolve()
+}
+function save(msg){
+  var snapshot=clone(state);
+  storageWriteQueue=storageWriteQueue.catch(function(){return null}).then(function(){
+    return persistSnapshot(snapshot)
+  }).then(function(){
+    if(storageMode==="indexeddb")updateStorageStatus("ok","IndexedDB")
+  }).catch(function(error){
+    console.error("Error guardando datos",error);
+    try{
+      storageMode="localstorage";
+      localStorage.setItem(KEY,JSON.stringify(snapshot));
+      updateStorageStatus("fallback","Modo compatible");
+      toast("No se pudo guardar en IndexedDB; se usó almacenamiento compatible.")
+    }catch(fallbackError){
+      updateStorageStatus("error","Error al guardar");
+      toast("No se pudieron guardar los cambios.")
+    }
+  });
+  if(msg)toast(msg);
+  return storageWriteQueue
+}
+async function countMigrationBackups(){
+  if(storageMode!=="indexeddb")return 0;
+  var db=await openAppDatabase();
+  var tx=db.transaction(["backups"],"readonly");
+  var done=transactionFinished(tx);
+  var count=await requestResult(tx.objectStore("backups").count());
+  await done;
+  return count
+}
+async function clearMigrationBackups(){
+  var db=await openAppDatabase();
+  var tx=db.transaction(["backups"],"readwrite");
+  var done=transactionFinished(tx);
+  tx.objectStore("backups").clear();
+  await done
+}
+async function updateStoragePanel(){
+  var panel=document.getElementById("storageDetails");
+  if(!panel)return;
+  var usage="No disponible",quota="No disponible",persistent="No";
+  try{
+    if(navigator.storage&&navigator.storage.estimate){
+      var estimate=await navigator.storage.estimate();
+      usage=formatBytes(estimate.usage||0);
+      quota=formatBytes(estimate.quota||0)
+    }
+    if(navigator.storage&&navigator.storage.persisted){
+      persistent=(await navigator.storage.persisted())?"Sí":"No"
+    }
+  }catch(error){}
+  var backups=0;
+  try{backups=await countMigrationBackups()}catch(error){}
+  panel.innerHTML=
+    '<div class="storage-metric"><strong>'+esc(storageMode==="indexeddb"?"IndexedDB":"Modo compatible")+'</strong><span>Motor activo</span></div>'+
+    '<div class="storage-metric"><strong>'+esc(usage)+'</strong><span>Espacio utilizado por el origen</span></div>'+
+    '<div class="storage-metric"><strong>'+esc(quota)+'</strong><span>Cuota estimada</span></div>'+
+    '<div class="storage-metric"><strong>'+esc(persistent)+'</strong><span>Almacenamiento persistente</span></div>'+
+    '<div class="storage-metric"><strong>'+backups+'</strong><span>Copias de migración</span></div>'
+}
+function formatBytes(bytes){
+  if(!bytes)return"0 B";
+  var units=["B","KB","MB","GB"],index=Math.min(Math.floor(Math.log(bytes)/Math.log(1024)),units.length-1);
+  return(bytes/Math.pow(1024,index)).toFixed(index?1:0)+" "+units[index]
+}
+async function requestPersistentStorage(){
+  if(!navigator.storage||!navigator.storage.persist){
+    toast("Este navegador no permite solicitar almacenamiento persistente.");
+    return
+  }
+  try{
+    var granted=await navigator.storage.persist();
+    toast(granted?"Almacenamiento persistente concedido.":"El navegador no lo ha concedido.");
+    updateStoragePanel()
+  }catch(error){toast("No se pudo solicitar almacenamiento persistente.")}
+}
+function isNativeApp(){return!!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform())}
+function nativePlugin(name){return window.Capacitor&&window.Capacitor.Plugins?window.Capacitor.Plugins[name]:null}
+function isStandaloneApp(){return isNativeApp()||(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)||window.navigator.standalone===true}
+function isAppleMobile(){return /iphone|ipad|ipod/i.test(navigator.userAgent)}
+function installStateText(){
+  if(isStandaloneApp())return'Instalada en este dispositivo';
+  if(deferredInstallPrompt)return'Lista para instalar';
+  if(isAppleMobile())return'Instalable desde Safari';
+  return'Instalable desde el menú del navegador'
+}
+function refreshInstallPanel(){
+  var label=document.getElementById('installStateLabel'),button=document.getElementById('installAppButton'),help=document.getElementById('installHelp');
+  if(label)label.textContent=installStateText();
+  if(button){button.textContent=isStandaloneApp()?'App instalada':'Instalar app';button.disabled=isStandaloneApp()}
+  if(help&&!isAppleMobile())help.classList.remove('show')
+}
+async function installPwa(){
+  if(isStandaloneApp()){toast('La aplicación ya está instalada en este dispositivo.');return}
+  if(deferredInstallPrompt){
+    deferredInstallPrompt.prompt();
+    try{await deferredInstallPrompt.userChoice}catch(e){}
+    deferredInstallPrompt=null;refreshInstallPanel();return
+  }
+  var help=document.getElementById('installHelp');
+  if(help){help.classList.add('show');help.scrollIntoView({behavior:'smooth',block:'nearest'})}
+  if(isAppleMobile())toast('En Safari: Compartir → Añadir a pantalla de inicio.');
+  else toast('Abre el menú del navegador y selecciona Instalar app o Añadir a pantalla de inicio.')
+}
+function showPwaUpdate(worker){
+  pwaWaitingWorker=worker;
+  var el=document.getElementById('pwaUpdate');if(el)el.classList.add('show')
+}
+async function registerPwa(){
+  if(isNativeApp()||!('serviceWorker' in navigator))return;
+  try{
+    pwaRegistration=await navigator.serviceWorker.register('./service-worker.js',{scope:'./'});
+    if(pwaRegistration.waiting)showPwaUpdate(pwaRegistration.waiting);
+    pwaRegistration.addEventListener('updatefound',function(){
+      var worker=pwaRegistration.installing;if(!worker)return;
+      worker.addEventListener('statechange',function(){
+        if(worker.state==='installed'&&navigator.serviceWorker.controller)showPwaUpdate(worker)
+      })
+    });
+    navigator.serviceWorker.addEventListener('controllerchange',function(){
+      if(sessionStorage.getItem('pwa_reloading'))return;
+      sessionStorage.setItem('pwa_reloading','1');location.reload()
+    });
+    setTimeout(function(){pwaRegistration.update().catch(function(){})},2500)
+  }catch(error){console.warn('No se pudo registrar el service worker',error)}
+}
+window.addEventListener('beforeinstallprompt',function(event){event.preventDefault();deferredInstallPrompt=event;refreshInstallPanel()});
+window.addEventListener('appinstalled',function(){deferredInstallPrompt=null;refreshInstallPanel();toast('Aplicación instalada.')});
+function installPanelHtml(){
+  if(isNativeApp()){
+    return '<section class="card stack" style="margin-top:12px"><div class="install-card"><img class="install-app-icon" src="./icons/icon-192.png" alt="Icono de Cuaderno GH"><div class="install-copy"><h3>Aplicación Android</h3><p>Versión instalada dentro del dispositivo, con datos privados de esta aplicación.</p><span class="install-state">APK · fase 1</span></div></div></section>'
+  }
+  return '<section class="card stack" style="margin-top:12px"><div class="install-card"><img class="install-app-icon" src="./icons/icon-192.png" alt="Icono de Cuaderno GH"><div class="install-copy"><h3>Instalar Cuaderno GH</h3><p>Se abre como una aplicación independiente y puede funcionar sin conexión después de la primera carga.</p><span id="installStateLabel" class="install-state">'+esc(installStateText())+'</span></div><div class="actions"><button id="installAppButton" class="primary" type="button"'+(isStandaloneApp()?' disabled':'')+'>'+(isStandaloneApp()?'App instalada':'Instalar app')+'</button></div></div><div id="installHelp" class="install-help"><b>Android:</b> usa Chrome y pulsa Instalar app; también puedes abrir el menú ⋮ y elegir Instalar aplicación o Añadir a pantalla de inicio.<br><b>iPad:</b> abre la página en Safari, pulsa Compartir, elige Añadir a pantalla de inicio, activa Abrir como app web y pulsa Añadir.</div></section>'
+}
+
+function toast(msg){toastEl.textContent=msg;toastEl.className="toast show";clearTimeout(toastEl.t);toastEl.t=setTimeout(function(){toastEl.className="toast"},2600)}
+function group(id){return state.groups.find(function(g){return g.id===id})}
+function cur(){var g=group(activeGroup);return CURRICULA[(g&&g.curriculumId)||"eso3_geh"]||CURRICULA.eso3_geh}
+function students(){return state.students.filter(function(s){return s.groupId===activeGroup&&s.active!==false}).sort(function(a,b){return a.name.localeCompare(b.name,"es")})}
+function activities(){return state.activities.filter(function(a){return a.groupId===activeGroup&&(activeTerm==="all"||a.term===activeTerm)}).sort(function(a,b){return(a.date||"").localeCompare(b.date||"")})}
+function situations(){return state.situations.filter(function(s){return s.groupId===activeGroup&&(activeTerm==="all"||s.term===activeTerm)})}
+function student(id){return state.students.find(function(s){return s.id===id})}
+function activity(id){return state.activities.find(function(a){return a.id===id})}
+function criterion(code){return cur().criterios.find(function(c){return c.codigo===code})}
+function competence(code){return cur().competencias.find(function(c){return c.codigo===code})}
+function evidence(a,s,c){return state.evidence.find(function(e){return e.activityId===a&&e.studentId===s&&e.criterionCode===c})}
+function dateES(v){if(!v)return"Sin fecha";try{return new Intl.DateTimeFormat("es-ES",{dateStyle:"medium"}).format(new Date(v+"T12:00:00"))}catch(e){return v}}
+function defaults(){return{"4":"Domina el criterio con autonomía, precisión y profundidad.","3":"Alcanza el criterio adecuadamente, con pequeñas imprecisiones.","2":"Progresa, pero necesita apoyo o evidencias más completas.","1":"Presenta dificultades y las evidencias son insuficientes."}}
+function rubric(code){var c=criterion(code),t=c?c.texto.replace(/\.$/,"").toLowerCase():"desarrollar el criterio";return{"4":"Realiza con autonomía y profundidad las acciones de "+t+".","3":"Realiza adecuadamente las acciones de "+t+", con evidencias suficientes.","2":"Realiza parcialmente las acciones de "+t+" y necesita apoyo.","1":"Presenta dificultades importantes para "+t+"."}}
+function ensureRubrics(a){if(!a.rubrics)a.rubrics={};if(!a.briefs)a.briefs={};(a.criteriaCodes||[]).forEach(function(code){if(!a.rubrics[code])a.rubrics[code]=rubric(code);if(!a.briefs[code])a.briefs[code]=defaults()})}
+function avgActivity(aid,sid){var xs=state.evidence.filter(function(e){return e.activityId===aid&&e.studentId===sid});if(!xs.length)return null;return xs.reduce(function(n,e){return n+Number(e.score||0)},0)/xs.length}
+function relevantEvidence(sid,code){return state.evidence.filter(function(e){var a=activity(e.activityId);return e.studentId===sid&&e.criterionCode===code&&a&&a.groupId===activeGroup&&(activeTerm==="all"||a.term===activeTerm)})}
+function status(score){if(score==null)return{key:"empty",label:"Sin evidencias"};if(score>=8.5)return{key:"advanced",label:"Avanzado"};if(score>=6.5)return{key:"adequate",label:"Adecuado"};if(score>=5)return{key:"basic",label:"Básico"};return{key:"initial",label:"No alcanzada"}}
+function summary(sid){var C=cur(),by={},byCompetence={};C.criterios.forEach(function(c){var xs=relevantEvidence(sid,c.codigo);if(xs.length)by[c.codigo]=xs.reduce(function(n,e){return n+Number(e.score||0)},0)/xs.length});C.competencias.forEach(function(ce){var rel=C.criterios.filter(function(c){return c.competencia===ce.codigo}),ass=rel.filter(function(c){return by[c.codigo]!=null}),vals=ass.map(function(c){return by[c.codigo]}),av=vals.length?vals.reduce(function(a,b){return a+b},0)/vals.length:null;byCompetence[ce.codigo]={average:av,assessed:ass.length,total:rel.length,complete:ass.length===rel.length,status:status(av)}});var cvs=C.competencias.map(function(ce){return byCompetence[ce.codigo].average}).filter(function(v){return v!=null});return{by:by,byCompetence:byCompetence,overall:cvs.length?cvs.reduce(function(a,b){return a+b},0)/cvs.length:null,assessedCriteria:Object.keys(by).length,assessedCompetences:cvs.length,complete:Object.keys(by).length===C.criterios.length}}
+function gclass(v){if(v==null)return"g-none";if(v>=8.5)return"g-high";if(v>=6.5)return"g-good";if(v>=5)return"g-pass";return"g-low"}
+function head(title,desc,actions){var C=cur();return'<section class="head"><div><p class="help">'+esc(C.meta.curso+' · '+C.meta.materia)+'</p><h2>'+esc(title)+'</h2><p>'+esc(desc)+'</p></div>'+(actions?'<div class="actions">'+actions+'</div>':'')+'</section>'}
+function empty(t,d,a){return'<div class="card empty"><b>'+esc(t)+'</b><p>'+esc(d)+'</p>'+(a||'')+'</div>'}
+function renderSelectors(){groupSelect.innerHTML=state.groups.map(function(g){var C=CURRICULA[g.curriculumId]||CURRICULA.eso3_geh;return'<option value="'+g.id+'"'+(g.id===activeGroup?' selected':'')+'>'+esc(g.name+' · '+C.meta.materia)+'</option>'}).join('');termSelect.value=activeTerm}
+function scrollBottomNavToActive(behavior){
+  var nav=document.querySelector('.bottom');
+  var active=nav&&nav.querySelector('button.active');
+  if(!nav||!active)return;
+  requestAnimationFrame(function(){
+    if(getComputedStyle(nav).display==='none')return;
+    var left=active.offsetLeft-(nav.clientWidth-active.offsetWidth)/2;
+    try{nav.scrollTo({left:Math.max(0,left),behavior:behavior||'smooth'})}
+    catch(error){nav.scrollLeft=Math.max(0,left)}
+  })
+}
+function setView(v){view=v;document.querySelectorAll('[data-view]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-view')===v)});render();scrollBottomNavToActive('smooth');window.scrollTo(0,0)}
+function render(){renderSelectors();if(view==='cuaderno')renderBook();else if(view==='grupos')renderGroups();else if(view==='actividades')renderActivities();else if(view==='evaluar')renderEvaluate();else if(view==='asistencia')renderAttendance();else if(view==='situaciones')renderSituations();else if(view==='informes')renderReports();else if(view==='curriculo')renderCurriculum();else renderData();scrollBottomNavToActive('auto')}
+function renderBook(){
+  var ss=students(),aa=activities(),C=cur();
+  var actions='<button class="primary" data-go="evaluar">Evaluar</button><button class="secondary" data-go="actividades">Nueva actividad</button>';
+  if(!ss.length||!aa.length){
+    app.innerHTML=head('Cuaderno de notas','Calificación mediante evidencias → criterios → competencias → materia.',actions)+
+      '<div class="callout">Currículo activo: <b>'+esc(C.meta.curso+' · '+C.meta.materia)+'</b> · '+C.competencias.length+' competencias · '+C.criterios.length+' criterios.</div>'+
+      '<section class="grid two" style="margin-top:12px">'+
+      (!ss.length?empty('Sin alumnado','Añade estudiantes al grupo.','<button class="primary" data-go="grupos">Ir a grupos</button>'):'')+
+      (!aa.length?empty('Sin actividades','Crea actividades y selecciona criterios.','<button class="primary" data-go="actividades">Crear actividad</button>'):'')+
+      '</section>';
+    return
+  }
+
+  var headers=aa.map(function(a){
+    return'<th class="activity-col"><button class="activity-head" data-open-eval="'+a.id+'" title="'+esc(a.title)+'">'+
+      '<span class="activity-type">'+esc(a.instrument||'Actividad')+'</span>'+
+      '<strong>'+esc(a.title)+'</strong>'+
+      '<small>'+esc(dateES(a.date))+' · '+(a.criteriaCodes||[]).length+' crit.</small>'+
+      '</button></th>'
+  }).join('');
+
+  var rows=ss.map(function(s,index){
+    var sum=summary(s.id);
+    return'<tr>'+
+      '<th class="student-col"><div class="student-line"><span class="student-index">'+(index+1)+'</span><span><span class="student-name">'+esc(s.name)+'</span><span class="student-meta">'+esc(s.identifier||'Sin identificador')+'</span></span></div></th>'+
+      aa.map(function(a){
+        var av=avgActivity(a.id,s.id),cl=gclass(av);
+        return'<td class="grade-cell"><button class="grade-btn" data-cell-a="'+a.id+'" data-cell-s="'+s.id+'" aria-label="Evaluar a '+esc(s.name)+' en '+esc(a.title)+'"><span class="score-pill '+cl+'">'+(av==null?'·':av.toFixed(1))+'</span></button></td>'
+      }).join('')+
+      '<td class="avg-col"><div class="overall-score"><span class="score-pill '+gclass(sum.overall)+'">'+(sum.overall==null?'—':sum.overall.toFixed(1))+'</span><small>'+(sum.complete?'completa':'provisional')+'</small></div></td>'+
+      '</tr>'
+  }).join('');
+
+  var activityMeans=aa.map(function(a){
+    var values=ss.map(function(s){return avgActivity(a.id,s.id)}).filter(function(v){return v!=null});
+    var mean=values.length?values.reduce(function(x,y){return x+y},0)/values.length:null;
+    return'<td><b>'+(mean==null?'—':mean.toFixed(1))+'</b></td>'
+  }).join('');
+  var studentOverall=ss.map(function(s){return summary(s.id).overall}).filter(function(v){return v!=null});
+  var classOverall=studentOverall.length?studentOverall.reduce(function(x,y){return x+y},0)/studentOverall.length:null;
+
+  var selectedMobile=(state.ui&&state.ui.bookActivityId&&aa.some(function(a){return a.id===state.ui.bookActivityId}))?state.ui.bookActivityId:aa[0].id;
+  if(!state.ui)state.ui={};
+  state.ui.bookActivityId=selectedMobile;
+
+  app.innerHTML=
+    head('Cuaderno de notas','Consulta la matriz completa en ordenador o evalúa una actividad de forma cómoda desde el móvil.',actions)+
+
+    '<section class="gradebook-desktop gradebook-shell">'+
+      '<div class="gradebook-toolbar">'+
+        '<div class="gradebook-toolbar-main"><span class="gradebook-icon">GH</span><div><h3>'+esc(group(activeGroup).name)+'</h3><p>'+esc(C.meta.curso+' · '+C.meta.materia)+' · '+ss.length+' alumnos · '+aa.length+' actividades</p></div></div>'+
+        '<div class="gradebook-legend"><span><i class="legend-high"></i>8,5–10</span><span><i class="legend-good"></i>6,5–8,4</span><span><i class="legend-pass"></i>5–6,4</span><span><i class="legend-low"></i>&lt;5</span></div>'+
+      '</div>'+
+      '<div class="gradebook-scroll"><table class="gradebook">'+
+        '<thead><tr><th class="student-col">Alumnado</th>'+headers+'<th class="avg-col">Nota competencial</th></tr></thead>'+
+        '<tbody>'+rows+'</tbody>'+
+        '<tfoot><tr><th class="student-col">Media del grupo</th>'+activityMeans+'<td class="avg-col"><b>'+(classOverall==null?'—':classOverall.toFixed(1))+'</b></td></tr></tfoot>'+
+      '</table></div>'+
+    '</section>'+
+
+    '<section class="gradebook-mobile">'+
+      '<div class="mobile-book-selector"><label>Actividad<select id="mobileBookActivity">'+aa.map(function(a){return'<option value="'+a.id+'"'+(a.id===selectedMobile?' selected':'')+'>'+esc(a.title)+'</option>'}).join('')+'</select></label></div>'+
+      '<div id="mobileBookContent"></div>'+
+    '</section>';
+
+  renderMobileBook(selectedMobile)
+}
+function renderMobileBook(aid){
+  var aa=activities(),ss=students();
+  var container=document.getElementById('mobileBookContent');
+  if(!container||!aa.length)return;
+  var a=activity(aid)||aa[0];
+  if(!a)return;
+  var values=ss.map(function(s){return avgActivity(a.id,s.id)}).filter(function(v){return v!=null});
+  var mean=values.length?values.reduce(function(x,y){return x+y},0)/values.length:null;
+  var evaluated=values.length;
+  var passed=values.filter(function(v){return v>=5}).length;
+
+  var rows=ss.map(function(s){
+    var av=avgActivity(a.id,s.id),sum=summary(s.id),cl=gclass(av);
+    return'<article class="mobile-student-row">'+
+      '<div class="mobile-student-main"><strong>'+esc(s.name)+'</strong><small>'+(s.identifier?esc(s.identifier)+' · ':'')+'Nota competencial: '+(sum.overall==null?'—':sum.overall.toFixed(1))+'</small></div>'+
+      '<button class="mobile-score-button '+cl+'" data-cell-a="'+a.id+'" data-cell-s="'+s.id+'" aria-label="Evaluar a '+esc(s.name)+'">'+
+        '<span>'+(av==null?'—':av.toFixed(1))+'</span><small>'+(av==null?'Sin evaluar':'Abrir')+'</small>'+
+      '</button>'+
+    '</article>'
+  }).join('');
+
+  container.innerHTML=
+    '<section class="mobile-activity-summary">'+
+      '<h3>'+esc(a.title)+'</h3>'+
+      '<p>'+esc(dateES(a.date))+' · '+esc(a.instrument||'Actividad')+'</p>'+
+      '<div class="chips">'+(a.criteriaCodes||[]).map(function(code){return'<span class="chip">'+esc(code)+'</span>'}).join('')+'</div>'+
+    '</section>'+
+    '<div class="mobile-book-footer">'+
+      '<div class="mobile-book-stat"><strong>'+(mean==null?'—':mean.toFixed(1))+'</strong><span>Media</span></div>'+
+      '<div class="mobile-book-stat"><strong>'+evaluated+' / '+ss.length+'</strong><span>Evaluados</span></div>'+
+      '<div class="mobile-book-stat"><strong>'+passed+'</strong><span>Superan 5</span></div>'+
+    '</div>'+
+    '<section class="mobile-student-list">'+rows+'</section>'
+}
+function curriculumOptions(selected){return Object.keys(CURRICULA).map(function(id){var C=CURRICULA[id];return'<option value="'+id+'"'+(id===selected?' selected':'')+'>'+esc(C.meta.curso+' · '+C.meta.materia)+'</option>'}).join('')}
+function renderGroups(){var cards=state.groups.map(function(g){var C=CURRICULA[g.curriculumId]||CURRICULA.eso3_geh,n=state.students.filter(function(s){return s.groupId===g.id&&s.active!==false}).length;return'<article class="item"><header><div><h3>'+esc(g.name)+'</h3><p class="help">'+esc(C.meta.curso+' · '+C.meta.materia)+' · '+n+' alumnos/as</p></div><div class="actions"><button class="secondary small" data-select-group="'+g.id+'">Abrir</button><button class="danger small" data-delete-group="'+g.id+'">Eliminar</button></div></header></article>'}).join('');var rows=students().map(function(s,i){return'<tr><td>'+(i+1)+'</td><td><b>'+esc(s.name)+'</b></td><td>'+esc(s.identifier||'')+'</td><td>'+esc(s.email||'')+'</td><td><button class="danger small" data-delete-student="'+s.id+'">Eliminar</button></td></tr>'}).join('');app.innerHTML=head('Grupos y alumnado','Cada grupo mantiene su propio currículo, actividades, notas y asistencia.')+'<section class="grid two"><form id="groupForm" class="card stack"><h3>Nuevo grupo</h3><label>Nombre<input name="name" required placeholder="1.º ESO A"></label><label>Materia y curso<select name="curriculumId">'+curriculumOptions('eso1_geh')+'</select></label><label>Curso escolar<input name="year" value="'+esc(state.settings.schoolYear)+'"></label><button class="primary">Crear grupo</button></form><section class="card"><h3>Grupos del departamento</h3><div class="stack">'+cards+'</div></section></section><section class="grid two" style="margin-top:12px"><form id="studentForm" class="card stack"><h3>Añadir alumno/a a '+esc(group(activeGroup).name)+'</h3><label>Nombre completo<input name="name" required></label><div class="row"><label>Identificador / NIA<input name="identifier"></label><label>Correo<input name="email"></label></div><button class="primary">Añadir</button></form><section class="card stack"><h3>Importar CSV</h3><input id="csvInput" type="file" accept=".csv,text/csv"><p class="help">Columnas: Nombre, Apellidos, Grupo, NIA, Correo.</p><button id="importCsv" class="primary" disabled>Importar filas</button><div id="csvPreview" class="help">Selecciona un archivo.</div></section></section><section style="margin-top:12px">'+(rows?'<div class="table-wrap"><table><thead><tr><th>#</th><th>Nombre</th><th>NIA</th><th>Correo</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>':empty('Sin alumnado','Añade o importa estudiantes.'))+'</section>'}
+function criterionChecks(selected,name){var set=selected||[],n=name||'criteria';return cur().criterios.map(function(c){return'<label class="check"><input type="checkbox" name="'+n+'" value="'+c.codigo+'"'+(set.indexOf(c.codigo)>=0?' checked':'')+'><span><b>'+c.codigo+' · '+c.competencia+'</b><small>'+esc(c.texto)+'</small></span></label>'}).join('')}
+function renderActivities(){var cards=activities().map(function(a){return'<article class="item"><header><div><h3>'+esc(a.title)+'</h3><div class="chips"><span class="chip gold">'+esc(a.instrument||'Actividad')+'</span><span class="chip">'+esc(a.term)+'</span>'+(a.criteriaCodes||[]).map(function(c){return'<span class="chip">'+c+'</span>'}).join('')+'</div><p class="help">'+esc(dateES(a.date))+'</p></div><div class="actions"><button class="primary small" data-open-eval="'+a.id+'">Evaluar</button><button class="secondary small" data-duplicate-activity="'+a.id+'">Duplicar</button><button class="danger small" data-delete-activity="'+a.id+'">Eliminar</button></div></header></article>'}).join('');app.innerHTML=head('Actividades','Crea instrumentos vinculados a los criterios del currículo activo.')+'<form id="activityForm" class="card stack"><div class="row"><label>Título<input name="title" required></label><label>Fecha<input name="date" type="date" value="'+new Date().toISOString().slice(0,10)+'"></label></div><div class="row"><label>Evaluación<select name="term"><option value="1">1.ª</option><option value="2">2.ª</option><option value="3">3.ª</option><option value="final">Ordinaria</option></select></label><label>Instrumento<select name="instrument"><option>Actividad</option><option>Prueba escrita</option><option>Comentario histórico</option><option>Comentario geográfico</option><option>Comentario de obra</option><option>Proyecto</option><option>Exposición</option><option>Debate</option><option>Investigación</option><option>Producto audiovisual</option></select></label></div><label>Descripción<textarea name="description"></textarea></label><h3>Criterios de evaluación</h3><div class="check-grid">'+criterionChecks([])+'</div><button class="primary">Crear actividad</button></form><section class="stack" style="margin-top:12px">'+(cards||empty('Sin actividades','Crea la primera actividad.'))+'</section>'}
+function renderEvaluate(aid,sid){var aa=activities(),ss=students();if(!aa.length||!ss.length){app.innerHTML=head('Evaluar','Registra evidencias por criterio.')+empty('Faltan datos','Necesitas alumnado y actividades.');return}aid=aid||aa[0].id;sid=sid||ss[0].id;app.innerHTML=head('Evaluar','Selecciona el nivel alcanzado en cada criterio.')+'<section class="card"><div class="row"><label>Actividad<select id="evalActivity">'+aa.map(function(a){return'<option value="'+a.id+'"'+(a.id===aid?' selected':'')+'>'+esc(a.title)+'</option>'}).join('')+'</select></label><label>Alumno/a<select id="evalStudent">'+ss.map(function(s){return'<option value="'+s.id+'"'+(s.id===sid?' selected':'')+'>'+esc(s.name)+'</option>'}).join('')+'</select></label></div></section><form id="evalForm" class="stack" style="margin-top:12px"></form>';buildEval()}
+function buildEval(){var aid=document.getElementById('evalActivity').value,sid=document.getElementById('evalStudent').value,a=activity(aid);ensureRubrics(a);document.getElementById('evalForm').innerHTML=(a.criteriaCodes||[]).map(function(code){var c=criterion(code),ex=evidence(aid,sid,code),brief=a.briefs[code],rub=a.rubrics[code];return'<article class="card"><div class="chips"><span class="chip">'+code+'</span><span class="chip gold">'+esc(c?c.competencia:'')+'</span></div><p><b>'+esc(c?c.texto:'')+'</b></p><div class="levels">'+cur().niveles.slice().sort(function(x,y){return y.valor-x.valor}).map(function(l){return'<label class="level"><input type="radio" name="level_'+code+'" value="'+l.valor+'"'+(ex&&Number(ex.level)===l.valor?' checked':'')+'><span><b>'+l.valor+' · '+esc(l.nombre)+'</b><em>'+esc(brief[String(l.valor)])+'</em><small>'+l.nota+' / 10</small></span></label>'}).join('')+'</div><label style="margin-top:9px">Observación<textarea name="comment_'+code+'">'+esc(ex?ex.comment:'')+'</textarea></label></article>'}).join('')+'<button class="primary">Guardar evaluación</button>'}
+function renderAttendance(){var ss=students(),today=new Date().toISOString().slice(0,10);app.innerHTML=head('Asistencia','Registra presencia, falta, retraso o justificación.')+(ss.length?'<form id="attendanceForm" class="card stack"><label>Fecha<input id="attendanceDate" type="date" value="'+today+'"></label><div class="table-wrap"><table><thead><tr><th>Alumno/a</th><th>Estado</th><th>Observación</th></tr></thead><tbody>'+ss.map(function(s){return'<tr><td><b>'+esc(s.name)+'</b></td><td><select name="status_'+s.id+'"><option value="P">Presente</option><option value="F">Falta</option><option value="R">Retraso</option><option value="J">Justificada</option></select></td><td><input name="note_'+s.id+'"></td></tr>'}).join('')+'</tbody></table></div><button class="primary">Guardar asistencia</button></form>':empty('Sin alumnado','Añade estudiantes.'))}
+function renderSituations(){var cards=situations().map(function(s){return'<article class="item"><header><div><h3>'+esc(s.title)+'</h3><p class="help">'+esc(s.term)+' · '+esc(s.product||'Sin producto final')+'</p><div class="chips">'+(s.criteriaCodes||[]).map(function(c){return'<span class="chip">'+c+'</span>'}).join('')+'</div></div><button class="danger small" data-delete-situation="'+s.id+'">Eliminar</button></header></article>'}).join('');app.innerHTML=head('Situaciones de aprendizaje','Planifica productos, metodología y currículo.')+'<form id="situationForm" class="card stack"><div class="row"><label>Título<input name="title" required></label><label>Evaluación<select name="term"><option value="1">1.ª</option><option value="2">2.ª</option><option value="3">3.ª</option></select></label></div><label>Producto final<input name="product"></label><div class="row"><label>Metodología<textarea name="methodology"></textarea></label><label>Atención a la diversidad / DUA<textarea name="dua"></textarea></label></div><label>ODS y conexiones<textarea name="ods"></textarea></label><div class="check-grid">'+criterionChecks([],'sitCriteria')+'</div><button class="primary">Crear situación</button></form><section class="stack" style="margin-top:12px">'+(cards||empty('Sin situaciones','Crea la primera situación de aprendizaje.'))+'</section>'}
+function renderReports(){var ss=students();if(!ss.length){app.innerHTML=head('Informes','Resultados por criterios y competencias.')+empty('Sin alumnado','Añade estudiantes.');return}app.innerHTML=head('Informes','La nota de materia es la media igualitaria de las competencias evaluadas.','<button class="secondary" id="print">Imprimir</button><button class="primary" id="exportGrades">CSV competencial</button>')+'<section class="card"><label>Alumno/a<select id="reportStudent">'+ss.map(function(s){return'<option value="'+s.id+'">'+esc(s.name)+'</option>'}).join('')+'</select></label></section><section id="reportArea" style="margin-top:12px"></section>';buildReport()}
+function buildReport(){var sid=document.getElementById('reportStudent').value,s=student(sid),sum=summary(sid),C=cur();var ces=C.competencias.map(function(ce){var x=sum.byCompetence[ce.codigo];return'<article class="competence-card"><header><h4>'+ce.codigo+'</h4><strong>'+(x.average==null?'—':x.average.toFixed(2))+'</strong></header><span class="status">'+esc(x.status.label)+'</span><p class="help">'+x.assessed+' / '+x.total+' criterios</p><div class="coverage"><span style="width:'+(x.total?Math.round(x.assessed/x.total*100):0)+'%"></span></div></article>'}).join('');var rows=C.criterios.filter(function(c){return sum.by[c.codigo]!=null}).map(function(c){return'<tr><td><b>'+c.codigo+'</b></td><td>'+c.competencia+'</td><td>'+esc(c.texto)+'</td><td><b>'+sum.by[c.codigo].toFixed(2)+'</b></td></tr>'}).join('');document.getElementById('reportArea').innerHTML='<section class="stats"><div class="stat"><strong>'+(sum.overall==null?'—':sum.overall.toFixed(2))+'</strong><span>nota competencial '+(sum.complete?'':'provisional')+'</span></div><div class="stat"><strong>'+sum.assessedCompetences+' / '+C.competencias.length+'</strong><span>competencias evaluadas</span></div><div class="stat"><strong>'+sum.assessedCriteria+' / '+C.criterios.length+'</strong><span>criterios evaluados</span></div><div class="stat"><strong>'+state.evidence.filter(function(e){return e.studentId===sid}).length+'</strong><span>evidencias</span></div></section><h3 style="margin-top:15px">Competencias específicas</h3><section class="competence-grid">'+ces+'</section><section class="card" style="margin-top:12px"><h3>Resultados por criterio</h3>'+(rows?'<div class="table-wrap"><table><thead><tr><th>Criterio</th><th>CE</th><th>Descripción</th><th>Media</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<p class="help">Sin evidencias.</p>')+'</section>'}
+function renderCurriculum(){var C=cur(),warning=C.meta.status==='oficial_completo'?'':'<div class="callout warning">Este módulo todavía no ha terminado de cargar sus textos completos. Comprueba la conexión y recarga la página.</div>';app.innerHTML=head('Currículo',C.competencias.length+' competencias · '+C.criterios.length+' criterios · '+C.saberes.length+' saberes básicos.')+warning+'<div class="curriculum-source"><b>Fuente:</b> '+esc(C.meta.fuente||C.meta.norma)+'<br><b>Estado:</b> '+esc(C.meta.status==='oficial_completo'?'Texto completo':'Pendiente de carga')+(C.meta.origen?'<br>'+esc(C.meta.origen):'')+'</div>'+'<section class="stack" style="margin-top:12px">'+C.competencias.map(function(ce){var cs=C.criterios.filter(function(c){return c.competencia===ce.codigo});return'<article class="card"><div class="chips"><span class="chip gold">'+ce.codigo+'</span></div><h3>'+esc(ce.texto)+'</h3>'+cs.map(function(c){return'<details><summary>'+c.codigo+' · Criterio</summary><p>'+esc(c.texto)+'</p><div class="chips">'+(c.saberes||[]).map(function(x){return'<span class="chip">'+x+'</span>'}).join('')+'</div></details>'}).join('')+'</article>'}).join('')+'<article class="card"><h3>Saberes básicos</h3>'+C.saberes.map(function(s){return'<details><summary>'+esc(s.codigo+' · '+s.bloque)+'</summary><p>'+esc(s.texto)+'</p></details>'}).join('')+'</article></section>'}
+function renderData(){
+  app.innerHTML=head('Datos y configuración','Copias, almacenamiento local y ajustes generales.')+
+    '<section class="grid two">'+
+      '<form id="settingsForm" class="card stack"><h3>Configuración</h3><label>Centro<input name="center" value="'+esc(state.settings.center)+'"></label><label>Docente<input name="teacher" value="'+esc(state.settings.teacher)+'"></label><label>Curso escolar<input name="year" value="'+esc(state.settings.schoolYear)+'"></label><button class="primary">Guardar</button></form>'+
+      '<article class="card stack"><h3>Copias y exportaciones</h3><div class="actions"><button id="exportJson" class="primary">Copia JSON</button><button id="exportGrades" class="secondary">CSV competencial</button><button id="exportEvidence" class="secondary">Evidencias CSV</button></div><label>Importar copia JSON<input id="importJson" type="file" accept=".json,application/json"></label><p class="help">Las copias JSON y CSV no están cifradas. Guárdalas en una ubicación protegida.</p></article>'+
+    '</section>'+
+    installPanelHtml()+
+    '<section class="card stack" style="margin-top:12px">'+
+      '<div><h3>Almacenamiento y privacidad</h3><p class="help">Los datos académicos se guardan en IndexedDB dentro de esta aplicación. No se sincronizan con otros dispositivos ni se envían a GitHub.</p></div>'+
+      '<div id="storageDetails" class="storage-card-grid"><div class="storage-metric"><strong>Cargando…</strong><span>Estado del almacenamiento</span></div></div>'+
+      '<div class="actions"><button id="requestPersistentStorage" class="secondary" type="button">Solicitar almacenamiento persistente</button><button id="deleteMigrationBackups" class="danger" type="button">Eliminar copias de migración</button></div>'+
+      '<div class="storage-note"><b>Base local:</b> '+esc(DB_NAME)+' · cada instalación conserva una base independiente. La sincronización entre móvil y ordenador requerirá un servidor específico.</div>'+
+    '</section>'+
+    '<section class="card" style="margin-top:12px"><h3>Módulos curriculares</h3><div class="table-wrap"><table><thead><tr><th>Curso</th><th>Materia</th><th>CE</th><th>Criterios</th><th>Saberes</th><th>Estado</th></tr></thead><tbody>'+
+      Object.keys(CURRICULA).map(function(id){var C=CURRICULA[id];return'<tr><td>'+esc(C.meta.curso)+'</td><td>'+esc(C.meta.materia)+'</td><td>'+C.competencias.length+'</td><td>'+C.criterios.length+'</td><td>'+C.saberes.length+'</td><td>'+esc(C.meta.status==='oficial_completo'?'Completo':'Cargando')+'</td></tr>'}).join('')+
+      '</tbody></table></div></section>'+
+    '<section class="callout" style="margin-top:12px">La aplicación integra nueve módulos curriculares completos. El currículo público puede mantenerse en la caché del navegador; los datos personales y académicos se almacenan en IndexedDB.</section>';
+  setTimeout(function(){updateStoragePanel();refreshInstallPanel()},0)
+}
+function parseCSV(text){var first=(text.split(/\r?\n/)[0]||''),sep=[';',',','\t'].sort(function(a,b){return first.split(b).length-first.split(a).length})[0],lines=text.split(/\r?\n/).filter(Boolean).map(function(l){return l.split(sep).map(function(x){return x.replace(/^\"|\"$/g,'').trim()})}),h=lines.shift().map(norm);function ix(names){for(var i=0;i<h.length;i++)for(var j=0;j<names.length;j++)if(h[i].indexOf(names[j])>=0)return i;return-1}var ni=ix(['nombre']),ai=ix(['apellidos','apellido']),ii=ix(['nia','identificador']),ei=ix(['correo','email']);return lines.map(function(r){var name=((ni>=0?r[ni]:'')+' '+(ai>=0?r[ai]:'')).trim()||r[0];return{name:name,identifier:ii>=0?r[ii]:'',email:ei>=0?r[ei]:''}}).filter(function(x){return x.name})}
+async function nativeShareFile(name,text,mime){
+  var Filesystem=nativePlugin('Filesystem'),Share=nativePlugin('Share');
+  if(!Filesystem||!Share)throw new Error('Plugins de archivos no disponibles');
+  var result=await Filesystem.writeFile({path:name,data:text,directory:'CACHE',encoding:'utf8',recursive:true});
+  await Share.share({title:name,text:'Archivo exportado desde Cuaderno GH',url:result.uri,dialogTitle:'Guardar o compartir '+name});
+}
+function download(name,text,mime){
+  if(isNativeApp()){
+    nativeShareFile(name,text,mime).then(function(){toast('Archivo preparado para guardar o compartir.')}).catch(function(error){console.error(error);toast('No se pudo preparar el archivo.')});
+    return
+  }
+  var b=new Blob([text],{type:mime}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},500)
+}
+function cq(v){return'"'+String(v==null?'':v).replace(/"/g,'""')+'"'}
+function gradesCSV(){var C=cur(),head=['grupo','curso','materia','alumno'].concat(C.criterios.map(function(c){return c.codigo})).concat(C.competencias.map(function(c){return c.codigo})).concat(['nota_competencial','caracter']),rows=[head];students().forEach(function(s){var sum=summary(s.id),r=[group(activeGroup).name,C.meta.curso,C.meta.materia,s.name];C.criterios.forEach(function(c){r.push(sum.by[c.codigo]==null?'':sum.by[c.codigo].toFixed(2).replace('.',','))});C.competencias.forEach(function(ce){var v=sum.byCompetence[ce.codigo].average;r.push(v==null?'':v.toFixed(2).replace('.',','))});r.push(sum.overall==null?'':sum.overall.toFixed(2).replace('.',','));r.push(sum.complete?'completa':'provisional');rows.push(r)});return'\ufeff'+rows.map(function(r){return r.map(cq).join(';')}).join('\r\n')}
+function evidenceCSV(){var rows=[['grupo','materia','alumno','actividad','criterio','nivel','nota','observacion']];state.evidence.forEach(function(e){var a=activity(e.activityId),s=student(e.studentId);if(a&&s&&a.groupId===activeGroup)rows.push([group(activeGroup).name,cur().meta.materia,s.name,a.title,e.criterionCode,e.level,e.score,e.comment||''])});return'\ufeff'+rows.map(function(r){return r.map(cq).join(';')}).join('\r\n')}
+function closeModal(){modalBg.hidden=true;modalBody.innerHTML=''}
+document.addEventListener('click',function(ev){var t=ev.target.closest('button');if(!t)return;if(t.dataset.view){setView(t.dataset.view);return}if(t.dataset.go){setView(t.dataset.go);return}if(t.dataset.selectGroup){activeGroup=t.dataset.selectGroup;state.ui.groupId=activeGroup;save();setView('cuaderno');return}if(t.dataset.deleteGroup){if(state.groups.length===1){toast('Debe existir al menos un grupo.');return}if(confirm('¿Eliminar el grupo y todos sus datos?')){var id=t.dataset.deleteGroup,acts=state.activities.filter(function(a){return a.groupId===id}).map(function(a){return a.id});state.groups=state.groups.filter(function(g){return g.id!==id});state.students=state.students.filter(function(s){return s.groupId!==id});state.activities=state.activities.filter(function(a){return a.groupId!==id});state.evidence=state.evidence.filter(function(e){return acts.indexOf(e.activityId)<0});state.attendance=state.attendance.filter(function(a){return a.groupId!==id});state.situations=state.situations.filter(function(s){return s.groupId!==id});activeGroup=state.groups[0].id;state.ui.groupId=activeGroup;save('Grupo eliminado.');render()}return}if(t.dataset.deleteStudent){var sid=t.dataset.deleteStudent;if(confirm('¿Eliminar al alumno/a y sus evidencias?')){state.students=state.students.filter(function(s){return s.id!==sid});state.evidence=state.evidence.filter(function(e){return e.studentId!==sid});save('Alumno/a eliminado.');renderGroups()}return}if(t.dataset.deleteActivity){var aid=t.dataset.deleteActivity;if(confirm('¿Eliminar actividad y evidencias?')){state.activities=state.activities.filter(function(a){return a.id!==aid});state.evidence=state.evidence.filter(function(e){return e.activityId!==aid});save('Actividad eliminada.');renderActivities()}return}if(t.dataset.duplicateActivity){var a=clone(activity(t.dataset.duplicateActivity));a.id=uid('a');a.title+=' · copia';state.activities.push(a);save('Actividad duplicada.');renderActivities();return}if(t.dataset.openEval){view='evaluar';document.querySelectorAll('[data-view]').forEach(function(b){b.classList.toggle('active',b.dataset.view==='evaluar')});renderEvaluate(t.dataset.openEval);scrollBottomNavToActive('smooth');return}if(t.dataset.cellA){view='evaluar';document.querySelectorAll('[data-view]').forEach(function(b){b.classList.toggle('active',b.dataset.view==='evaluar')});renderEvaluate(t.dataset.cellA,t.dataset.cellS);scrollBottomNavToActive('smooth');return}if(t.dataset.deleteSituation){state.situations=state.situations.filter(function(s){return s.id!==t.dataset.deleteSituation});save('Situación eliminada.');renderSituations();return}if(t.id==='closeModal'){closeModal();return}if(t.id==='importCsv'&&csvRows){var added=0;csvRows.forEach(function(x){state.students.push({id:uid('s'),groupId:activeGroup,name:x.name,identifier:x.identifier,email:x.email,active:true});added++});save(added+' alumnos/as importados.');csvRows=null;renderGroups();return}if(t.id==='print'){window.print();return}if(t.id==='installAppButton'){installPwa();return}
+if(t.id==='applyPwaUpdate'){if(pwaWaitingWorker)pwaWaitingWorker.postMessage({type:'SKIP_WAITING'});return}
+if(t.id==='requestPersistentStorage'){requestPersistentStorage();return}
+if(t.id==='deleteMigrationBackups'){
+  if(storageMode!=="indexeddb"){toast("No hay copias de migración en IndexedDB.");return}
+  if(confirm("¿Eliminar las copias automáticas creadas durante la migración? Antes conviene descargar una copia JSON.")){
+    clearMigrationBackups().then(function(){toast("Copias de migración eliminadas.");updateStoragePanel()}).catch(function(){toast("No se pudieron eliminar las copias.")})
+  }
+  return
+}
+if(t.id==='exportJson'){download('cuaderno-departamento-geh.json',JSON.stringify(state,null,2),'application/json');return}if(t.id==='exportGrades'){download('calificaciones-'+group(activeGroup).name+'.csv',gradesCSV(),'text/csv;charset=utf-8');return}if(t.id==='exportEvidence'){download('evidencias-'+group(activeGroup).name+'.csv',evidenceCSV(),'text/csv;charset=utf-8');return}})
+document.addEventListener('submit',function(ev){ev.preventDefault();var f=ev.target;if(f.id==='groupForm'){var id=uid('g');state.groups.push({id:id,name:f.name.value.trim(),curriculumId:f.curriculumId.value,schoolYear:f.year.value.trim()});activeGroup=id;state.ui.groupId=id;save('Grupo creado.');renderGroups();return}if(f.id==='studentForm'){state.students.push({id:uid('s'),groupId:activeGroup,name:f.name.value.trim(),identifier:f.identifier.value.trim(),email:f.email.value.trim(),active:true});save('Alumno/a añadido/a.');renderGroups();return}if(f.id==='activityForm'){var codes=Array.from(f.querySelectorAll('input[name="criteria"]:checked')).map(function(x){return x.value});if(!codes.length){toast('Selecciona al menos un criterio.');return}var a={id:uid('a'),groupId:activeGroup,title:f.title.value.trim(),date:f.date.value,term:f.term.value,instrument:f.instrument.value,description:f.description.value.trim(),criteriaCodes:codes,rubrics:{},briefs:{}};ensureRubrics(a);state.activities.push(a);save('Actividad creada.');renderActivities();return}if(f.id==='evalForm'){var aid=document.getElementById('evalActivity').value,sid=document.getElementById('evalStudent').value,a=activity(aid),n=0;(a.criteriaCodes||[]).forEach(function(code){var r=f.querySelector('input[name="level_'+code+'"]:checked');if(!r)return;var level=Number(r.value),lv=cur().niveles.find(function(x){return x.valor===level}),record={id:uid('e'),activityId:aid,studentId:sid,criterionCode:code,level:level,score:lv.nota,comment:f.querySelector('[name="comment_'+code+'"]').value.trim()};var old=evidence(aid,sid,code);if(old){record.id=old.id;state.evidence[state.evidence.indexOf(old)]=record}else state.evidence.push(record);n++});save(n+' evidencias guardadas.');buildEval();return}if(f.id==='attendanceForm'){var date=document.getElementById('attendanceDate').value;students().forEach(function(s){var old=state.attendance.find(function(a){return a.groupId===activeGroup&&a.studentId===s.id&&a.date===date}),rec={id:old?old.id:uid('at'),groupId:activeGroup,studentId:s.id,date:date,status:f['status_'+s.id].value,note:f['note_'+s.id].value.trim()};if(old)state.attendance[state.attendance.indexOf(old)]=rec;else state.attendance.push(rec)});save('Asistencia guardada.');return}if(f.id==='situationForm'){var codes=Array.from(f.querySelectorAll('input[name="sitCriteria"]:checked')).map(function(x){return x.value});state.situations.push({id:uid('sit'),groupId:activeGroup,title:f.title.value.trim(),term:f.term.value,product:f.product.value.trim(),methodology:f.methodology.value.trim(),dua:f.dua.value.trim(),ods:f.ods.value.trim(),criteriaCodes:codes});save('Situación creada.');renderSituations();return}if(f.id==='settingsForm'){state.settings.center=f.center.value.trim();state.settings.teacher=f.teacher.value.trim();state.settings.schoolYear=f.year.value.trim();save('Configuración guardada.');renderData();return}})
+document.addEventListener('change',function(ev){if(ev.target.id==='groupSelect'){activeGroup=ev.target.value;state.ui.groupId=activeGroup;save();render();return}if(ev.target.id==='termSelect'){activeTerm=ev.target.value;state.ui.term=activeTerm;save();render();return}if(ev.target.id==='mobileBookActivity'){
+  if(!state.ui)state.ui={};
+  state.ui.bookActivityId=ev.target.value;
+  save();
+  renderMobileBook(ev.target.value);
+  return
+}
+if(ev.target.id==='evalActivity'||ev.target.id==='evalStudent'){buildEval();return}if(ev.target.id==='reportStudent'){buildReport();return}if(ev.target.id==='csvInput'){var file=ev.target.files[0];if(!file)return;var r=new FileReader();r.onload=function(){csvRows=parseCSV(String(r.result||''));document.getElementById('csvPreview').textContent=csvRows.length+' filas detectadas.';document.getElementById('importCsv').disabled=!csvRows.length};r.readAsText(file,'utf-8');return}if(ev.target.id==='importJson'){var file2=ev.target.files[0];if(!file2)return;var r2=new FileReader();r2.onload=function(){try{var data=normalizeState(JSON.parse(String(r2.result||'')));if(confirm('¿Sustituir los datos actuales?')){state=data;activeGroup=state.groups[0].id;save('Copia importada.');render()}}catch(e){toast('JSON no válido.')}};r2.readAsText(file2,'utf-8')}})
+var START_QUERY=new URLSearchParams(location.search);
+app.innerHTML='<section class="card empty"><b>Abriendo el cuaderno…</b><p>Comprobando y preparando el almacenamiento local.</p></section>';
+function configureNativeBackButton(){
+  if(!isNativeApp())return;
+  var App=nativePlugin('App');
+  if(!App||!App.addListener)return;
+  App.addListener('backButton',function(){
+    if(!modalBg.hidden){closeModal();return}
+    if(view!=='cuaderno'){setView('cuaderno');return}
+    if(App.exitApp)App.exitApp()
+  })
+}
+async function startApplication(){
+  state=await initializeStorage();
+  activeGroup=(state.ui&&state.ui.groupId&&group(state.ui.groupId))?state.ui.groupId:state.groups[0].id;
+  activeTerm=(state.ui&&state.ui.term)||"all";
+  state.ui.groupId=activeGroup;
+  state.ui.term=activeTerm;
+  render();
+  configureNativeBackButton();
+  registerPwa();
+  refreshInstallPanel();
+  if(START_QUERY.get("nosync")==="1"){
+    updateSyncStatus("loading","Sincronización omitida")
+  }else{
+    hydrateCurricula().then(function(){render()})
+  }
+  if(START_QUERY.get("selftest")==="1")runSelfTest()
+}
+function runSelfTest(){setTimeout(function(){var lines=[];function ok(x,m){lines.push((x?'PASS ':'FAIL ')+m);if(!x)throw Error(m)}try{state=defaultState();activeGroup='g_default';var ids=Object.keys(CURRICULA);ok(ids.length===9,'nueve módulos curriculares');ok(typeof openAppDatabase==='function','motor IndexedDB');ok(typeof registerPwa==='function','registro PWA');ok(typeof isNativeApp==='function','detección Android nativa');ok(typeof nativeShareFile==='function','exportación nativa');ok(DB_COLLECTIONS.length===7,'almacenes académicos estructurados');ok(typeof renderMobileBook==='function','vista móvil del cuaderno');ok(typeof scrollBottomNavToActive==='function','navegación inferior desplazable');ok(CURRICULA.bach1_pcul.criterios.length===17,'Patrimonio: 17 criterios completos');ok(CURRICULA.bach1_pcul.saberes.length===27,'Patrimonio: 27 saberes completos');ok(CURRICULA.eso3_geh.competencias.length===9,'3 ESO conserva nueve competencias');state.students.push({id:'s1',groupId:activeGroup,name:'Prueba',active:true});state.activities.push({id:'a1',groupId:activeGroup,title:'Prueba',date:'2026-09-01',term:'1',instrument:'Actividad',criteriaCodes:['1.1'],rubrics:{},briefs:{}});state.evidence.push({id:'e1',activityId:'a1',studentId:'s1',criterionCode:'1.1',level:3,score:7.5,comment:''});ok(summary('s1').overall===7.5,'cálculo competencial dinámico');state.groups.push({id:'g2',name:'2 Bach Geo',curriculumId:'bach2_geo',schoolYear:'2026/2027'});activeGroup='g2';ok(cur().meta.materia==='Geografía','cambio de currículo por grupo');ok(cur().competencias.length===7,'competencias dinámicas de Geografía');ok(gradesCSV().indexOf('nota_competencial')>=0,'CSV dinámico');lines.push('SELFTEST_OK')}catch(e){lines.push('SELFTEST_ERROR '+e.message)}var p=document.createElement('pre');p.id='selfTestResult';p.className='selftest';p.textContent=lines.join('\n');document.body.appendChild(p)},120)}
+startApplication().catch(function(error){
+  console.error(error);
+  storageMode="localstorage";
+  state=defaultState();
+  activeGroup=state.ui.groupId;
+  activeTerm=state.ui.term;
+  updateStorageStatus("error","Error de datos");
+  render();
+  toast("No se pudo abrir el almacenamiento; se inició un cuaderno vacío.")
+});
+})();
+</script></body></html>

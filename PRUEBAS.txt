@@ -1,0 +1,31 @@
+PRUEBAS Y VALIDACIONES — ANDROID FASE 1
+
+PASS Capacitor Doctor: Android looking great
+PASS Capacitor CLI 8.4.1
+PASS Capacitor Core 8.4.1
+PASS Capacitor Android 8.4.1
+PASS Android minSdk 24
+PASS Android compileSdk 36
+PASS Android targetSdk 36
+PASS Java 21 configurado
+PASS Sintaxis JavaScript del cuaderno
+PASS Sincronización `npx cap sync android`
+PASS Plugin App 8.1.0
+PASS Plugin Filesystem 8.1.2
+PASS Plugin Share 8.0.1
+PASS Plugin Splash Screen 8.0.1
+PASS Detección de ejecución nativa
+PASS Service worker desactivado en Android nativo
+PASS Exportación nativa JSON/CSV incorporada
+PASS Botón Atrás nativo incorporado
+PASS 15 recursos PNG de icono Android
+PASS Pantallas de inicio verticales y horizontales
+PASS android:allowBackup=false
+PASS android:usesCleartextTraffic=false
+PASS Flujo GitHub Actions validado como YAML
+PASS Archivos web copiados a assets/public
+
+NO EJECUTADO: compilación local del APK.
+Motivo: el entorno de construcción no incluye Android SDK y bloqueó la descarga
+de Gradle. El proyecto incluye GitHub Actions para compilar `app-debug.apk` en
+un runner con Android SDK.

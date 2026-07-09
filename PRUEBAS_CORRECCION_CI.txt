@@ -1,0 +1,12 @@
+PRUEBAS ESTÁTICAS
+
+PASS package-lock válido
+PASS package.json válido
+PASS URLs internas eliminadas
+PASS registro público en lockfile
+PASS .npmrc creado
+PASS setup-node usa registry público
+PASS npm ci fuerza registry público
+PASS 97 URLs corregidas
+
+La instalación real de npm se verificará en GitHub Actions.

@@ -1,0 +1,26 @@
+PRUEBAS REALIZADAS — VERSIÓN 4.5
+
+Corrección del menú inferior en Android
+PASS overflow horizontal real
+PASS botones de ancho fijo y no comprimibles
+PASS gesto táctil horizontal (`touch-action: pan-x`)
+PASS inercia de desplazamiento
+PASS barra de desplazamiento oculta
+PASS centrado automático de la opción activa
+PASS margen para la zona de gestos del sistema
+PASS adaptación adicional en pantallas de 360 px
+PASS accesos directos a Evaluar actualizan la navegación
+PASS nueva caché PWA `cuaderno-gh-v45`
+
+Integridad
+PASS sintaxis JavaScript
+PASS IndexedDB sin modificaciones
+PASS estructura PWA conservada
+PASS iconos y manifest conservados
+
+Para comprobar la actualización en un Android que ya tenía la PWA instalada:
+1. Publicar todos los archivos del ZIP.
+2. Abrir la aplicación con conexión.
+3. Cerrar completamente la aplicación.
+4. Volver a abrirla.
+5. Si continúa la versión anterior, abrir la URL en Chrome y recargarla una vez.
